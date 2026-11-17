@@ -12,14 +12,9 @@
   :root {
     --ink: #3d3552;
     --muted: #7a7191;
-    --card: rgba(255, 255, 255, 0.78);
+    --card: rgba(255, 255, 255, 0.8);
     --line: rgba(61, 53, 82, 0.12);
-    --pink: #f7b5c8;
     --pink-deep: #e37fa0;
-    --lav: #c9b8f0;
-    --mint: #b5e6d3;
-    --peach: #ffd2b0;
-    --sky: #b8d8f5;
     --shadow: 0 10px 40px rgba(120, 90, 160, 0.15);
     --radius: 22px;
   }
@@ -44,120 +39,93 @@
       radial-gradient(circle at 10% 80%, #ffe8d6 0, transparent 40%),
       linear-gradient(180deg, #fdeef4 0%, #f1e9ff 55%, #e8f6f1 100%);
   }
-  .skyline {
-    position: fixed; left: 0; right: 0; bottom: 0; z-index: -1;
-    width: 100%; height: 34vh; min-height: 180px;
-    pointer-events: none; opacity: 0.55;
-  }
-  .sun {
-    position: fixed; z-index: -1; right: 8vw; top: 12vh;
-    width: 140px; height: 140px; border-radius: 50%;
-    background: radial-gradient(circle, #ffc4d4 0%, #ffb3c8 60%, rgba(255,179,200,0) 72%);
-    opacity: .7;
-  }
-  .petal {
-    position: fixed; top: -20px; z-index: -1;
-    width: 14px; height: 10px;
-    background: #ffc2d4;
-    border-radius: 14px 1px 14px 1px;
-    opacity: .75;
-    animation: fall linear infinite;
-  }
-  @keyframes fall {
-    0% { transform: translate(0, -5vh) rotate(0deg); }
-    100% { transform: translate(18vw, 105vh) rotate(540deg); }
-  }
+  .skyline { position: fixed; left: 0; right: 0; bottom: 0; z-index: -1; width: 100%; height: 34vh; min-height: 180px; pointer-events: none; opacity: 0.55; }
+  .sun { position: fixed; z-index: -1; right: 8vw; top: 12vh; width: 140px; height: 140px; border-radius: 50%;
+    background: radial-gradient(circle, #ffc4d4 0%, #ffb3c8 60%, rgba(255,179,200,0) 72%); opacity: .7; }
+  .petal { position: fixed; top: -20px; z-index: -1; width: 14px; height: 10px; background: #ffc2d4;
+    border-radius: 14px 1px 14px 1px; opacity: .75; animation: fall linear infinite; }
+  @keyframes fall { 0% { transform: translate(0, -5vh) rotate(0deg); } 100% { transform: translate(18vw, 105vh) rotate(540deg); } }
   @media (prefers-reduced-motion: reduce) { .petal { display: none; } }
 
   /* ---------- Layout ---------- */
-  header.nav {
-    display: flex; align-items: center; justify-content: space-between;
-    max-width: 1150px; margin: 0 auto; padding: 18px 16px;
-  }
+  header.nav { display: flex; align-items: center; justify-content: space-between; max-width: 1180px; margin: 0 auto; padding: 18px 16px; }
   .logo { font-weight: 900; font-size: 1.15rem; letter-spacing: .02em; cursor: pointer; }
   .logo span { color: var(--pink-deep); }
-  .nav-links { display: flex; gap: 6px; }
-  .nav-links button {
-    background: none; border: none; font: inherit; color: var(--ink);
-    padding: 8px 14px; border-radius: 999px; cursor: pointer; font-weight: 500;
-  }
+  .nav-links { display: flex; gap: 4px; }
+  .nav-links button { background: none; border: none; font: inherit; color: var(--ink); padding: 8px 14px; border-radius: 999px; cursor: pointer; font-weight: 500; }
   .nav-links button:hover { background: rgba(255,255,255,.6); }
 
-  main { max-width: 1150px; margin: 0 auto; padding: 0 16px 120px; }
+  main { max-width: 1180px; margin: 0 auto; padding: 0 16px 120px; }
   .view { display: none; animation: fadein .45s ease; }
   .view.active { display: block; }
   @keyframes fadein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
-  .card {
-    background: var(--card);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,.8);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-  }
+  .card { background: var(--card); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,.8); border-radius: var(--radius); box-shadow: var(--shadow); }
 
-  .btn {
-    display: inline-flex; align-items: center; gap: 8px;
-    font: inherit; font-weight: 700; font-size: 1rem;
+  .btn { display: inline-flex; align-items: center; gap: 8px; font: inherit; font-weight: 700; font-size: 1rem;
     border: none; border-radius: 999px; padding: 14px 28px; cursor: pointer;
-    background: linear-gradient(135deg, #f49ab7, #b79cf0);
-    color: #fff; box-shadow: 0 8px 24px rgba(227,127,160,.35);
-    transition: transform .15s, box-shadow .15s;
-    text-decoration: none;
-  }
+    background: linear-gradient(135deg, #f49ab7, #b79cf0); color: #fff; box-shadow: 0 8px 24px rgba(227,127,160,.35);
+    transition: transform .15s, box-shadow .15s; text-decoration: none; }
   .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(227,127,160,.45); }
   .btn.ghost { background: rgba(255,255,255,.85); color: var(--ink); box-shadow: none; border: 1px solid var(--line); }
   .btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+
+  .dot { width: 16px; height: 16px; border-radius: 50%; flex: none; border: 2px solid #fff; box-shadow: 0 0 0 1px var(--line); display: inline-block; }
 
   /* ---------- Hero ---------- */
   .hero { text-align: center; padding: 40px 0 30px; }
   .hero .jp { font-size: .95rem; color: var(--pink-deep); letter-spacing: .3em; font-weight: 700; }
   .hero h1 { font-size: clamp(2.2rem, 6vw, 3.8rem); margin: 10px 0 14px; font-weight: 900; line-height: 1.1; }
   .hero h1 em { font-style: normal; background: linear-gradient(120deg, #e37fa0, #9b7fe0); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .hero p { color: var(--muted); max-width: 560px; margin: 0 auto 26px; font-size: 1.08rem; line-height: 1.7; }
+  .hero p { color: var(--muted); max-width: 580px; margin: 0 auto 26px; font-size: 1.08rem; line-height: 1.7; }
   .hero .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
-  /* ---------- Map section ---------- */
-  .section-title { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 40px 4px 14px; }
+  /* ---------- Map ---------- */
+  .section-title { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 44px 4px 14px; }
   .section-title h2 { margin: 0; font-size: 1.6rem; font-weight: 900; }
   .section-title p { margin: 0; color: var(--muted); }
-  .map-wrap { display: grid; grid-template-columns: 1.4fr 1fr; gap: 18px; }
-  #tokyoMap { height: 460px; border-radius: var(--radius); overflow: hidden; z-index: 0; }
+  .map-wrap { display: grid; grid-template-columns: 1.55fr 1fr; gap: 18px; }
+  #tokyoMap { height: 560px; border-radius: 18px; overflow: hidden; z-index: 0; background: #f4f1f6; }
   .map-card { padding: 10px; }
-  .hood-list { padding: 18px; display: flex; flex-direction: column; gap: 8px; max-height: 480px; overflow-y: auto; }
-  .hood-chip {
-    display: flex; align-items: center; gap: 12px; padding: 10px 12px;
-    border-radius: 14px; cursor: pointer; border: 1px solid transparent; background: rgba(255,255,255,.55);
-    transition: background .15s, border-color .15s, transform .15s; text-align: left; font: inherit; color: inherit; width: 100%;
-  }
+  .hood-list { padding: 14px; display: flex; flex-direction: column; gap: 6px; max-height: 580px; overflow-y: auto; }
+  .hood-chip { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 14px; cursor: pointer;
+    border: 1px solid transparent; background: rgba(255,255,255,.55); transition: background .15s, border-color .15s, transform .15s;
+    text-align: left; font: inherit; color: inherit; width: 100%; }
   .hood-chip:hover { background: #fff; border-color: var(--line); transform: translateX(3px); }
-  .dot { width: 16px; height: 16px; border-radius: 50%; flex: none; border: 2px solid #fff; box-shadow: 0 0 0 1px var(--line); }
   .hood-chip b { display: block; }
   .hood-chip small { color: var(--muted); }
+  .hood-chip .new { font-size: .68rem; background: #ffe3ee; color: #c25483; padding: 2px 7px; border-radius: 999px; margin-left: 4px; vertical-align: middle; }
 
-  .leaflet-tooltip.hood-label {
-    background: #fff; border: none; border-radius: 999px; padding: 3px 10px;
-    font-family: "Zen Maru Gothic", sans-serif; font-weight: 700; color: var(--ink);
-    box-shadow: 0 4px 12px rgba(0,0,0,.12);
-  }
+  .leaflet-tooltip.hood-label { background: rgba(255,255,255,.92); border: none; border-radius: 999px; padding: 2px 9px;
+    font-family: "Zen Maru Gothic", sans-serif; font-weight: 700; font-size: .78rem; color: var(--ink); box-shadow: 0 3px 10px rgba(0,0,0,.12); }
   .leaflet-tooltip.hood-label::before { display: none; }
+  .labels-off .leaflet-tooltip.hood-label { opacity: 0 !important; transition: opacity .15s; }
+  .labels-off .leaflet-tooltip.hood-label.show { opacity: 1 !important; }
+  .map-hint { font-size: .82rem; color: var(--muted); padding: 8px 6px 2px; }
 
-  /* ---------- Neighborhood drawer ---------- */
+  /* ---------- Festivals ---------- */
+  .months { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .months button { font: inherit; font-weight: 700; font-size: .88rem; padding: 7px 13px; border-radius: 999px; border: 1px solid var(--line);
+    background: rgba(255,255,255,.75); color: var(--ink); cursor: pointer; }
+  .months button.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .fest-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .fest { padding: 16px 18px; border-top: 6px solid; }
+  .fest .when { font-size: .8rem; font-weight: 700; color: var(--muted); letter-spacing: .05em; }
+  .fest b { display: block; margin: 4px 0 4px; font-size: 1.05rem; }
+  .fest p { margin: 0 0 10px; color: var(--muted); font-size: .9rem; line-height: 1.55; }
+  .fest .where { font-size: .85rem; font-weight: 700; background: none; border: none; padding: 0; cursor: pointer; color: var(--pink-deep); font-family: inherit; }
+  .empty { color: var(--muted); padding: 20px; text-align: center; }
+
+  /* ---------- Drawer ---------- */
   .overlay { position: fixed; inset: 0; background: rgba(61,53,82,.35); z-index: 1000; display: none; }
   .overlay.open { display: block; }
-  .drawer {
-    position: fixed; top: 0; right: 0; bottom: 0; width: min(620px, 100%);
-    background: #fffafc; z-index: 1001; overflow-y: auto;
-    transform: translateX(100%); transition: transform .35s ease;
-    box-shadow: -10px 0 40px rgba(0,0,0,.12);
-  }
+  .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(640px, 100%); background: #fffafc; z-index: 1001; overflow-y: auto;
+    transform: translateX(100%); transition: transform .35s ease; box-shadow: -10px 0 40px rgba(0,0,0,.12); }
   .drawer.open { transform: none; }
   .drawer-head { padding: 28px 24px 22px; position: relative; }
-  .drawer-head .close {
-    position: absolute; top: 16px; right: 16px; width: 38px; height: 38px; border-radius: 50%;
-    border: none; background: rgba(255,255,255,.85); font-size: 1.3rem; cursor: pointer; color: var(--ink);
-  }
+  .drawer-head .close { position: absolute; top: 16px; right: 16px; width: 38px; height: 38px; border-radius: 50%; border: none;
+    background: rgba(255,255,255,.85); font-size: 1.3rem; cursor: pointer; color: var(--ink); }
   .drawer-head .jp { font-weight: 700; opacity: .7; letter-spacing: .15em; }
   .drawer-head h2 { margin: 4px 0 6px; font-size: 2rem; font-weight: 900; }
   .drawer-head .tagline { margin: 0; font-weight: 500; }
@@ -166,67 +134,65 @@
   .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 18px; }
   .tag { font-size: .8rem; padding: 4px 10px; border-radius: 999px; background: #f3edff; color: #6c5aa8; font-weight: 500; }
 
-  .tabs { display: flex; gap: 6px; background: #f4eef8; padding: 5px; border-radius: 999px; margin: 6px 0 14px; }
-  .tabs button {
-    flex: 1; border: none; background: none; font: inherit; font-weight: 700; padding: 9px 6px;
-    border-radius: 999px; cursor: pointer; color: var(--muted);
-  }
+  .tabs { display: flex; gap: 4px; background: #f4eef8; padding: 5px; border-radius: 18px; margin: 6px 0 14px; flex-wrap: wrap; }
+  .tabs button { flex: 1 1 auto; border: none; background: none; font: inherit; font-weight: 700; font-size: .9rem; padding: 8px 10px;
+    border-radius: 999px; cursor: pointer; color: var(--muted); white-space: nowrap; }
   .tabs button.on { background: #fff; color: var(--ink); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
 
   .gmap { width: 100%; height: 280px; border: 0; border-radius: 16px; background: #eee; display: block; }
   .gmap-caption { font-size: .85rem; color: var(--muted); margin: 8px 2px 14px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
   .gmap-caption a { color: var(--pink-deep); font-weight: 700; text-decoration: none; }
 
-  .place {
-    display: flex; gap: 12px; padding: 12px 14px; border-radius: 14px; background: #fff;
-    border: 1px solid var(--line); margin-bottom: 8px; cursor: pointer; text-align: left; width: 100%; font: inherit; color: inherit;
-    transition: border-color .15s, transform .15s;
-  }
+  .place { display: flex; gap: 12px; padding: 12px 14px; border-radius: 14px; background: #fff; border: 1px solid var(--line);
+    margin-bottom: 8px; cursor: pointer; text-align: left; width: 100%; font: inherit; color: inherit; transition: border-color .15s, transform .15s; }
   .place:hover, .place.on { border-color: var(--pink-deep); transform: translateX(2px); }
+  .place.static { cursor: default; transform: none; }
+  .place.static:hover { border-color: var(--line); }
   .place .ico { font-size: 1.4rem; line-height: 1; }
   .place b { display: block; margin-bottom: 2px; }
   .place span { font-size: .9rem; color: var(--muted); line-height: 1.5; }
+  .veg { background: #effaf2; border-color: #cdebd6; }
+  .sub-h { font-size: .8rem; letter-spacing: .12em; font-weight: 700; color: var(--muted); margin: 16px 2px 8px; }
+  .note { font-size: .8rem; color: var(--muted); margin: 6px 2px; line-height: 1.5; }
 
   /* ---------- Quiz ---------- */
-  .quiz { max-width: 720px; margin: 30px auto 0; padding: 34px 30px; }
+  .quiz { max-width: 760px; margin: 30px auto 0; padding: 34px 30px; }
   .progress { height: 10px; background: #f1e8f6; border-radius: 999px; overflow: hidden; margin-bottom: 8px; }
   .progress div { height: 100%; width: 0; background: linear-gradient(90deg, #f49ab7, #b79cf0, #8fd6bd); transition: width .35s ease; border-radius: 999px; }
   .q-count { font-size: .85rem; color: var(--muted); font-weight: 700; letter-spacing: .08em; }
   .quiz h2 { font-size: 1.7rem; margin: 14px 0 6px; font-weight: 900; line-height: 1.3; }
   .quiz .sub { color: var(--muted); margin: 0 0 22px; }
   .options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .opt {
-    text-align: left; font: inherit; color: inherit; cursor: pointer;
-    background: #fff; border: 2px solid transparent; border-radius: 18px; padding: 16px;
-    box-shadow: 0 3px 12px rgba(120,90,160,.08); transition: transform .15s, border-color .15s, background .15s;
-    display: flex; gap: 12px; align-items: flex-start;
-  }
+  .options.months-grid { grid-template-columns: repeat(4, 1fr); }
+  .opt { text-align: left; font: inherit; color: inherit; cursor: pointer; background: #fff; border: 2px solid transparent; border-radius: 18px; padding: 16px;
+    box-shadow: 0 3px 12px rgba(120,90,160,.08); transition: transform .15s, border-color .15s, background .15s; display: flex; gap: 12px; align-items: flex-start; }
   .opt:hover { transform: translateY(-2px); border-color: #f3c4d4; }
   .opt.on { border-color: var(--pink-deep); background: #fff3f7; }
   .opt .e { font-size: 1.7rem; line-height: 1; }
   .opt b { display: block; margin-bottom: 3px; }
   .opt small { color: var(--muted); line-height: 1.45; display: block; }
+  .months-grid .opt { justify-content: center; text-align: center; flex-direction: column; align-items: center; padding: 14px 8px; gap: 4px; }
   .quiz-nav { display: flex; justify-content: space-between; margin-top: 26px; gap: 10px; }
 
   /* ---------- Results ---------- */
   .result-hero { text-align: center; padding: 30px 0 10px; }
   .result-hero h1 { font-size: clamp(1.9rem, 5vw, 2.9rem); margin: 8px 0; font-weight: 900; }
-  .result-hero p { color: var(--muted); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+  .result-hero p { color: var(--muted); max-width: 620px; margin: 0 auto; line-height: 1.7; }
   .trio { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 18px 0 6px; }
-  .trio span { padding: 8px 16px; border-radius: 999px; font-weight: 700; background: #fff; box-shadow: 0 3px 10px rgba(0,0,0,.06); }
+  .trio span { padding: 8px 16px; border-radius: 999px; font-weight: 700; box-shadow: 0 3px 10px rgba(0,0,0,.06); }
 
   .res-grid { display: grid; grid-template-columns: 1fr 1.25fr; gap: 18px; margin-top: 24px; align-items: start; }
-  .stay { padding: 24px; position: sticky; top: 16px; }
-  .stay h3, .scores h3 { margin: 0 0 4px; font-size: 1.25rem; font-weight: 900; }
-  .stay .label { font-size: .8rem; letter-spacing: .14em; font-weight: 700; color: var(--pink-deep); }
+  .side-card { padding: 24px; }
+  .side-card + .side-card { margin-top: 18px; }
+  .side-card h3 { margin: 0 0 4px; font-size: 1.25rem; font-weight: 900; }
+  .label { font-size: .8rem; letter-spacing: .14em; font-weight: 700; color: var(--pink-deep); }
   .info-row { display: flex; gap: 10px; align-items: flex-start; padding: 12px 0; border-top: 1px dashed var(--line); }
   .info-row:first-of-type { border-top: none; }
   .info-row .ico { font-size: 1.3rem; }
   .info-row b { display: block; }
   .info-row span { color: var(--muted); font-size: .92rem; line-height: 1.5; }
 
-  .timeline { display: flex; flex-direction: column; gap: 0; }
-  .slot { padding: 22px 24px; position: relative; }
+  .slot { padding: 22px 24px; }
   .slot-time { font-size: .8rem; font-weight: 700; letter-spacing: .14em; color: var(--muted); }
   .slot h3 { margin: 4px 0 4px; font-size: 1.45rem; font-weight: 900; display: flex; align-items: center; gap: 10px; }
   .slot .why { margin: 0 0 12px; color: var(--muted); font-size: .95rem; }
@@ -235,47 +201,47 @@
   .slot li:first-child { border-top: none; }
   .slot li b { display: block; }
   .slot li span { color: var(--muted); font-size: .92rem; }
-  .slot .eat { background: #fff6ec; border-radius: 14px; padding: 10px 14px; font-size: .93rem; margin-bottom: 12px; }
-  .slot-actions { display: flex; flex-wrap: wrap; gap: 8px; }
-  .mini {
-    font: inherit; font-size: .85rem; font-weight: 700; padding: 8px 14px; border-radius: 999px;
-    background: #fff; border: 1px solid var(--line); color: var(--ink); cursor: pointer; text-decoration: none;
-  }
+  .slot .eat { background: #fff6ec; border-radius: 14px; padding: 10px 14px; font-size: .93rem; margin-bottom: 8px; line-height: 1.55; }
+  .slot .eat.green { background: #effaf2; }
+  .slot-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .mini { font: inherit; font-size: .85rem; font-weight: 700; padding: 8px 14px; border-radius: 999px; background: #fff; border: 1px solid var(--line);
+    color: var(--ink); cursor: pointer; text-decoration: none; display: inline-block; }
   .mini:hover { border-color: var(--pink-deep); }
-  .transit {
-    display: flex; align-items: center; gap: 10px; margin: 10px 0 10px 26px; padding: 10px 14px;
-    border-left: 3px dotted #c9b8f0; color: var(--muted); font-size: .92rem;
-  }
+  .transit { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 10px 0 10px 26px; padding: 10px 14px; border-left: 3px dotted #c9b8f0; color: var(--muted); font-size: .92rem; }
   .transit a { color: #7d63c9; font-weight: 700; text-decoration: none; }
 
-  .scores { padding: 24px; margin-top: 18px; }
-  .bar-row { display: grid; grid-template-columns: 120px 1fr 44px; gap: 10px; align-items: center; margin: 9px 0; font-size: .92rem; }
+  .bar-row { display: grid; grid-template-columns: 120px 1fr 44px; gap: 10px; align-items: center; margin: 8px 0; font-size: .92rem; }
   .bar { height: 12px; background: #f3edf7; border-radius: 999px; overflow: hidden; }
   .bar div { height: 100%; border-radius: 999px; transition: width .8s ease; }
   .bar-row .pct { text-align: right; font-weight: 700; color: var(--muted); }
+  .res-fest { padding: 10px 0; border-top: 1px dashed var(--line); }
+  .res-fest:first-of-type { border-top: none; }
+  .res-fest b { display: block; }
+  .res-fest span { color: var(--muted); font-size: .9rem; line-height: 1.5; }
 
   .res-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+  footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 30px 16px 50px; line-height: 1.6; }
 
-  footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 30px 16px 50px; }
-
-  /* ---------- Responsive ---------- */
-  @media (max-width: 860px) {
+  @media (max-width: 900px) {
     .map-wrap, .res-grid { grid-template-columns: 1fr; }
-    #tokyoMap { height: 360px; }
+    #tokyoMap { height: 420px; }
     .hood-list { max-height: none; }
-    .stay { position: static; }
   }
   @media (max-width: 560px) {
     .options { grid-template-columns: 1fr; }
+    .options.months-grid { grid-template-columns: repeat(3, 1fr); }
     .quiz { padding: 24px 18px; }
     .nav-links button.hide-sm { display: none; }
-    .bar-row { grid-template-columns: 96px 1fr 40px; }
+    .bar-row { grid-template-columns: 100px 1fr 40px; }
+  }
+  @media print {
+    .bg, .sun, .skyline, .petal, header.nav, .res-actions, footer, iframe { display: none !important; }
+    .card { box-shadow: none; backdrop-filter: none; }
   }
 </style>
 </head>
 <body>
 
-<!-- Background -->
 <div class="bg"></div>
 <div class="sun"></div>
 <svg class="skyline" viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden="true">
@@ -283,13 +249,9 @@
     <linearGradient id="sk1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9c8f5"/><stop offset="1" stop-color="#f3d6e6"/></linearGradient>
     <linearGradient id="sk2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6bfd2"/><stop offset="1" stop-color="#fbe0ea"/></linearGradient>
   </defs>
-  <!-- back layer -->
   <path fill="url(#sk1)" d="M0 300 V210 h40 v-30 h30 v40 h25 v-70 h35 v60 h20 v-90 h30 v100 h40 v-50 h30 v40 h25 V120 h12 v-20 h6 v20 h12 v100 h30 v-60 h45 v80 h20 v-40 h40 v30 h35 v-110 h30 v110 h20 v-50 h40 v60 h30 v-80 h30 v70 h25 v-30 h40 v50 h30 v-100 h35 v90 h20 v-60 h40 v70 h30 v-40 h30 v50 h40 v-70 h30 v80 h30 V300 Z"/>
-  <!-- Tokyo Tower -->
   <path fill="#f4a6bf" d="M860 300 L878 150 L884 150 L890 95 L894 95 L897 40 L899 40 L902 95 L906 95 L912 150 L918 150 L936 300 Z M884 200 h28 v8 h-28 Z M880 240 h36 v8 h-36 Z"/>
-  <!-- Skytree -->
   <path fill="#c9b3ef" d="M300 300 L312 120 L316 60 L318 10 L320 60 L324 120 L336 300 Z M308 150 h20 v10 h-20 Z"/>
-  <!-- front layer -->
   <path fill="url(#sk2)" opacity=".9" d="M0 300 V250 h60 v-20 h40 v30 h50 v-40 h30 v50 h60 v-25 h40 v35 h70 v-30 h50 v20 h60 v-45 h35 v45 h55 v-20 h40 v30 h70 v-35 h45 v40 h60 v-25 h40 v30 h60 v-40 h40 v45 h60 v-20 h50 v25 h45 V300 Z"/>
 </svg>
 
@@ -297,7 +259,8 @@
   <div class="logo" onclick="go('home')">東京 <span>A Day in Tokyo</span></div>
   <nav class="nav-links">
     <button onclick="go('home')">Home</button>
-    <button class="hide-sm" onclick="go('home'); setTimeout(()=>document.getElementById('mapSection').scrollIntoView(),50)">Map</button>
+    <button class="hide-sm" onclick="goSection('mapSection')">Map</button>
+    <button class="hide-sm" onclick="goSection('festSection')">Festivals</button>
     <button onclick="startQuiz()">Take the quiz</button>
   </nav>
 </header>
@@ -308,21 +271,32 @@
     <div class="hero">
       <div class="jp">東京の一日</div>
       <h1>Your perfect <em>day in Tokyo</em>,<br>made for you</h1>
-      <p>Answer 10 quick questions about how you like to travel. We'll match you with Tokyo's neighborhoods, tell you where to stay, and plan a day that links your three best matches.</p>
+      <p>Answer 13 quick questions about how you travel. We'll match you with 15 Tokyo neighborhoods, from Shibuya to hidden gems like Koenji and Kagurazaka. Then we'll tell you where to stay and plan a day that links your three best matches.</p>
       <div class="ctas">
         <button class="btn" onclick="startQuiz()">Start the questionnaire →</button>
-        <button class="btn ghost" onclick="document.getElementById('mapSection').scrollIntoView()">Explore the map</button>
+        <button class="btn ghost" onclick="goSection('mapSection')">Explore the map</button>
       </div>
     </div>
 
     <div class="section-title" id="mapSection">
       <h2>Meet the neighborhoods</h2>
-      <p>Click a neighborhood on the map or in the list to see what it's like</p>
+      <p>Click a colored area or a name in the list</p>
     </div>
     <div class="map-wrap">
-      <div class="card map-card"><div id="tokyoMap"></div></div>
+      <div class="card map-card">
+        <div id="tokyoMap"></div>
+        <div class="map-hint">Colored areas follow the official district (chōme) borders. Zoom in to see every name.</div>
+      </div>
       <div class="card hood-list" id="hoodList"></div>
     </div>
+
+    <div class="section-title" id="festSection">
+      <h2>Festival calendar</h2>
+      <p>Plan your trip around Tokyo's matsuri</p>
+    </div>
+    <div class="months" id="festMonths"></div>
+    <div class="fest-grid" id="festGrid"></div>
+    <p class="note" style="margin-top:12px">Dates shift a little every year, and some events skip years. Always check the official page before you go.</p>
   </section>
 
   <!-- ===================== QUIZ ===================== -->
@@ -341,28 +315,31 @@
   </section>
 
   <!-- ===================== RESULTS ===================== -->
-  <section id="view-results" class="view">
-    <div id="resultsContent"></div>
-  </section>
+  <section id="view-results" class="view"><div id="resultsContent"></div></section>
 </main>
 
-<footer>Made for the Technion AI course · Maps by Google Maps &amp; OpenStreetMap · No accounts, no database, just open and plan</footer>
+<footer>Made for the Technion AI course · Maps by Google Maps, OpenStreetMap &amp; CARTO<br>No accounts, no database, just open and plan · Places and dates can change, so double-check before you go</footer>
 
-<!-- Neighborhood drawer -->
 <div class="overlay" id="overlay" onclick="closeDrawer()"></div>
 <aside class="drawer" id="drawer" aria-hidden="true"></aside>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
+/* Official district borders (OpenStreetMap), merged per neighborhood. Format: [[lat,lng], ...] rings */
+const BOUNDS = {"shinjuku":[[[35.68863,139.68316],[35.68942,139.68345],[35.68961,139.68383],[35.68997,139.68375],[35.69055,139.68438],[35.69141,139.68486],[35.69181,139.68422],[35.69214,139.68447],[35.69211,139.68374],[35.69257,139.68354],[35.69308,139.68442],[35.69399,139.6854],[35.69639,139.68663],[35.69549,139.68958],[35.69693,139.69052],[35.69801,139.69775],[35.69829,139.7045],[35.69794,139.70748],[35.70088,139.70804],[35.70083,139.70968],[35.7013,139.71168],[35.7014,139.71401],[35.69779,139.7137],[35.69773,139.71292],[35.69736,139.71333],[35.6942,139.71235],[35.69402,139.71303],[35.69128,139.71247],[35.69121,139.71452],[35.69065,139.71488],[35.68793,139.71409],[35.6876,139.71595],[35.68344,139.71591],[35.68327,139.71544],[35.68236,139.71538],[35.6815,139.71416],[35.68334,139.71127],[35.68371,139.71006],[35.68419,139.70929],[35.68464,139.70701],[35.68618,139.7068],[35.68782,139.70555],[35.68784,139.7051],[35.68805,139.70506],[35.6879,139.70279],[35.68828,139.70253],[35.68832,139.70194],[35.68898,139.70226],[35.68933,139.70212],[35.689,139.70126],[35.68879,139.69978],[35.68847,139.69985],[35.6884,139.69962],[35.68866,139.69946],[35.68664,139.69461],[35.68172,139.68744],[35.68348,139.68582],[35.68362,139.68593],[35.68586,139.68477],[35.68633,139.68468],[35.68648,139.68562],[35.68718,139.6855],[35.68733,139.68581],[35.68773,139.68574],[35.68743,139.68403],[35.68799,139.68343],[35.68863,139.68316]]],"shibuya":[[[35.66785,139.69181],[35.66823,139.69367],[35.6685,139.70032],[35.66919,139.70211],[35.66515,139.70152],[35.66509,139.70165],[35.65972,139.70111],[35.65937,139.70111],[35.65934,139.70148],[35.65798,139.70206],[35.65769,139.70172],[35.65751,139.7018],[35.65529,139.69475],[35.65749,139.69614],[35.65845,139.69545],[35.66005,139.69551],[35.66017,139.69574],[35.66068,139.69546],[35.66123,139.69623],[35.66284,139.69464],[35.66363,139.69546],[35.66603,139.69374],[35.66666,139.69276],[35.66785,139.69181]]],"harajuku":[[[35.66212,139.70127],[35.66976,139.70218],[35.67285,139.70301],[35.67281,139.70345],[35.67314,139.70452],[35.67431,139.70621],[35.67462,139.70698],[35.67567,139.71277],[35.67444,139.71272],[35.6749,139.71485],[35.67415,139.71523],[35.6739,139.71511],[35.67377,139.71561],[35.67322,139.71627],[35.67243,139.71669],[35.67225,139.71658],[35.67239,139.71585],[35.67293,139.71484],[35.67203,139.71443],[35.67192,139.71456],[35.67112,139.71411],[35.67092,139.71413],[35.67086,139.71435],[35.67035,139.71403],[35.66964,139.71509],[35.66923,139.7144],[35.6694,139.7139],[35.66596,139.71085],[35.66607,139.71051],[35.66421,139.70878],[35.66303,139.71038],[35.66136,139.70768],[35.66357,139.70432],[35.66411,139.70294],[35.66247,139.70227],[35.66187,139.70231],[35.66212,139.70127]]],"ginza":[[[35.66863,139.75856],[35.67233,139.76064],[35.67335,139.76389],[35.67593,139.76603],[35.6753,139.76818],[35.6753,139.76879],[35.67406,139.77245],[35.67146,139.77183],[35.66782,139.76761],[35.66669,139.76735],[35.66527,139.76563],[35.66308,139.76354],[35.66356,139.76291],[35.66436,139.76332],[35.66522,139.76324],[35.66681,139.76237],[35.66726,139.76169],[35.66821,139.75895],[35.66863,139.75856]]],"asakusa":[[[35.71144,139.79197],[35.71437,139.79252],[35.71729,139.7927],[35.71867,139.7927],[35.71979,139.79206],[35.72023,139.79321],[35.72338,139.79837],[35.72082,139.80016],[35.72079,139.80073],[35.71935,139.80168],[35.71928,139.8019],[35.71902,139.80191],[35.71878,139.80234],[35.71722,139.80352],[35.71614,139.80537],[35.71445,139.80372],[35.71192,139.80071],[35.71008,139.79899],[35.71073,139.79763],[35.71144,139.79197]]],"akihabara":[[[35.70182,139.76621],[35.7027,139.76656],[35.70248,139.76672],[35.70255,139.76756],[35.70272,139.76759],[35.70262,139.76811],[35.70332,139.76802],[35.70331,139.7693],[35.7037,139.76942],[35.70372,139.76984],[35.70523,139.76996],[35.70501,139.77327],[35.70287,139.77303],[35.70262,139.77577],[35.70152,139.77565],[35.70172,139.77339],[35.69698,139.77273],[35.69704,139.77128],[35.69724,139.77071],[35.69861,139.76845],[35.69953,139.76643],[35.69982,139.76654],[35.69969,139.76703],[35.70013,139.76728],[35.69951,139.76831],[35.69984,139.76844],[35.69987,139.76862],[35.7005,139.76867],[35.70063,139.76806],[35.70112,139.76738],[35.70094,139.76715],[35.70105,139.76695],[35.70134,139.76696],[35.70182,139.76621]]],"shimokitazawa":[[[35.65983,139.66478],[35.66165,139.66589],[35.66404,139.66533],[35.66852,139.66614],[35.67159,139.66606],[35.67177,139.66857],[35.67155,139.66886],[35.67221,139.67282],[35.67157,139.6726],[35.66981,139.67247],[35.66703,139.67318],[35.66464,139.67438],[35.66411,139.67495],[35.66391,139.67483],[35.66346,139.67547],[35.66278,139.67596],[35.6599,139.67669],[35.66002,139.67602],[35.66028,139.67609],[35.66037,139.67589],[35.66078,139.67586],[35.66088,139.6739],[35.66114,139.67383],[35.66106,139.6727],[35.65977,139.6714],[35.66063,139.66911],[35.65897,139.66844],[35.65912,139.66742],[35.6593,139.66742],[35.65969,139.6664],[35.6597,139.66581],[35.66002,139.66531],[35.65983,139.66478]]],"kichijoji":[[[35.70295,139.56667],[35.70368,139.56692],[35.7103,139.57057],[35.70881,139.5756],[35.70766,139.57858],[35.70355,139.58747],[35.70376,139.59449],[35.70085,139.59274],[35.69479,139.59013],[35.69558,139.58815],[35.69415,139.58675],[35.69517,139.58635],[35.69615,139.5854],[35.69729,139.58471],[35.69796,139.5831],[35.69787,139.58245],[35.69813,139.58226],[35.69881,139.58026],[35.70017,139.57875],[35.7017,139.5765],[35.70316,139.57729],[35.70295,139.56667]]],"nakameguro":[[[35.64255,139.68424],[35.64311,139.68554],[35.64296,139.68602],[35.64397,139.68653],[35.64477,139.68714],[35.64478,139.68745],[35.64587,139.68814],[35.64547,139.68894],[35.64499,139.68921],[35.64422,139.69008],[35.64423,139.69143],[35.64429,139.69183],[35.6457,139.69322],[35.64602,139.69391],[35.64606,139.69536],[35.64577,139.69649],[35.64577,139.69734],[35.64736,139.6985],[35.64715,139.69915],[35.64733,139.70006],[35.64673,139.70195],[35.64636,139.7022],[35.64433,139.70534],[35.64396,139.706],[35.64404,139.70644],[35.64343,139.70653],[35.64298,139.70722],[35.6415,139.71026],[35.63863,139.70709],[35.63735,139.70512],[35.63603,139.70614],[35.63582,139.70564],[35.63588,139.70502],[35.63548,139.70429],[35.63552,139.70372],[35.6351,139.70301],[35.63522,139.70169],[35.63506,139.7011],[35.63413,139.69962],[35.63352,139.69825],[35.63532,139.69774],[35.63507,139.69606],[35.6353,139.69421],[35.63566,139.69316],[35.63686,139.6957],[35.6382,139.69744],[35.63901,139.69587],[35.6409,139.69442],[35.64023,139.69338],[35.63922,139.69239],[35.63981,139.68974],[35.64018,139.68948],[35.63977,139.68762],[35.64041,139.68675],[35.6399,139.68604],[35.64011,139.68587],[35.64072,139.68585],[35.64135,139.6854],[35.64137,139.68513],[35.64248,139.68474],[35.64239,139.68432],[35.64255,139.68424]]],"yanaka":[[[35.72634,139.75553],[35.7289,139.75701],[35.73099,139.75772],[35.73268,139.75865],[35.73172,139.76015],[35.73239,139.76135],[35.73178,139.76165],[35.73147,139.76291],[35.73057,139.76476],[35.72949,139.76561],[35.72865,139.76556],[35.7277,139.76582],[35.72766,139.76669],[35.72745,139.76671],[35.72732,139.76723],[35.72813,139.76993],[35.72801,139.77034],[35.72738,139.77103],[35.72746,139.77123],[35.72682,139.77227],[35.72637,139.77268],[35.72615,139.77264],[35.72479,139.77438],[35.72384,139.77299],[35.72339,139.77325],[35.72315,139.7727],[35.72294,139.77275],[35.7227,139.77242],[35.72244,139.7716],[35.72269,139.77145],[35.7224,139.77038],[35.72111,139.77085],[35.72068,139.76943],[35.72024,139.76958],[35.72015,139.76916],[35.71843,139.7669],[35.71717,139.76801],[35.71573,139.76875],[35.71564,139.76771],[35.71679,139.76679],[35.7165,139.76598],[35.71765,139.7648],[35.71735,139.76437],[35.71801,139.76407],[35.71798,139.76236],[35.71845,139.76217],[35.71856,139.76228],[35.71874,139.76205],[35.71886,139.76125],[35.71949,139.76025],[35.72043,139.75974],[35.72051,139.75999],[35.72068,139.75994],[35.72059,139.75843],[35.72244,139.75818],[35.72634,139.75553]]],"koenji":[[[35.70634,139.64188],[35.71149,139.6435],[35.70944,139.65092],[35.70905,139.65099],[35.70896,139.65132],[35.70929,139.65413],[35.7091,139.6542],[35.70924,139.65795],[35.70571,139.6582],[35.70522,139.65808],[35.70481,139.66101],[35.70254,139.66118],[35.70142,139.66074],[35.70144,139.66114],[35.70119,139.66152],[35.70027,139.66149],[35.70001,139.66198],[35.69935,139.66183],[35.69932,139.66215],[35.69846,139.66241],[35.69749,139.66197],[35.69808,139.65731],[35.69781,139.64387],[35.70096,139.64366],[35.70328,139.64388],[35.7048,139.64484],[35.70521,139.64492],[35.70517,139.64259],[35.70564,139.64195],[35.70634,139.64188]]],"kagurazaka":[[[35.70329,139.73485],[35.70375,139.73499],[35.70374,139.73521],[35.70424,139.73547],[35.70528,139.73549],[35.70544,139.73636],[35.7053,139.73753],[35.70504,139.73773],[35.70396,139.73674],[35.70336,139.73811],[35.70303,139.73798],[35.70291,139.73823],[35.70243,139.73829],[35.70312,139.73911],[35.70302,139.73954],[35.70272,139.73954],[35.70285,139.73986],[35.70134,139.74312],[35.70051,139.74261],[35.70026,139.74316],[35.69825,139.74149],[35.69881,139.74066],[35.69859,139.74041],[35.69918,139.73974],[35.69893,139.7391],[35.69865,139.73921],[35.69847,139.73875],[35.69797,139.73875],[35.69797,139.73833],[35.7009,139.7369],[35.70165,139.73848],[35.70228,139.73762],[35.70175,139.73695],[35.70214,139.73646],[35.7024,139.73668],[35.7028,139.736],[35.70298,139.73608],[35.70325,139.73565],[35.7031,139.7355],[35.70329,139.73485]]],"ebisu":[[[35.64746,139.70183],[35.64878,139.70203],[35.64984,139.70254],[35.65135,139.70398],[35.65349,139.70545],[35.65084,139.7077],[35.64773,139.70932],[35.64864,139.71076],[35.64809,139.71238],[35.64789,139.71489],[35.64835,139.71893],[35.64744,139.72234],[35.64739,139.72313],[35.64673,139.72393],[35.646,139.72316],[35.64549,139.72315],[35.64552,139.72286],[35.64531,139.72298],[35.64464,139.72273],[35.64436,139.72225],[35.64446,139.72152],[35.64414,139.72098],[35.64387,139.72095],[35.64373,139.72138],[35.64235,139.72024],[35.64164,139.71925],[35.64149,139.71928],[35.64173,139.71675],[35.64233,139.71596],[35.64306,139.71539],[35.64204,139.71508],[35.64214,139.71415],[35.64166,139.71354],[35.64223,139.71282],[35.64232,139.71193],[35.64201,139.71049],[35.6415,139.71026],[35.64297,139.70723],[35.64344,139.70652],[35.64404,139.70643],[35.64395,139.70603],[35.64422,139.70552],[35.64635,139.70221],[35.64653,139.70208],[35.64672,139.70241],[35.64746,139.70183]]],"azabudai":[[[35.66207,139.72366],[35.66329,139.72389],[35.66513,139.72476],[35.66643,139.7245],[35.66654,139.72663],[35.66679,139.72762],[35.66439,139.73108],[35.66494,139.7316],[35.66536,139.73245],[35.66693,139.73362],[35.66644,139.73444],[35.6669,139.73477],[35.66711,139.73559],[35.66868,139.73764],[35.66811,139.73879],[35.66783,139.7389],[35.66801,139.73909],[35.66756,139.73992],[35.6669,139.73941],[35.66657,139.73998],[35.66693,139.74033],[35.66592,139.74236],[35.66683,139.74291],[35.66653,139.74366],[35.66499,139.74281],[35.66411,139.74199],[35.66394,139.74223],[35.66379,139.74207],[35.66367,139.74223],[35.66303,139.74196],[35.66325,139.74144],[35.66246,139.74124],[35.6624,139.74095],[35.66238,139.74261],[35.66104,139.74253],[35.66129,139.74319],[35.66095,139.74412],[35.66036,139.74343],[35.65993,139.7433],[35.65863,139.74368],[35.65843,139.74299],[35.65857,139.74252],[35.65784,139.74246],[35.65745,139.74219],[35.65798,139.74071],[35.65838,139.74029],[35.65854,139.73976],[35.65973,139.74034],[35.66016,139.7391],[35.65961,139.73859],[35.65938,139.73773],[35.65958,139.73654],[35.65818,139.73623],[35.6576,139.73642],[35.65733,139.73579],[35.65757,139.73546],[35.65712,139.7353],[35.65726,139.73378],[35.65709,139.73367],[35.65793,139.73266],[35.65714,139.73158],[35.65788,139.73065],[35.65855,139.72757],[35.66128,139.72819],[35.66153,139.7286],[35.66211,139.72763],[35.66287,139.72685],[35.66221,139.72591],[35.66207,139.72366]]],"toyosu":[[[35.6402,139.76817],[35.65418,139.78976],[35.66519,139.78864],[35.66541,139.79124],[35.66113,139.79675],[35.65307,139.80476],[35.64802,139.79722],[35.6385,139.77975],[35.6385,139.77873],[35.63758,139.77703],[35.6402,139.76817]]]};
+
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const MONTHS_FULL = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
 /* =========================================================
-   DATA: Tokyo neighborhoods
+   DATA: 15 Tokyo neighborhoods
    ========================================================= */
 const HOODS = {
   shinjuku: {
-    name: "Shinjuku", jp: "新宿", color: "#f7a8c4", lat: 35.6909, lng: 139.7003,
+    name: "Shinjuku", jp: "新宿", color: "#f7a8c4", lat: 35.6915, lng: 139.7005,
     tagline: "Neon skyscrapers, tiny bars and Tokyo's busiest station",
-    about: "Shinjuku is Tokyo at full volume. On the west side are government towers with free observation decks. On the east side, Kabukicho's neon and Golden Gai's tiny six-seat bars stay busy until dawn. Shinjuku Gyoen, one of the city's loveliest gardens, is a few minutes' walk away when you need a break.",
-    tags: ["Nightlife", "Food alleys", "Transport hub", "Skyline views"],
+    about: "Shinjuku is Tokyo at full volume. On the west side are government towers with free observation decks. On the east side, Kabukicho's neon and Golden Gai's tiny six-seat bars stay busy until dawn. When you need a break, Shinjuku Gyoen is one of the city's loveliest gardens, and Shin-Okubo, Tokyo's Koreatown, is one stop north.",
+    tags: ["Nightlife", "Food alleys", "Transport hub", "Koreatown"],
     station: { name: "Shinjuku Station", lines: "JR Yamanote, Chuo & Saikyo lines · Marunouchi line · Toei Shinjuku & Oedo lines · Odakyu & Keio" },
     hotel: { name: "Hotel Gracery Shinjuku", note: "Mid-range, famous for the giant Godzilla head on its terrace. Kabukicho is right outside, and the station is a 5-minute walk.", price: "$$" },
     attractions: [
@@ -371,27 +348,57 @@ const HOODS = {
       { name: "Shinjuku Golden Gai", ico: "🍸", desc: "About 200 tiny bars packed into six narrow lanes, each with its own theme." },
       { name: "Tokyo Metropolitan Government Building", ico: "🏙️", desc: "Free observation decks on the 45th floor. On clear days you can see Mt. Fuji." }
     ],
-    eat: "Yakitori and a cold beer in Omoide Yokocho, or ramen at Fuunji (tsukemen dipping noodles)",
+    shops: [
+      { name: "Isetan Shinjuku", ico: "🛍️", desc: "Tokyo's most fashionable department store. Its basement food hall is legendary." },
+      { name: "Kinokuniya Shinjuku Main Store", ico: "📚", desc: "Huge bookstore with stationery, manga and a foreign-language floor." },
+      { name: "Disk Union Shinjuku", ico: "💿", desc: "A cluster of record shops, each floor dedicated to one genre." }
+    ],
+    food: [
+      { name: "Omoide Yokocho", ico: "🍢", desc: "Yakitori skewers and motsu-ni stew under the train tracks." },
+      { name: "Shin-Okubo Koreatown", ico: "🌶️", desc: "Korean street food, cheese hotteok and K-pop shops, one stop north." },
+      { name: "Fuunji", ico: "🍜", desc: "Cult tsukemen (dipping ramen) shop near the south exit. Expect a queue." }
+    ],
+    veg: "Ain Soph. Journey is a fully vegan café known for its fluffy pancakes, and Ramen Ouka near Shinjuku-gyoemmae makes vegan ramen. In Shin-Okubo, vegetable bibimbap and hotteok are easy veggie picks.",
+    festivals: [
+      { name: "Cherry blossoms at Shinjuku Gyoen", months: [3, 4], when: "Late March – early April", desc: "About 1,000 cherry trees of 70 varieties. Alcohol isn't allowed in the garden, so it's a calm, picnic-style hanami." },
+      { name: "Shinjuku Eisa Festival", months: [7], when: "Late July", desc: "Okinawan drum-and-dance troupes parade through the streets around the east exit." },
+      { name: "Tori-no-ichi at Hanazono Shrine", months: [11], when: "November (on the Days of the Rooster)", desc: "Night market of lucky bamboo rakes and food stalls, steps from Golden Gai." }
+    ],
     slot: { morning: 1, afternoon: 2, evening: 3 }
   },
   shibuya: {
-    name: "Shibuya", jp: "渋谷", color: "#c9b3f2", lat: 35.6595, lng: 139.7005,
+    name: "Shibuya", jp: "渋谷", color: "#c9b3f2", lat: 35.6598, lng: 139.6995,
     tagline: "The famous crossing, rooftop views and youth culture",
-    about: "Shibuya is where Tokyo's young crowd shops, eats and goes out. Thousands of people cross the Scramble at once, and Shibuya Sky's open-air rooftop looks straight down on it. Away from the crossing are record shops, MIYASHITA PARK's rooftop park and the bar alleys of Nonbei Yokocho.",
+    about: "Shibuya is where Tokyo's young crowd shops, eats and goes out. Thousands of people cross the Scramble at once, and Shibuya Sky's open-air rooftop looks straight down on it. Away from the crossing are record shops, MIYASHITA PARK's rooftop park and the bar alleys of Nonbei Yokocho. Walk 15 minutes north-west to reach Okushibu (Oku-Shibuya) and Tomigaya, a quiet area of specialty coffee and tiny bistros.",
     tags: ["Iconic sights", "Shopping", "Clubs", "Rooftop views"],
     station: { name: "Shibuya Station", lines: "JR Yamanote & Saikyo lines · Ginza, Hanzomon & Fukutoshin lines · Tokyu Toyoko & Den-en-toshi · Keio Inokashira" },
     hotel: { name: "Shibuya Stream Excel Hotel Tokyu", note: "Modern rooms connected directly to Shibuya Station, with the crossing a few minutes away.", price: "$$$" },
     attractions: [
-      { name: "Shibuya Scramble Crossing", ico: "🚦", desc: "The world's busiest pedestrian crossing. Watch it from above at the Starbucks or MAGNET." },
+      { name: "Shibuya Scramble Crossing", ico: "🚦", desc: "The world's busiest pedestrian crossing. Watch it from above at MAGNET by SHIBUYA109." },
       { name: "Shibuya Sky", ico: "🌇", desc: "Open-air rooftop on top of Shibuya Scramble Square. Book a sunset slot ahead of time." },
-      { name: "Hachiko Statue", ico: "🐕", desc: "Statue of the loyal Akita dog, Tokyo's best-known meeting spot." },
-      { name: "MIYASHITA PARK", ico: "🛍️", desc: "Rooftop park above shops, with a long yokocho food hall underneath." }
+      { name: "MIYASHITA PARK", ico: "🌿", desc: "Rooftop park above shops, with a long yokocho food hall underneath." },
+      { name: "Okushibu (Tomigaya)", ico: "☕", desc: "Quiet back-streets of coffee roasters, bakeries and small bistros near Yoyogi Park." }
     ],
-    eat: "Conveyor-belt sushi at Uobei, or the Shibuya Yokocho food hall under MIYASHITA PARK",
+    shops: [
+      { name: "Shibuya PARCO", ico: "🎮", desc: "Home of Nintendo TOKYO and Pokémon Center Shibuya, plus cool Japanese labels." },
+      { name: "Tower Records Shibuya", ico: "💿", desc: "Nine floors of music, J-pop merch and in-store events." },
+      { name: "Shibuya 109", ico: "👗", desc: "The temple of gyaru and Tokyo girls' fashion." }
+    ],
+    food: [
+      { name: "Shibuya Yokocho", ico: "🏮", desc: "A long food hall under MIYASHITA PARK with regional dishes from all over Japan." },
+      { name: "Nonbei Yokocho", ico: "🍶", desc: "\"Drunkard's Alley\", a row of tiny, old-school bars by the train tracks." },
+      { name: "Uobei Shibuya Dogenzaka", ico: "🍣", desc: "Cheap, fast sushi delivered to your seat by a high-speed conveyor." }
+    ],
+    veg: "Okushibu has many veggie-friendly cafés. The Shibuya Yokocho food hall has vegetable dishes, and Shibuya PARCO's restaurant floors list vegetarian options. Use the vegan search link below for today's picks.",
+    festivals: [
+      { name: "Konno Hachimangu Autumn Festival", months: [9], when: "Mid-September", desc: "Portable shrines (mikoshi) parade through Shibuya's streets, with food stalls at the shrine." },
+      { name: "Halloween in Shibuya", months: [10], when: "Late October", desc: "Famous costume crowds. Street drinking is now banned around Halloween and the city discourages gatherings, so check the rules first." },
+      { name: "Winter illuminations", months: [11, 12], when: "Late November – December (most years)", desc: "Blue LED lights along Koen-dori and around Yoyogi Park." }
+    ],
     slot: { morning: 1, afternoon: 2, evening: 3 }
   },
   harajuku: {
-    name: "Harajuku", jp: "原宿", color: "#ffc6a8", lat: 35.6702, lng: 139.7027,
+    name: "Harajuku", jp: "原宿", color: "#ffc6a8", lat: 35.6710, lng: 139.7065,
     tagline: "Kawaii street fashion next to a forest shrine",
     about: "Harajuku mixes extremes. Takeshita Street is a candy-colored crush of crepes, cosplay and fashion shops. A few steps away, Meiji Jingu sits in a quiet forest of 100,000 trees. Omotesando's architect-designed boutiques and the indie shops along Cat Street fill in the space between.",
     tags: ["Street fashion", "Kawaii", "Shrines", "Cafés"],
@@ -403,7 +410,22 @@ const HOODS = {
       { name: "Omotesando", ico: "🏛️", desc: "Tree-lined avenue known as Tokyo's Champs-Élysées, full of striking modern architecture." },
       { name: "Cat Street", ico: "🐈", desc: "Relaxed backstreet with vintage shops, sneaker stores and indie brands." }
     ],
-    eat: "A Marion Crêpe on Takeshita Street, then fluffy soufflé pancakes at a café near Omotesando",
+    shops: [
+      { name: "Laforet Harajuku", ico: "👗", desc: "The birthplace of Harajuku fashion: avant-garde and kawaii Japanese brands." },
+      { name: "Kiddy Land Harajuku", ico: "🧸", desc: "Five floors of character goods, from Sanrio to Ghibli and Snoopy." },
+      { name: "Omotesando Hills", ico: "✨", desc: "Tadao Ando-designed mall full of Japanese designer labels." }
+    ],
+    food: [
+      { name: "Takeshita Street crêpe stands", ico: "🥞", desc: "Marion Crêpes and Santa Monica Crêpes are the classic Harajuku snack." },
+      { name: "AFURI Harajuku", ico: "🍜", desc: "Light, citrusy yuzu shio ramen in a sleek counter bar." },
+      { name: "Harajuku Gyoza Rou", ico: "🥟", desc: "Cheap, legendary gyoza, either pan-fried or boiled." }
+    ],
+    veg: "AFURI serves a vegan ramen with seasonal vegetables. Many cafés along Omotesando and Cat Street have plant-based menus, and the crêpe stands can make fruit-only crêpes.",
+    festivals: [
+      { name: "Hatsumode at Meiji Jingu", months: [1], when: "January 1–3", desc: "Japan's most visited New Year shrine, with millions of visitors praying for a lucky year." },
+      { name: "Harajuku Omotesando Genki Matsuri Super Yosakoi", months: [8], when: "Late August", desc: "More than 100 teams in colorful costumes perform energetic yosakoi dances." },
+      { name: "Meiji Jingu Autumn Grand Festival", months: [11], when: "Around November 1–3", desc: "Traditional archery, gagaku court music and dance performances at the shrine." }
+    ],
     slot: { morning: 3, afternoon: 3, evening: 1 }
   },
   ginza: {
@@ -419,27 +441,58 @@ const HOODS = {
       { name: "GINZA SIX", ico: "✨", desc: "Stylish mall with a free rooftop garden and art installations." },
       { name: "Hama-rikyu Gardens", ico: "🍵", desc: "Former shogun garden with a teahouse on a pond, framed by skyscrapers." }
     ],
-    eat: "A sushi omakase lunch (much cheaper than dinner), or the depachika food hall in Mitsukoshi's basement",
+    shops: [
+      { name: "Ginza Itoya", ico: "✏️", desc: "Twelve floors of beautiful Japanese stationery." },
+      { name: "UNIQLO Ginza", ico: "👕", desc: "The 12-floor global flagship, with Tokyo-only collaborations." },
+      { name: "Dover Street Market Ginza", ico: "🖤", desc: "Comme des Garçons' multi-brand concept store." }
+    ],
+    food: [
+      { name: "Tsukiji Outer Market", ico: "🐟", desc: "Fresh sushi, grilled scallops and tamagoyaki on sticks." },
+      { name: "Ginza Mitsukoshi depachika", ico: "🍱", desc: "Department-store basement food hall of bento, wagashi and fruit." },
+      { name: "Yurakucho Gado-shita", ico: "🍻", desc: "Salaryman izakaya tucked under the railway arches." }
+    ],
+    veg: "Ain Soph. Ginza is a long-running, fully vegan restaurant. Many depachika counters sell vegetable bento and inari sushi, and shojin ryori (Buddhist temple cuisine) is naturally plant-based.",
+    festivals: [
+      { name: "Kabuki-za New Year performances", months: [1], when: "January", desc: "Festive New Year programs at the grand kabuki theater." },
+      { name: "Tsukiji Hongwanji Bon Odori", months: [7, 8], when: "Late July – early August", desc: "Bon dancing at a striking Indian-style temple, with food stalls from Tsukiji shops." },
+      { name: "Christmas windows & illuminations", months: [11, 12], when: "November – December", desc: "Department store windows and Chuo-dori light up for the holidays." }
+    ],
     slot: { morning: 3, afternoon: 3, evening: 2 }
   },
   asakusa: {
-    name: "Asakusa", jp: "浅草", color: "#f5d48c", lat: 35.7118, lng: 139.7966,
+    name: "Asakusa", jp: "浅草", color: "#f5d48c", lat: 35.7135, lng: 139.7955,
     tagline: "Old Edo, red lanterns and Tokyo's oldest temple",
     about: "Asakusa holds on to the old-town (shitamachi) atmosphere of Edo-era Tokyo. Walk through the giant red lantern of Kaminarimon, snack your way down Nakamise-dori to Senso-ji, then cross the Sumida River for views of Tokyo Skytree. Rickshaw drivers, kimono rentals and kitchen-tool shops on Kappabashi complete the picture.",
     tags: ["Temples", "Traditional", "Street snacks", "Kimono"],
-    station: { name: "Asakusa Station", lines: "Ginza line · Toei Asakusa line · Tobu Skytree line" },
+    station: { name: "Asakusa Station", lines: "Ginza line · Toei Asakusa line (direct to Narita & Haneda) · Tobu Skytree line" },
     hotel: { name: "The Gate Hotel Kaminarimon by Hulic", note: "Calm boutique hotel next to Kaminarimon gate, with a rooftop terrace facing Skytree.", price: "$$$" },
     attractions: [
       { name: "Senso-ji Temple", ico: "🏯", desc: "Tokyo's oldest temple (628 AD). Come at dawn or after dark to see it without the crowds." },
       { name: "Nakamise-dori", ico: "🍡", desc: "Shopping street of ningyo-yaki cakes, rice crackers and souvenirs leading to Senso-ji." },
-      { name: "Sumida Park & Tokyo Skytree view", ico: "🗼", desc: "Riverside walk with the best views of Skytree and the golden Asahi building." },
+      { name: "Sumida Park", ico: "🗼", desc: "Riverside walk with the best views of Skytree and the golden Asahi building." },
       { name: "Kappabashi Kitchen Town", ico: "🔪", desc: "A whole street of Japanese knives, ceramics and plastic food samples." }
     ],
-    eat: "Tempura at Daikokuya, and melon pan from Kagetsudo while you walk",
+    shops: [
+      { name: "Kappabashi Dougu Street", ico: "🔪", desc: "Hand-forged knives, lacquerware and realistic plastic food." },
+      { name: "Fujiya Tenugui Asakusa", ico: "🧣", desc: "Hand-dyed tenugui cotton towels with Edo-era patterns." },
+      { name: "Kimono rental in Asakusa", ico: "👘", desc: "Rent a kimono or yukata for the day and walk to Senso-ji." }
+    ],
+    food: [
+      { name: "Hoppy Street Asakusa", ico: "🍢", desc: "Outdoor izakaya row famous for beef-tendon stew (gyu-suji nikomi)." },
+      { name: "Nakamise-dori", ico: "🍘", desc: "Kibi-dango, fresh senbei and ningyo-yaki cakes." },
+      { name: "Asakusa Kagetsudo", ico: "🍈", desc: "Giant, crispy melon pan baked fresh all day." }
+    ],
+    veg: "Many Nakamise snacks are vegetarian, like kibi-dango, senbei and sweet potato treats (just check for egg). The area also has several vegan ramen and shojin-style restaurants. Use the vegan search link below.",
+    festivals: [
+      { name: "Sanja Matsuri", months: [5], when: "Third weekend of May", desc: "One of Tokyo's wildest festivals: around 100 portable shrines are carried through the streets." },
+      { name: "Hozuki-ichi (Ground-cherry Market)", months: [7], when: "July 9–10", desc: "Senso-ji fills with lantern-orange hozuki plants and wind chimes." },
+      { name: "Sumida River Fireworks", months: [7], when: "Last Saturday of July", desc: "About 20,000 fireworks over the river, one of Tokyo's biggest summer nights." },
+      { name: "Hagoita-ichi (Battledore Fair)", months: [12], when: "December 17–19", desc: "Stalls selling ornate decorated paddles at Senso-ji." }
+    ],
     slot: { morning: 3, afternoon: 2, evening: 1 }
   },
   akihabara: {
-    name: "Akihabara", jp: "秋葉原", color: "#9fe0c8", lat: 35.6984, lng: 139.7731,
+    name: "Akihabara", jp: "秋葉原", color: "#9fe0c8", lat: 35.7010, lng: 139.7715,
     tagline: "Anime, retro games and electric-town energy",
     about: "Akihabara, or Akiba, is the center of Japan's otaku culture. Its streets are packed with multi-floor anime shops, retro game stores, gachapon capsule-toy halls and maid cafés. Under the train tracks, 2k540 Aki-Oka Artisan sells handmade crafts, and the 1,300-year-old Kanda Myojin shrine even sells anime-themed charms.",
     tags: ["Anime", "Gaming", "Electronics", "Pop culture"],
@@ -448,141 +501,394 @@ const HOODS = {
     attractions: [
       { name: "Akihabara Electric Town", ico: "🎮", desc: "Main Chuo-dori strip of anime megastores, arcades and electronics shops." },
       { name: "Super Potato Akihabara", ico: "👾", desc: "Retro game heaven, with Famicom cartridges and a vintage arcade floor." },
-      { name: "Mandarake Complex", ico: "📚", desc: "Eight floors of manga, figures and collectibles." },
-      { name: "Kanda Myojin Shrine", ico: "⛩️", desc: "Historic shrine with anime-themed charms, a 5-minute walk from Akiba." }
+      { name: "Kanda Myojin Shrine", ico: "⛩️", desc: "Historic shrine with anime-themed charms, a 5-minute walk from Akiba." },
+      { name: "2k540 Aki-Oka Artisan", ico: "🧵", desc: "Craft workshops and studios under the train tracks." }
     ],
-    eat: "Curry at Go Go Curry, or the full maid-café experience if you're curious",
+    shops: [
+      { name: "Mandarake Complex", ico: "📚", desc: "Eight floors of manga, figures and collectibles." },
+      { name: "Akihabara Radio Kaikan", ico: "🤖", desc: "Ten floors of figures, trading cards and hobby shops." },
+      { name: "Yodobashi Camera Multimedia Akiba", ico: "📷", desc: "Gigantic electronics store with tax-free shopping." }
+    ],
+    food: [
+      { name: "Go Go Curry Akihabara", ico: "🍛", desc: "Thick Kanazawa-style curry with katsu." },
+      { name: "Kanda Matsuya", ico: "🥢", desc: "Historic soba restaurant (since 1884) in nearby Kanda." },
+      { name: "Maidreamin Akihabara", ico: "🎀", desc: "The classic maid-café experience: songs, latte art and \"moe moe kyun\"." }
+    ],
+    veg: "Vegan Bistro Jangara, the plant-based branch of a well-known ramen chain, makes vegan tonkotsu-style ramen and gyoza right in Akihabara.",
+    festivals: [
+      { name: "Kanda Matsuri", months: [5], when: "Mid-May (main parade in odd-numbered years)", desc: "One of Tokyo's three great festivals. Processions of floats and mikoshi pass right through Akiba." },
+      { name: "Hatsumode at Kanda Myojin", months: [1], when: "January 1–7", desc: "A very popular New Year shrine visit, especially among IT workers and anime fans." }
+    ],
     slot: { morning: 1, afternoon: 3, evening: 2 }
   },
   shimokitazawa: {
-    name: "Shimokitazawa", jp: "下北沢", color: "#f5b0e0", lat: 35.6616, lng: 139.6680,
+    name: "Shimokitazawa", jp: "下北沢", color: "#f0a8e0", lat: 35.6612, lng: 139.6680,
     tagline: "Vintage clothes, indie music and tiny theaters",
     about: "Shimokitazawa, or Shimokita, is Tokyo's bohemian village. Its winding lanes are full of thrift stores, record shops, small live houses and fringe theaters. Since the railway went underground, its old tracks have become new spaces like reload and BONUS TRACK, low-key complexes of independent shops, cafés and bookstores.",
     tags: ["Vintage", "Live music", "Indie cafés", "Local vibe"],
     station: { name: "Shimo-Kitazawa Station", lines: "Odakyu line · Keio Inokashira line (7 min from Shibuya)" },
     hotel: { name: "MUSTARD HOTEL Shimokitazawa", note: "Laid-back design hotel built on the old railway line, steps from reload's shops.", price: "$$" },
     attractions: [
-      { name: "Shimokitazawa vintage shops", ico: "👕", desc: "Dozens of thrift and vintage stores, from ¥500 bins to rare designer pieces." },
       { name: "BONUS TRACK", ico: "📖", desc: "Small village of indie shops, a bookstore and cafés along the old train line." },
       { name: "reload Shimokitazawa", ico: "☕", desc: "Low-rise complex of curated shops and specialty coffee." },
-      { name: "Honda Theater", ico: "🎭", desc: "Heart of Shimokita's famous small-theater scene." }
+      { name: "Honda Theater", ico: "🎭", desc: "Heart of Shimokita's famous small-theater scene." },
+      { name: "Shimokitazawa SHELTER", ico: "🎸", desc: "Legendary basement live house where indie and rock bands play almost every night." }
     ],
-    eat: "Soup curry at Rojiura Curry SAMURAI, then coffee from one of the specialty roasters",
+    shops: [
+      { name: "New York Joe Exchange", ico: "👕", desc: "Vintage trade-in store in a former public bathhouse." },
+      { name: "Flamingo Shimokitazawa", ico: "🦩", desc: "Colorful American vintage; look for the neon flamingo sign." },
+      { name: "Village Vanguard Shimokitazawa", ico: "🎁", desc: "Chaotic \"exciting bookstore\" of quirky goods and comics." }
+    ],
+    food: [
+      { name: "Rojiura Curry SAMURAI Shimokitazawa", ico: "🍛", desc: "Hokkaido-style soup curry loaded with vegetables." },
+      { name: "Shimokitazawa Ichibangai", ico: "🍢", desc: "Old shopping street of small izakaya and snack bars." },
+      { name: "Bear Pond Espresso", ico: "☕", desc: "Cult espresso bar. Get there early, because it closes when the beans run out." }
+    ],
+    veg: "Shimokita is one of Tokyo's best areas for plant-based food. Rojiura Curry SAMURAI has a vegan soup curry, there are vegan bakeries nearby, and the BONUS TRACK cafés serve many veggie options.",
+    festivals: [
+      { name: "Shimokitazawa Tengu Matsuri", months: [2], when: "Around Setsubun (early February)", desc: "A parade of long-nosed tengu goblins, with beans thrown to chase away bad luck." },
+      { name: "Shimokitazawa Theater Festival", months: [2], when: "February", desc: "A month of fringe and small-stage performances across the area." },
+      { name: "Shimokitazawa Curry Festival", months: [10], when: "October", desc: "Over 100 shops serve special curries, making it the area's biggest food event." }
+    ],
     slot: { morning: 1, afternoon: 3, evening: 3 }
   },
   kichijoji: {
-    name: "Kichijoji", jp: "吉祥寺", color: "#bfe6a8", lat: 35.7030, lng: 139.5797,
+    name: "Kichijoji", jp: "吉祥寺", color: "#bfe6a8", lat: 35.7020, lng: 139.5780,
     tagline: "Park life, Ghibli magic and a relaxed local pace",
     about: "Kichijoji regularly ranks as the place Tokyoites most want to live. Inokashira Park has swan boats on its pond and weekend street performers, and the Ghibli Museum sits at its edge. Back toward the station, Harmonica Yokocho's narrow lanes mix tiny bars with old-school snack shops.",
-    tags: ["Parks", "Ghibli", "Local life", "Relaxed"],
+    tags: ["Parks", "Ghibli", "Local life", "Family-friendly"],
     station: { name: "Kichijoji Station", lines: "JR Chuo & Sobu lines (about 15 min rapid to Shinjuku) · Keio Inokashira line" },
     hotel: { name: "Kichijoji Tokyu REI Hotel", note: "Comfortable, good-value hotel a few minutes from the station and the park.", price: "$$" },
     attractions: [
       { name: "Inokashira Park", ico: "🦢", desc: "Rent a swan boat, wander the pond and catch weekend buskers." },
-      { name: "Ghibli Museum", ico: "🌳", desc: "Hayao Miyazaki's whimsical museum. Tickets must be booked weeks ahead." },
+      { name: "Ghibli Museum, Mitaka", ico: "🌳", desc: "Hayao Miyazaki's whimsical museum. Tickets must be booked weeks ahead." },
       { name: "Harmonica Yokocho", ico: "🏮", desc: "Postwar maze of tiny bars and eateries near the station." },
-      { name: "Sun Road Shopping Street", ico: "🛍️", desc: "Covered shopping arcade full of local shops and snacks." }
+      { name: "Inokashira Benzaiten", ico: "⛩️", desc: "Small vermilion shrine on the pond, dedicated to the goddess of music and arts." }
     ],
-    eat: "Menchi-katsu (fried meat cutlet) from Satou. Expect a queue, but it's worth it",
+    shops: [
+      { name: "Sun Road Shopping Street", ico: "🛍️", desc: "Covered arcade full of local shops and snacks." },
+      { name: "Nakamichi-dori Kichijoji", ico: "🏺", desc: "Quiet street of zakka (lifestyle) shops, ceramics and boutiques." },
+      { name: "Kichijoji Loft", ico: "🎨", desc: "Japanese stationery, beauty and design goods." }
+    ],
+    food: [
+      { name: "Satou Kichijoji", ico: "🥩", desc: "Famous menchi-katsu (fried minced-beef cutlet). There's always a queue." },
+      { name: "Harmonica Yokocho", ico: "🍶", desc: "Yakitori, gyoza and tiny standing bars." },
+      { name: "Iseya Kichijoji", ico: "🍢", desc: "Old-school yakitori house near the park since 1928." }
+    ],
+    veg: "Kichijoji has a relaxed organic-café culture, with several macrobiotic and vegan-friendly cafés near Inokashira Park and along Nakamichi-dori.",
+    festivals: [
+      { name: "Cherry blossoms at Inokashira Park", months: [3, 4], when: "Late March – early April", desc: "Pink trees hanging over the pond, with boats gliding underneath. A classic." },
+      { name: "Kichijoji Music Festival", months: [5], when: "May", desc: "Free live music on stages and in venues around the city." },
+      { name: "Kichijoji Anime Wonderland", months: [10, 11], when: "October – November", desc: "Anime events, character parades and stamp rallies." }
+    ],
     slot: { morning: 3, afternoon: 3, evening: 1 }
   },
   nakameguro: {
-    name: "Nakameguro", jp: "中目黒", color: "#b8c8f5", lat: 35.6440, lng: 139.6987,
+    name: "Nakameguro", jp: "中目黒", color: "#b8c8f5", lat: 35.6420, lng: 139.6985,
     tagline: "Canal-side cafés, boutiques and cherry blossoms",
-    about: "Nakameguro is stylish without trying too hard. Boutiques, galleries and coffee bars line the Meguro River canal, which turns into a tunnel of pink lanterns in cherry blossom season. Nearby is the huge Starbucks Reserve Roastery, and Daikanyama's T-Site bookstore is a short walk up the hill.",
+    about: "Nakameguro is stylish without trying too hard. Boutiques, galleries and coffee bars line the Meguro River canal, which turns into a tunnel of pink lanterns in cherry blossom season. Nearby is the huge Starbucks Reserve Roastery, and under the train tracks, Nakameguro Koukashita is full of restaurants and bars.",
     tags: ["Cafés", "Boutiques", "Riverside", "Date night"],
     station: { name: "Naka-Meguro Station", lines: "Hibiya line · Tokyu Toyoko line (2 stops from Shibuya)" },
     hotel: { name: "Hotel Gajoen Tokyo", note: "Ornate, art-filled hotel in nearby Meguro, about 15 minutes away. Nakameguro itself has very few hotels.", price: "$$$$" },
     attractions: [
       { name: "Meguro River", ico: "🌸", desc: "Canal walk lined with cherry trees, cafés and small shops." },
       { name: "Starbucks Reserve Roastery Tokyo", ico: "☕", desc: "Four-story roastery designed by Kengo Kuma, with a Teavana floor." },
-      { name: "Daikanyama T-Site", ico: "📚", desc: "Beautiful Tsutaya bookstore complex a 10-minute walk away." },
-      { name: "Nakameguro Koukashita", ico: "🍷", desc: "Restaurants and bars tucked under the train tracks." }
+      { name: "Nakameguro Koukashita", ico: "🍷", desc: "Restaurants and bars tucked under the train tracks." },
+      { name: "Meguro Sky Garden", ico: "🌿", desc: "Hidden loop-shaped rooftop garden built over a highway junction." }
     ],
-    eat: "Brunch by the canal, then tacos or natural wine at Koukashita in the evening",
+    shops: [
+      { name: "COW BOOKS Nakameguro", ico: "📚", desc: "Tiny, beautifully curated vintage bookshop by the canal." },
+      { name: "Meguro River boutiques", ico: "👗", desc: "Japanese designers, ceramics and select shops along the water." },
+      { name: "Tsutaya Books Nakameguro", ico: "📖", desc: "Bookstore and café sharing a space with Starbucks under the tracks." }
+    ],
+    food: [
+      { name: "Nakameguro Koukashita", ico: "🍷", desc: "Natural wine, tacos and izakaya under the railway." },
+      { name: "Onibus Coffee Nakameguro", ico: "☕", desc: "Specialty coffee in a little wooden house by the tracks." },
+      { name: "Tonki Meguro", ico: "🐷", desc: "Legendary tonkatsu counter (since 1939), one stop away in Meguro." }
+    ],
+    veg: "Brunch cafés along the canal usually have veggie bowls, and nearby Ebisu has AFURI's vegan ramen. Use the vegan search link below for the latest spots.",
+    festivals: [
+      { name: "Nakameguro Sakura Festival", months: [3, 4], when: "Late March – early April", desc: "About 800 cherry trees over the canal, lit by pink lanterns at night." },
+      { name: "Meguro Sanma Festival", months: [9], when: "September", desc: "Thousands of free grilled saury fish are handed out around Meguro Station." }
+    ],
     slot: { morning: 2, afternoon: 3, evening: 3 }
   },
   yanaka: {
-    name: "Yanaka", jp: "谷中", color: "#e8c4a0", lat: 35.7266, lng: 139.7670,
+    name: "Yanaka", jp: "谷中", color: "#e8c4a0", lat: 35.7255, lng: 139.7665,
     tagline: "Old wooden houses, temples and cats",
     about: "Yanaka came through the earthquake and wartime bombings almost untouched, so it still feels like early-20th-century Tokyo. Locals call it Yanesen, short for Yanaka, Nezu and Sendagi. Wooden houses, around 70 small temples, craft shops and resident cats line its quiet streets. Watch the sunset from the Yuyake Dandan steps, then walk down the old-fashioned Yanaka Ginza shopping street.",
     tags: ["Old Tokyo", "Temples", "Crafts", "Quiet"],
-    station: { name: "Nippori Station", lines: "JR Yamanote & Keihin-Tohoku lines · Keisei Skyliner (direct to Narita) · Sendagi Station: Chiyoda line" },
+    station: { name: "Nippori Station", lines: "JR Yamanote & Keihin-Tohoku lines · Keisei Skyliner (36 min direct to Narita) · Sendagi Station: Chiyoda line" },
     hotel: { name: "hanare (Yanaka)", note: "A whole neighborhood as a hotel: rooms in an old wooden house, reception at HAGISO café, baths at the local sento.", price: "$$" },
     attractions: [
       { name: "Yanaka Ginza", ico: "🐈", desc: "Nostalgic shopping street of croquettes, crafts and cat-themed treats." },
-      { name: "Yanaka Cemetery", ico: "🍃", desc: "Peaceful, tree-lined cemetery with famous graves and stray cats." },
       { name: "Nezu Shrine", ico: "⛩️", desc: "Tunnel of red torii gates and a stunning azalea garden in spring." },
+      { name: "Yanaka Cemetery", ico: "🍃", desc: "Peaceful, tree-lined cemetery with famous graves and stray cats." },
       { name: "SCAI The Bathhouse", ico: "🖼️", desc: "Contemporary art gallery inside a 200-year-old public bathhouse." }
     ],
-    eat: "Croquettes and menchi-katsu along Yanaka Ginza, and kakigori (shaved ice) at Himitsudo",
+    shops: [
+      { name: "Isetatsu Yanaka", ico: "🎴", desc: "Woodblock-printed chiyogami paper, made by the same family since 1864." },
+      { name: "Yanaka Matsunoya", ico: "🧺", desc: "Handmade brooms, baskets and household tools." },
+      { name: "Yanaka Ginza", ico: "🐾", desc: "Small shops of cat goods, crafts and local sweets." }
+    ],
+    food: [
+      { name: "Yanaka Ginza", ico: "🥔", desc: "Walk-and-eat croquettes, menchi-katsu and senbei." },
+      { name: "Kamachiku Nezu", ico: "🍜", desc: "Handmade udon in a 100-year-old warehouse with a garden." },
+      { name: "Himitsudo Yanaka", ico: "🍧", desc: "Fluffy kakigori shaved ice made from natural ice." }
+    ],
+    veg: "Kamachiku's cold udon can be ordered vegetarian, and kakigori is a sweet veggie treat. Temple-town tofu shops and onigiri stands are easy options too.",
+    festivals: [
+      { name: "Bunkyo Azalea Festival at Nezu Shrine", months: [4, 5], when: "Early April – early May", desc: "Around 3,000 azaleas of 100 varieties bloom on the shrine hillside." },
+      { name: "Nezu Shrine Grand Festival", months: [9], when: "September", desc: "Portable shrines and festival stalls fill the old streets." },
+      { name: "Hanami in Yanaka Cemetery", months: [3, 4], when: "Late March – early April", desc: "A peaceful tunnel of cherry blossoms along Sakura-dori." }
+    ],
     slot: { morning: 3, afternoon: 3, evening: 1 }
+  },
+  koenji: {
+    name: "Koenji", jp: "高円寺", color: "#ffb3a1", lat: 35.7050, lng: 139.6497, isNew: true,
+    tagline: "Punk, thrift and Tokyo's coolest local scene",
+    about: "Koenji is Shimokita's scruffier cousin, a few stops west of Shinjuku. It's full of hundreds of vintage shops, live houses, tiny izakaya under the tracks and a strong DIY spirit. Every August it hosts one of Japan's biggest Awa Odori dance festivals. It also has Japan's only shrine dedicated to the weather.",
+    tags: ["Vintage", "Punk & live music", "Cheap eats", "Local"],
+    station: { name: "Koenji Station", lines: "JR Chuo & Sobu lines (about 6 min to Shinjuku) · Shin-Koenji: Marunouchi line" },
+    hotel: { name: "BnA Hotel Koenji", note: "Small art hotel where every room was designed by a local artist, with a bar for meeting locals.", price: "$$" },
+    attractions: [
+      { name: "Koenji Hikawa Shrine", ico: "⛅", desc: "Home to Kisho Jinja, Japan's only shrine dedicated to the weather. Pray for sunshine." },
+      { name: "Koenji Look Shopping Street", ico: "👕", desc: "Long street of vintage, punk and secondhand clothing stores." },
+      { name: "Za-Koenji Public Theatre", ico: "🎭", desc: "Striking tent-shaped theater by architect Toyo Ito." },
+      { name: "Koenji High", ico: "🎸", desc: "Live house for indie, rock and experimental gigs." }
+    ],
+    shops: [
+      { name: "Koenji Look Shopping Street", ico: "👕", desc: "Dozens of vintage and secondhand stores." },
+      { name: "Kita-Kore Building", ico: "🧷", desc: "Wild avant-garde vintage and designer fashion in a ramshackle building." },
+      { name: "Koenji PAL Shopping Street", ico: "🛍️", desc: "Covered arcade with secondhand shops, records and cheap eats." }
+    ],
+    food: [
+      { name: "Koenji Gado-shita", ico: "🍻", desc: "Izakaya and standing bars along the elevated tracks." },
+      { name: "Koenji Junjo Shopping Street", ico: "🍢", desc: "Long, nostalgic street of family-run eateries." }
+    ],
+    veg: "Koenji has one of Tokyo's most relaxed vegan scenes, with several vegan cafés, falafel spots and Indian or Nepali curry houses that offer veggie sets.",
+    festivals: [
+      { name: "Tokyo Koenji Awa Odori", months: [8], when: "Last weekend of August", desc: "About 10,000 dancers and a million spectators. One of the best summer festivals in Tokyo." },
+      { name: "Koenji Fes", months: [10], when: "Late October", desc: "Flea markets, live music and street performances all over town." }
+    ],
+    slot: { morning: 1, afternoon: 3, evening: 3 }
+  },
+  kagurazaka: {
+    name: "Kagurazaka", jp: "神楽坂", color: "#d9b8e8", lat: 35.7015, lng: 139.7370, isNew: true,
+    tagline: "Cobblestone alleys, geisha history and a French touch",
+    about: "Kagurazaka is a sloping street of old geisha houses, hidden ryotei and cobblestone alleys like Hyogo Yokocho. A French school and institute nearby gave it a 'Little Paris' feel, with crêperies and bistros next to kaiseki restaurants. You can sometimes still hear shamisen music coming from behind closed doors.",
+    tags: ["Hidden alleys", "Geisha history", "French bistros", "Quiet"],
+    station: { name: "Kagurazaka Station", lines: "Tozai line · Iidabashi Station nearby: JR Chuo/Sobu, Yurakucho, Namboku, Oedo lines" },
+    hotel: { name: "Agnes Hotel Tokyo", note: "Small, elegant boutique hotel on a quiet Kagurazaka side street.", price: "$$$" },
+    attractions: [
+      { name: "Hyogo Yokocho", ico: "🏮", desc: "Kagurazaka's oldest cobblestone alley, lined with black-walled ryotei." },
+      { name: "Akagi Shrine", ico: "⛩️", desc: "Glass-and-wood shrine redesigned by architect Kengo Kuma." },
+      { name: "Zenkoku-ji (Bishamonten)", ico: "🛕", desc: "Vermilion temple at the heart of Kagurazaka-dori." },
+      { name: "Canal Café", ico: "🚣", desc: "Waterside terrace café on the old Edo castle moat, with rowing boats." }
+    ],
+    shops: [
+      { name: "la kagu", ico: "🪑", desc: "Lifestyle store in a renovated warehouse designed by Kengo Kuma." },
+      { name: "Kagurazaka-dori shops", ico: "🎐", desc: "Japanese sweets, geta sandals and traditional crafts." },
+      { name: "Kagurazaka Saryo", ico: "🍵", desc: "Japanese tea house selling matcha sweets and tea." }
+    ],
+    food: [
+      { name: "Kagurazaka bistros", ico: "🥖", desc: "French crêperies and bistros are a local specialty." },
+      { name: "Kagurazaka Isuzu", ico: "🍡", desc: "Traditional wagashi sweet shop since the Edo era." },
+      { name: "Kagurazaka kaiseki", ico: "🍱", desc: "Multi-course kaiseki dining in old geisha-district houses." }
+    ],
+    veg: "Kaiseki and shojin-style restaurants can often do vegetarian courses if you book ahead. The French crêperies make vegetarian galettes.",
+    festivals: [
+      { name: "Kagurazaka Matsuri", months: [7], when: "Late July", desc: "Two nights: a hozuki (ground-cherry) market, then hundreds of Awa Odori dancers on the slope." }
+    ],
+    slot: { morning: 2, afternoon: 3, evening: 3 }
+  },
+  ebisu: {
+    name: "Ebisu & Daikanyama", jp: "恵比寿・代官山", color: "#a6e3e9", lat: 35.6475, lng: 139.7090, isNew: true,
+    tagline: "Grown-up Shibuya: beer, books and design",
+    about: "Ebisu, named after a beer brand, is the relaxed grown-up neighbor of Shibuya. It has excellent izakaya, the lively Ebisu Yokocho food alley and Yebisu Garden Place. A short walk west is Daikanyama, Tokyo's answer to Brooklyn, with low-rise boutiques, galleries and the beautiful T-Site bookstore.",
+    tags: ["Food alleys", "Design", "Bookstores", "Date night"],
+    station: { name: "Ebisu Station", lines: "JR Yamanote & Saikyo lines · Hibiya line · Daikanyama Station: Tokyu Toyoko line" },
+    hotel: { name: "The Westin Tokyo", note: "Classic luxury hotel inside Yebisu Garden Place.", price: "$$$$" },
+    attractions: [
+      { name: "Daikanyama T-Site", ico: "📚", desc: "Celebrated Tsutaya bookstore complex, open late, with a lounge café." },
+      { name: "Yebisu Garden Place", ico: "🏛️", desc: "European-style plaza with restaurants and a photography museum." },
+      { name: "Tokyo Photographic Art Museum", ico: "📷", desc: "Japan's main photography museum, inside Yebisu Garden Place." },
+      { name: "Ebisu Yokocho", ico: "🏮", desc: "Packed, lively food alley of tiny counters and shared tables." }
+    ],
+    shops: [
+      { name: "LOG ROAD DAIKANYAMA", ico: "🌿", desc: "Green walkway of shops built on old railway tracks." },
+      { name: "Hillside Terrace Daikanyama", ico: "🏡", desc: "Fumihiko Maki's iconic low-rise complex of boutiques and galleries." },
+      { name: "Okura Daikanyama", ico: "👖", desc: "Indigo-dyed Japanese clothing in a wooden shop." }
+    ],
+    food: [
+      { name: "Ebisu Yokocho", ico: "🍢", desc: "Yakitori, oden and seafood in a lively covered alley." },
+      { name: "AFURI Ebisu", ico: "🍜", desc: "The original yuzu-ramen shop that started a trend." }
+    ],
+    veg: "The original AFURI in Ebisu has a vegan ramen, and Daikanyama's cafés usually offer veggie bowls and plant-based sweets.",
+    festivals: [
+      { name: "Ebisu Bon Odori", months: [7, 8], when: "Late July – early August", desc: "A packed, joyful bon dance at the station plaza, one of the most fun in Tokyo." },
+      { name: "Yebisu Garden Place Christmas", months: [11, 12], when: "November – December", desc: "A giant Baccarat crystal chandelier and a Christmas market." }
+    ],
+    slot: { morning: 2, afternoon: 3, evening: 3 }
+  },
+  azabudai: {
+    name: "Azabudai & Roppongi", jp: "麻布台・六本木", color: "#f6c1e9", lat: 35.6620, lng: 139.7350, isNew: true,
+    tagline: "teamLab Borderless, Tokyo Tower and museums",
+    about: "This is Tokyo's art and skyline district. Azabudai Hills, opened in 2023, has gardens around a super-tall tower and is now home to teamLab Borderless, the famous digital art museum with no map and no fixed path. Tokyo Tower is a short walk away, and Roppongi Hills adds the Mori Art Museum and an observation deck.",
+    tags: ["Digital art", "Museums", "Skyline", "Luxury"],
+    station: { name: "Kamiyacho Station", lines: "Hibiya line (direct to Azabudai Hills) · Roppongi-itchome: Namboku line · Roppongi: Hibiya & Oedo lines" },
+    hotel: { name: "Janu Tokyo", note: "Luxury wellness hotel inside Azabudai Hills, steps from teamLab Borderless. For something more affordable, look around Roppongi.", price: "$$$$" },
+    attractions: [
+      { name: "teamLab Borderless", ico: "🌈", desc: "Immersive digital art that flows between rooms. Book timed tickets ahead and allow at least 2–3 hours." },
+      { name: "Tokyo Tower", ico: "🗼", desc: "The 1958 orange icon, with views from the Main Deck and the Top Deck." },
+      { name: "Mori Art Museum", ico: "🖼️", desc: "Top contemporary art museum on the 53rd floor of Roppongi Hills, with the Tokyo City View deck." },
+      { name: "Azabudai Hills Central Square", ico: "🌳", desc: "Green terraced gardens between the towers of the new hills." }
+    ],
+    shops: [
+      { name: "Azabudai Hills", ico: "✨", desc: "New luxury and design shopping, plus a gourmet market." },
+      { name: "Tokyo Midtown", ico: "🏬", desc: "Japanese design stores and the 21_21 DESIGN SIGHT gallery." },
+      { name: "Roppongi Hills", ico: "🛍️", desc: "Fashion, museum shop and the giant Maman spider sculpture." }
+    ],
+    food: [
+      { name: "Azabudai Hills Market", ico: "🧺", desc: "Gourmet food market with fishmongers, bakeries and deli counters." },
+      { name: "Naniwaya Sohonten", ico: "🐟", desc: "The original taiyaki shop (since 1909) in Azabu-Juban." },
+      { name: "Azabu-Juban Shopping Street", ico: "🍡", desc: "Old shotengai of rice crackers, soba and sweet shops." }
+    ],
+    veg: "Roppongi has many international, vegan-friendly restaurants, and the cafés at Azabudai Hills offer plant-based options. Taiyaki is filled with red bean paste.",
+    festivals: [
+      { name: "Azabu-Juban Noryo Matsuri", months: [8], when: "Late August", desc: "Summer street festival with food stalls from around the world, run by nearby embassies." },
+      { name: "Roppongi & Azabudai Hills winter illuminations", months: [11, 12], when: "November – December", desc: "Keyakizaka's blue-and-white lights, a Christmas market, and Tokyo Tower glowing behind." }
+    ],
+    slot: { morning: 2, afternoon: 3, evening: 3 }
+  },
+  toyosu: {
+    name: "Toyosu", jp: "豊洲", color: "#f9c88b", lat: 35.6495, lng: 139.7905, isNew: true,
+    tagline: "teamLab Planets, the fish market and bay views",
+    about: "Toyosu is Tokyo's modern waterfront. teamLab Planets is here: you walk barefoot through water and floating flower gardens. Toyosu Market replaced Tsukiji's inner market, and you can watch the dawn tuna auction from a viewing deck and then eat sushi at the source. The Senkyaku Banrai food village next door serves seafood with bay views.",
+    tags: ["Digital art", "Seafood", "Waterfront", "Family-friendly"],
+    station: { name: "Shin-Toyosu Station", lines: "Yurikamome line · Toyosu Station: Yurakucho line" },
+    hotel: { name: "La Vista Tokyo Bay", note: "Hot-spring hotel with a rooftop open-air bath overlooking the bay, right next to Senkyaku Banrai.", price: "$$$" },
+    attractions: [
+      { name: "teamLab Planets TOKYO", ico: "💧", desc: "Barefoot immersive art: wade through water and walk among floating orchids. Book ahead." },
+      { name: "Toyosu Market", ico: "🐟", desc: "Watch the tuna auction from the observation deck (early morning, around 5:30–6:30)." },
+      { name: "Toyosu Senkyaku Banrai", ico: "🏮", desc: "Edo-style food village with an onsen, next to the market." },
+      { name: "Toyosu Gururi Park", ico: "🌉", desc: "Waterfront path with views of Rainbow Bridge and the city lights." }
+    ],
+    shops: [
+      { name: "Urban Dock LaLaport Toyosu", ico: "🛍️", desc: "Big waterfront mall with Japanese brands and a bay deck." },
+      { name: "Toyosu Market shops", ico: "🔪", desc: "Kitchen knives and professional cooking tools." },
+      { name: "Toyosu Senkyaku Banrai shops", ico: "🎁", desc: "Food souvenirs and seafood snacks." }
+    ],
+    food: [
+      { name: "Sushi Dai Toyosu", ico: "🍣", desc: "Famous breakfast omakase inside the market. The queue starts before dawn." },
+      { name: "Toyosu Senkyaku Banrai food court", ico: "🦐", desc: "Kaisendon (seafood bowls) and grilled seafood with a view." },
+      { name: "Tsukishima Monja Street", ico: "🍳", desc: "Two stops away: the home of monjayaki, Tokyo's gooey griddle dish." }
+    ],
+    veg: "Vegan Ramen UZU Tokyo, right next to teamLab Planets, serves plant-based ramen designed around the art experience. Monjayaki can be made with vegetables only.",
+    festivals: [
+      { name: "Fukagawa Hachiman Matsuri", months: [8], when: "Mid-August (biggest in years with the main festival)", desc: "Nearby at Tomioka Hachimangu: spectators throw water on the mikoshi carriers. Bring a change of clothes." },
+      { name: "Toyosu winter illuminations", months: [12], when: "December", desc: "Light-ups along the waterfront and at the mall." }
+    ],
+    slot: { morning: 3, afternoon: 2, evening: 3 }
   }
 };
 
 /* =========================================================
-   QUESTIONNAIRE
-   Each option gives points to the neighborhoods that suit it.
+   QUESTIONNAIRE (each option points strongly at 1–3 areas)
    ========================================================= */
 const QUESTIONS = [
   {
-    q: "It's 9am on your first morning. What do you want to wake up to?",
-    sub: "This sets the mood for your whole day.",
+    q: "It's 8am on your first morning. Where are you?",
+    sub: "Pick the morning that sounds most like you.",
     options: [
-      { e: "⛩️", t: "Incense and temple bells", d: "Old shrines and quiet lanes before the crowds", p: { asakusa: 3, yanaka: 3, harajuku: 1 } },
-      { e: "🌳", t: "A park and good coffee", d: "Green space, joggers and a slow start", p: { kichijoji: 3, nakameguro: 2, harajuku: 1, shimokitazawa: 1 } },
-      { e: "🏙️", t: "Skyscrapers and city buzz", d: "Crowds, screens and a lot of energy", p: { shinjuku: 3, shibuya: 3, akihabara: 1 } },
-      { e: "🛍️", t: "Elegant shops opening up", d: "Window shopping along a wide boulevard", p: { ginza: 3, harajuku: 2 } }
+      { e: "⛩️", t: "Walking into a temple at dawn", d: "Incense, bells and empty old streets", p: { asakusa: 3, yanaka: 2 } },
+      { e: "🐟", t: "Watching the tuna auction", d: "Then sushi for breakfast at the market", p: { toyosu: 3, ginza: 2 } },
+      { e: "🦢", t: "Rowing a swan boat in a park", d: "Local families, birds, a slow start", p: { kichijoji: 3 } },
+      { e: "☕", t: "Coffee on a canal walk", d: "Indie roasters and boutiques waking up", p: { nakameguro: 3, ebisu: 1, shibuya: 1 } },
+      { e: "🌲", t: "A forest shrine, then fashion", d: "Quiet trees, then a crowded crêpe street", p: { harajuku: 3 } },
+      { e: "🏙️", t: "Looking down from the 45th floor", d: "Skyscrapers and maybe Mt. Fuji", p: { shinjuku: 3, azabudai: 1 } }
     ]
   },
   {
     q: "Where do you want to sleep?",
-    sub: "Your hotel neighborhood matters more than you'd think.",
+    sub: "Your hotel neighborhood shapes every morning and night.",
     options: [
-      { e: "🏨", t: "A luxury hotel with a view", d: "Marble lobbies and city lights", p: { ginza: 3, shinjuku: 1, nakameguro: 2 } },
-      { e: "🎨", t: "A trendy design hotel", d: "Cool lobby bar, local creatives", p: { shibuya: 3, harajuku: 2, shimokitazawa: 2 } },
-      { e: "🏮", t: "A traditional or local guesthouse", d: "Tatami, wooden houses, a neighborhood sento", p: { yanaka: 3, asakusa: 3 } },
-      { e: "💤", t: "Somewhere quiet and residential", d: "Feel like a local, sleep like a baby", p: { kichijoji: 3, yanaka: 1, nakameguro: 1, shimokitazawa: 1 } }
+      { e: "🏢", t: "A luxury tower with a view", d: "Spa, skyline, cocktails", p: { azabudai: 3, ginza: 2, ebisu: 1 } },
+      { e: "♨️", t: "A hot-spring hotel by the water", d: "Rooftop onsen with bay views", p: { toyosu: 3 } },
+      { e: "🏮", t: "Old wooden house or ryokan feel", d: "Tatami, temples, the local sento", p: { yanaka: 3, asakusa: 2 } },
+      { e: "🎨", t: "A small art or design hotel", d: "Creative locals, a cool bar", p: { koenji: 3, shimokitazawa: 2, harajuku: 1 } },
+      { e: "🌙", t: "A quiet, elegant side street", d: "Calm nights, walkable dinners", p: { kagurazaka: 3, nakameguro: 1, kichijoji: 1 } },
+      { e: "🚉", t: "Right at the busiest station", d: "Everything at my door, 24/7", p: { shinjuku: 3, shibuya: 2, akihabara: 1 } }
     ]
   },
   {
-    q: "How do you feel about your nearest subway station?",
+    q: "What do you want from your nearest station?",
     sub: "Tokyo stations range from giant mazes to sleepy local stops.",
     options: [
-      { e: "🚇", t: "Give me a mega-hub", d: "Every line, every direction, even if it's a maze", p: { shinjuku: 3, shibuya: 3, akihabara: 2 } },
-      { e: "🚶", t: "Walk everywhere, few trains", d: "I'd rather explore on foot", p: { ginza: 3, asakusa: 2, yanaka: 2, harajuku: 1 } },
-      { e: "🚃", t: "One good line is enough", d: "A small station with a local feel", p: { shimokitazawa: 3, kichijoji: 3, nakameguro: 2 } },
-      { e: "✈️", t: "Easy airport access", d: "Direct trains to Narita or Haneda", p: { yanaka: 2, asakusa: 2, ginza: 1, shinjuku: 1 } }
+      { e: "🚇", t: "A mega-hub with every line", d: "Go anywhere without changing trains", p: { shinjuku: 3, shibuya: 3 } },
+      { e: "✈️", t: "Direct trains to the airport", d: "Skyliner or a direct subway line, no stress", p: { yanaka: 3, asakusa: 3 } },
+      { e: "🚃", t: "One small line with a local feel", d: "A neighborhood station with a shopping street", p: { shimokitazawa: 3, koenji: 3, kichijoji: 2 } },
+      { e: "🚶", t: "I'd rather walk everywhere", d: "Trains only when I really need them", p: { ginza: 3, kagurazaka: 2, ebisu: 1, nakameguro: 1 } },
+      { e: "🚝", t: "A driverless monorail over the bay", d: "Views of the water on every ride", p: { toyosu: 3 } }
     ]
   },
   {
-    q: "Pick your shopping bag.",
-    sub: "What are you bringing home?",
+    q: "What's in your shopping bag?",
+    sub: "Be honest, you're going to buy something.",
     options: [
-      { e: "👜", t: "A designer piece", d: "Flagship stores and department stores", p: { ginza: 3, harajuku: 1, shibuya: 1 } },
-      { e: "👕", t: "Vintage treasures", d: "Thrift racks, records and one-off finds", p: { shimokitazawa: 3, harajuku: 1, kichijoji: 1 } },
-      { e: "🎮", t: "Anime figures and retro games", d: "Manga, gachapon and Famicom cartridges", p: { akihabara: 3, shinjuku: 1 } },
-      { e: "🏺", t: "Handmade crafts", d: "Ceramics, knives, tenugui towels", p: { yanaka: 3, asakusa: 3, nakameguro: 1 } }
+      { e: "👜", t: "A designer piece", d: "Flagships and department stores", p: { ginza: 3, azabudai: 2 } },
+      { e: "👕", t: "Vintage and thrift finds", d: "¥500 bins and rare one-offs", p: { koenji: 3, shimokitazawa: 3 } },
+      { e: "🎮", t: "Anime figures and retro games", d: "Manga, gachapon, trading cards", p: { akihabara: 3 } },
+      { e: "🌈", t: "Bold street fashion", d: "Kawaii, avant-garde, Japanese labels", p: { harajuku: 3, shibuya: 2 } },
+      { e: "📚", t: "Books, design and lifestyle goods", d: "Beautiful bookstores and select shops", p: { ebisu: 3, nakameguro: 2, kagurazaka: 1 } },
+      { e: "🏺", t: "Traditional crafts", d: "Knives, paper, ceramics, tenugui", p: { yanaka: 3, asakusa: 3 } }
     ]
   },
   {
-    q: "Lunch is calling. What's your move?",
-    sub: "Tokyo has more Michelin stars than any city on Earth, and great food at every price.",
+    q: "Which food scene would you queue for?",
+    sub: "Tokyo has more Michelin stars than any other city, and great food at every price.",
     options: [
-      { e: "🍣", t: "A sushi counter, omakase style", d: "The chef decides, you just enjoy", p: { ginza: 3 } },
-      { e: "🍢", t: "Street snacks while I walk", d: "Skewers, crackers and fried croquettes", p: { asakusa: 3, yanaka: 2, harajuku: 1 } },
-      { e: "🥐", t: "A hip café with a great brunch", d: "Latte art and natural light", p: { nakameguro: 3, shimokitazawa: 2, kichijoji: 2 } },
-      { e: "🍜", t: "Fast, cheap and legendary ramen", d: "Queue, slurp, leave happy", p: { shinjuku: 3, akihabara: 2, shibuya: 1 } }
+      { e: "🍢", t: "Smoky yokocho alleys", d: "Yakitori under the train tracks", p: { shinjuku: 3, ebisu: 2, kichijoji: 2 } },
+      { e: "🍣", t: "Sushi straight from the market", d: "The freshest fish of my life", p: { toyosu: 3, ginza: 3 } },
+      { e: "🍡", t: "Snacks while I walk", d: "Croquettes, senbei, melon pan", p: { yanaka: 3, asakusa: 3 } },
+      { e: "🥖", t: "Bistros on cobblestone alleys", d: "French-Japanese, candle-lit", p: { kagurazaka: 3, nakameguro: 1 } },
+      { e: "🍛", t: "Curry, coffee and cheap eats", d: "Soup curry, cozy izakaya, local hangouts", p: { shimokitazawa: 3, koenji: 3, akihabara: 1 } },
+      { e: "🌶️", t: "International food streets", d: "Koreatown, embassy-area food", p: { shinjuku: 2, azabudai: 3 } }
     ]
   },
   {
-    q: "Which side of Japanese culture pulls you in most?",
-    sub: "Be honest, there's no wrong answer.",
+    q: "Any dietary preferences?",
+    sub: "We'll favor areas where eating is easy for you and show veggie tips.",
+    diet: true,
     options: [
-      { e: "🏯", t: "History and tradition", d: "Edo-era streets, kimono, tea ceremonies", p: { asakusa: 3, yanaka: 3, ginza: 1 } },
-      { e: "🌈", t: "Kawaii and street fashion", d: "Pastel everything, bold outfits", p: { harajuku: 3, shibuya: 2 } },
-      { e: "🤖", t: "Anime, games and otaku culture", d: "Maid cafés, arcades, collectibles", p: { akihabara: 3, shinjuku: 1 } },
-      { e: "🎸", t: "Indie art and music", d: "Small galleries, live houses, zines", p: { shimokitazawa: 3, kichijoji: 2, nakameguro: 1 } }
+      { e: "🍽️", t: "I eat everything", d: "Bring on the wagyu and sashimi", p: {} },
+      { e: "🥗", t: "Vegetarian", d: "No meat or fish, please", p: { shimokitazawa: 2, koenji: 2, harajuku: 1, ebisu: 1, kichijoji: 1 } },
+      { e: "🌱", t: "Vegan", d: "Fully plant-based", p: { shimokitazawa: 2, toyosu: 2, ginza: 2, akihabara: 2, koenji: 1, harajuku: 1, ebisu: 1, shinjuku: 1 } },
+      { e: "🦐", t: "Pescatarian, seafood lover", d: "Fish yes, meat no", p: { toyosu: 3, ginza: 2 } }
+    ]
+  },
+  {
+    q: "Which side of Japan pulls you in most?",
+    sub: "There's no wrong answer.",
+    options: [
+      { e: "🏯", t: "History and tradition", d: "Edo streets, geisha districts, temples", p: { asakusa: 3, yanaka: 2, kagurazaka: 2 } },
+      { e: "🎀", t: "Kawaii and street style", d: "Pastel everything, bold outfits", p: { harajuku: 3, shibuya: 1 } },
+      { e: "🤖", t: "Anime, games and otaku culture", d: "Maid cafés, arcades, collectibles", p: { akihabara: 3 } },
+      { e: "🎸", t: "Indie, punk and DIY", d: "Small venues, zines, thrift culture", p: { koenji: 3, shimokitazawa: 3 } },
+      { e: "🌈", t: "Digital art and museums", d: "teamLab, contemporary art, design", p: { azabudai: 3, toyosu: 3 } },
+      { e: "🌿", t: "Slow living and nature", d: "Parks, rivers, good coffee", p: { kichijoji: 3, nakameguro: 2 } }
+    ]
+  },
+  {
+    q: "Pick ONE experience you'd never skip.",
+    sub: "The thing you'd tell everyone about back home.",
+    options: [
+      { e: "💧", t: "teamLab Planets", d: "Wading barefoot through art in water", p: { toyosu: 3 } },
+      { e: "🌌", t: "teamLab Borderless + Tokyo Tower", d: "Digital art rooms, then the orange tower at night", p: { azabudai: 3 } },
+      { e: "🌳", t: "The Ghibli Museum", d: "Totoro, the Catbus and Miyazaki's sketches", p: { kichijoji: 3 } },
+      { e: "👘", t: "Kimono and a rickshaw ride", d: "Through Senso-ji's old streets", p: { asakusa: 3 } },
+      { e: "🎭", t: "A night of kabuki", d: "Japan's dramatic classical theater", p: { ginza: 3 } },
+      { e: "🎸", t: "A gig in a basement live house", d: "Local bands, cheap beer, real Tokyo", p: { shimokitazawa: 3, koenji: 2 } }
     ]
   },
   {
@@ -590,38 +896,46 @@ const QUESTIONS = [
     sub: "Tokyo can be very busy, or surprisingly calm.",
     options: [
       { e: "🎉", t: "The busier the better", d: "Big crowds give me energy", p: { shibuya: 3, shinjuku: 3, harajuku: 2, akihabara: 2 } },
-      { e: "🙂", t: "Some buzz is fine", d: "Lively, but with room to breathe", p: { ginza: 2, asakusa: 2, shimokitazawa: 2, nakameguro: 1 } },
-      { e: "🍃", t: "I prefer peace and quiet", d: "Calm streets, few tourists", p: { yanaka: 3, kichijoji: 3, nakameguro: 2 } }
+      { e: "🙂", t: "A little buzz is nice", d: "Lively, but with room to breathe", p: { ginza: 2, ebisu: 2, azabudai: 2, toyosu: 2, asakusa: 1, shimokitazawa: 1 } },
+      { e: "🍃", t: "Peace and quiet, please", d: "Calm streets, few tourists", p: { yanaka: 3, kagurazaka: 3, kichijoji: 2, nakameguro: 2, koenji: 1 } }
     ]
   },
   {
     q: "The sun is setting. Where does your night go?",
     sub: "Tokyo after dark is a different city.",
     options: [
-      { e: "🌃", t: "Neon lights and tiny bars", d: "Bar-hopping through alleys until late", p: { shinjuku: 3, shibuya: 1 } },
-      { e: "🪩", t: "Clubs and rooftop views", d: "Sunset from a skydeck, then dancing", p: { shibuya: 3, shinjuku: 1 } },
-      { e: "🎶", t: "Live music in a small venue", d: "Indie bands in a basement live house", p: { shimokitazawa: 3, kichijoji: 1 } },
-      { e: "🕯️", t: "A quiet dinner, early night", d: "Riverside wine or a calm izakaya", p: { nakameguro: 3, yanaka: 2, kichijoji: 2, ginza: 1, asakusa: 1 } }
+      { e: "🌃", t: "Neon and six-seat bars", d: "Bar-hopping through alleys until late", p: { shinjuku: 3, ebisu: 1 } },
+      { e: "🪩", t: "Rooftops and clubs", d: "Sunset from a skydeck, then dancing", p: { shibuya: 3, azabudai: 2 } },
+      { e: "🎶", t: "Live music and cheap beer", d: "Basement gigs, tiny izakaya", p: { koenji: 3, shimokitazawa: 3 } },
+      { e: "🕯️", t: "A candle-lit dinner in an alley", d: "Kaiseki, bistros, natural wine", p: { kagurazaka: 3, nakameguro: 2, ebisu: 1 } },
+      { e: "🌉", t: "City lights over the water", d: "Bay views and a hot-spring soak", p: { toyosu: 3 } },
+      { e: "😴", t: "An early, cozy night", d: "Big day tomorrow!", p: { kichijoji: 2, yanaka: 2, asakusa: 2 } }
     ]
   },
   {
     q: "What's your daily budget (excluding the hotel)?",
     sub: "Tokyo can be surprisingly affordable.",
     options: [
-      { e: "🪙", t: "Budget: under ¥8,000", d: "Konbini snacks, ramen and free sights", p: { akihabara: 2, shimokitazawa: 2, asakusa: 2, yanaka: 2, kichijoji: 1 } },
-      { e: "💴", t: "Comfortable: ¥8,000–20,000", d: "Nice meals and a few paid attractions", p: { shinjuku: 2, shibuya: 2, harajuku: 2, kichijoji: 2, nakameguro: 1 } },
-      { e: "💎", t: "Treat myself: ¥20,000+", d: "Omakase, cocktails, luxury shopping", p: { ginza: 3, nakameguro: 2, shibuya: 1 } }
+      { e: "🪙", t: "Shoestring: under ¥6,000", d: "Konbini, ramen and free sights", p: { koenji: 3, akihabara: 2, yanaka: 2, asakusa: 1, shimokitazawa: 1 } },
+      { e: "💴", t: "Comfortable: ¥6,000–20,000", d: "Nice meals and a few paid attractions", p: { shinjuku: 2, shibuya: 2, harajuku: 2, kichijoji: 2, shimokitazawa: 2, nakameguro: 1, toyosu: 1 } },
+      { e: "💎", t: "Treat myself: ¥20,000+", d: "Omakase, cocktails, luxury shopping", p: { ginza: 3, azabudai: 3, kagurazaka: 1, ebisu: 1 } }
     ]
   },
   {
-    q: "Last one! Who's coming with you?",
+    q: "Who's coming with you?",
     sub: "Good company changes the plan.",
     options: [
-      { e: "🎒", t: "Just me, solo adventure", d: "Free to wander and get lost", p: { shimokitazawa: 2, akihabara: 2, yanaka: 2, shinjuku: 1 } },
-      { e: "💕", t: "My partner, a romantic trip", d: "Pretty walks and cozy dinners", p: { nakameguro: 3, ginza: 2, kichijoji: 1 } },
-      { e: "👯", t: "Friends, let's go!", d: "Fun, nightlife and big group energy", p: { shibuya: 3, shinjuku: 2, harajuku: 2 } },
-      { e: "👨‍👩‍👧", t: "Family with kids", d: "Parks, easy logistics, early nights", p: { kichijoji: 3, asakusa: 2, akihabara: 1 } }
+      { e: "🎒", t: "Just me, solo", d: "Free to wander and get lost", p: { koenji: 2, shimokitazawa: 2, akihabara: 2, yanaka: 1 } },
+      { e: "💕", t: "My partner", d: "Pretty walks and cozy dinners", p: { nakameguro: 3, kagurazaka: 3, ebisu: 2 } },
+      { e: "👯", t: "A group of friends", d: "Fun, nightlife and big energy", p: { shibuya: 3, shinjuku: 2, harajuku: 1 } },
+      { e: "👨‍👩‍👧", t: "Family with kids", d: "Parks, easy logistics, early nights", p: { kichijoji: 3, toyosu: 3, asakusa: 1 } }
     ]
+  },
+  {
+    q: "When are you visiting Tokyo?",
+    sub: "We'll show the festivals happening during your trip.",
+    month: true,
+    options: MONTHS_FULL.map(m => ({ t: m, p: {} }))
   }
 ];
 
@@ -629,11 +943,13 @@ const QUESTIONS = [
    HELPERS
    ========================================================= */
 const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 const gmapEmbed = (query) => `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=15&output=embed`;
 const gmapSearch = (query) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 const gmapDirections = (from, to) =>
   `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(from)}&destination=${encodeURIComponent(to)}&travelmode=transit`;
-const placeQuery = (place, hood) => `${place}, ${hood.name}, Tokyo`;
+const placeQuery = (place, hood) => `${place}, ${hood.name.split(" & ")[0]}, Tokyo`;
+const vegSearch = (hood) => gmapSearch(`vegan restaurants near ${hood.station.name}, Tokyo`);
 
 function go(view) {
   document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
@@ -641,8 +957,11 @@ function go(view) {
   window.scrollTo({ top: 0, behavior: "smooth" });
   if (view === "home" && map) setTimeout(() => map.invalidateSize(), 60);
 }
+function goSection(id) {
+  if (!$("view-home").classList.contains("active")) go("home");
+  setTimeout(() => $(id).scrollIntoView({ behavior: "smooth" }), 80);
+}
 
-/* Falling petals */
 (function petals() {
   for (let i = 0; i < 14; i++) {
     const p = document.createElement("div");
@@ -650,40 +969,82 @@ function go(view) {
     p.style.left = Math.random() * 100 + "vw";
     p.style.animationDuration = 9 + Math.random() * 10 + "s";
     p.style.animationDelay = -Math.random() * 15 + "s";
-    p.style.transform = `scale(${0.6 + Math.random() * 0.8})`;
     document.body.appendChild(p);
   }
 })();
 
 /* =========================================================
-   HOME MAP (Leaflet + pastel tiles)
+   HOME MAP: colored neighborhood regions with real borders
    ========================================================= */
 let map;
+const hoodLayers = {};
 function initMap() {
-  map = L.map("tokyoMap", { scrollWheelZoom: false, zoomControl: true });
+  map = L.map("tokyoMap", { scrollWheelZoom: false, zoomSnap: 0.25 });
   L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
     subdomains: "abcd", maxZoom: 19
   }).addTo(map);
 
-  const bounds = [];
+  const all = [];
   Object.entries(HOODS).forEach(([id, h]) => {
-    bounds.push([h.lat, h.lng]);
-    L.circle([h.lat, h.lng], { radius: 900, color: h.color, weight: 2, fillColor: h.color, fillOpacity: 0.45 })
-      .addTo(map).on("click", () => openDrawer(id));
-    L.circleMarker([h.lat, h.lng], { radius: 9, color: "#fff", weight: 3, fillColor: h.color, fillOpacity: 1 })
-      .addTo(map)
-      .bindTooltip(h.name, { permanent: true, direction: "top", offset: [0, -10], className: "hood-label" })
-      .on("click", () => openDrawer(id));
+    const rings = BOUNDS[id] || [];
+    if (!rings.length) return;
+    const poly = L.polygon(rings, {
+      color: shade(h.color, -35), weight: 2, dashArray: "5 4",
+      fillColor: h.color, fillOpacity: 0.55
+    }).addTo(map);
+    poly.bindTooltip(h.name, { permanent: true, direction: "center", className: "hood-label" });
+    poly.on("click", () => openDrawer(id));
+    poly.on("mouseover", () => { poly.setStyle({ fillOpacity: 0.8, weight: 3, dashArray: null }); poly.getTooltip().getElement()?.classList.add("show"); });
+    poly.on("mouseout", () => { poly.setStyle({ fillOpacity: 0.55, weight: 2, dashArray: "5 4" }); poly.getTooltip().getElement()?.classList.remove("show"); });
+    hoodLayers[id] = poly;
+    rings.forEach(r => all.push(...r));
   });
-  map.fitBounds(bounds, { padding: [40, 40] });
+  map.fitBounds(all, { padding: [20, 20] });
+  const updateLabels = () => $("tokyoMap").classList.toggle("labels-off", map.getZoom() < 12.75);
+  map.on("zoomend", updateLabels);
+  updateLabels();
 
   $("hoodList").innerHTML = Object.entries(HOODS).map(([id, h]) => `
-    <button class="hood-chip" onclick="openDrawer('${id}')">
+    <button class="hood-chip" onclick="openDrawer('${id}')" onmouseenter="hoverHood('${id}', true)" onmouseleave="hoverHood('${id}', false)">
       <span class="dot" style="background:${h.color}"></span>
-      <span><b>${h.name} <span style="opacity:.55;font-weight:500">${h.jp}</span></b><small>${h.tagline}</small></span>
+      <span><b>${h.name} <span style="opacity:.55;font-weight:500">${h.jp}</span>${h.isNew ? '<span class="new">hidden gem</span>' : ""}</b><small>${h.tagline}</small></span>
     </button>`).join("");
 }
+function hoverHood(id, on) { const l = hoodLayers[id]; if (l) l.fire(on ? "mouseover" : "mouseout"); }
+function shade(hex, amt) {
+  const n = parseInt(hex.slice(1), 16);
+  const c = (v) => Math.max(0, Math.min(255, v + amt));
+  return "#" + [c(n >> 16), c((n >> 8) & 255), c(n & 255)].map(v => v.toString(16).padStart(2, "0")).join("");
+}
+
+/* =========================================================
+   FESTIVAL CALENDAR
+   ========================================================= */
+let festMonth = new Date().getMonth() + 1;
+function allFestivals() {
+  const list = [];
+  Object.entries(HOODS).forEach(([id, h]) => h.festivals.forEach(f => list.push({ ...f, id })));
+  return list;
+}
+function renderFestivals() {
+  $("festMonths").innerHTML = `<button class="${festMonth === 0 ? "on" : ""}" onclick="setFestMonth(0)">All year</button>` +
+    MONTHS.map((m, i) => `<button class="${festMonth === i + 1 ? "on" : ""}" onclick="setFestMonth(${i + 1})">${m}</button>`).join("");
+  const list = allFestivals().filter(f => festMonth === 0 || f.months.includes(festMonth))
+    .sort((a, b) => a.months[0] - b.months[0]);
+  $("festGrid").innerHTML = list.length ? list.map(f => festCard(f)).join("")
+    : `<div class="card empty">No festivals listed for this month. It's a great time for quiet temple visits and short queues!</div>`;
+}
+function festCard(f) {
+  const h = HOODS[f.id];
+  return `<div class="card fest" style="border-top-color:${h.color}">
+    <div class="when">${f.when}</div>
+    <b>${f.name}</b>
+    <p>${f.desc}</p>
+    <button class="where" onclick="openDrawer('${f.id}')"><span class="dot" style="background:${h.color};width:12px;height:12px;vertical-align:-1px"></span> ${h.name} →</button>
+  </div>`;
+}
+function setFestMonth(m) { festMonth = m; renderFestivals(); }
 
 /* =========================================================
    NEIGHBORHOOD DRAWER with live Google Maps
@@ -702,20 +1063,19 @@ function openDrawer(id) {
     <div class="drawer-body">
       <div class="tags" style="margin-top:16px">${h.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
       <p class="about">${h.about}</p>
-
       <div class="tabs" id="dTabs">
-        <button class="on" onclick="drawerTab('attr', this)">Attractions</button>
-        <button onclick="drawerTab('hotel', this)">Hotel</button>
-        <button onclick="drawerTab('station', this)">Station</button>
+        <button data-t="attr" class="on">Attractions</button>
+        <button data-t="shop">Shopping</button>
+        <button data-t="eat">Food & Veg</button>
+        <button data-t="fest">Festivals</button>
+        <button data-t="hotel">Hotel</button>
+        <button data-t="station">Station</button>
       </div>
-
-      <iframe class="gmap" id="dMap" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-        src="${gmapEmbed(placeQuery(h.attractions[0].name, h))}" title="Google Map"></iframe>
-      <div class="gmap-caption"><span id="dMapLabel">📍 ${h.attractions[0].name}</span>
-        <a id="dMapLink" href="${gmapSearch(placeQuery(h.attractions[0].name, h))}" target="_blank" rel="noopener">Open in Google Maps ↗</a></div>
-
+      <iframe class="gmap" id="dMap" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Google Map"></iframe>
+      <div class="gmap-caption"><span id="dMapLabel"></span><a id="dMapLink" target="_blank" rel="noopener">Open in Google Maps ↗</a></div>
       <div id="dTabBody"></div>
     </div>`;
+  document.querySelectorAll("#dTabs button").forEach(b => b.onclick = () => drawerTab(b.dataset.t, b));
   drawerTab("attr");
   $("overlay").classList.add("open");
   $("drawer").classList.add("open");
@@ -734,73 +1094,81 @@ function showOnMap(query, label) {
   $("dMapLabel").textContent = "📍 " + label;
   $("dMapLink").href = gmapSearch(query);
 }
-
+function placeButtons(items, h, cls = "") {
+  return items.map((a, i) => `
+    <button class="place ${cls} ${i === 0 ? "on" : ""}" data-q="${esc(placeQuery(a.name, h))}" data-l="${esc(a.name)}">
+      <span class="ico">${a.ico}</span><span><b>${a.name}</b><span>${a.desc}</span></span>
+    </button>`).join("");
+}
 function drawerTab(tab, btn) {
   const h = HOODS[drawerHood];
   if (btn) { document.querySelectorAll("#dTabs button").forEach(b => b.classList.remove("on")); btn.classList.add("on"); }
-  let html = "";
+  let html = "", first = null;
   if (tab === "attr") {
-    html = h.attractions.map((a, i) => `
-      <button class="place ${i === 0 ? "on" : ""}" onclick="pickPlace(this, '${encodeURIComponent(placeQuery(a.name, h))}', '${encodeURIComponent(a.name)}')">
-        <span class="ico">${a.ico}</span><span><b>${a.name}</b><span>${a.desc}</span></span>
-      </button>`).join("")
-      + `<div class="place" style="cursor:default;background:#fff6ec"><span class="ico">🍜</span><span><b>Must-eat</b><span>${h.eat}</span></span></div>`;
+    html = placeButtons(h.attractions, h); first = h.attractions[0];
+  } else if (tab === "shop") {
+    html = placeButtons(h.shops, h); first = h.shops[0];
+  } else if (tab === "eat") {
+    html = `<div class="sub-h">FOOD AREAS & LOCAL DISHES</div>` + placeButtons(h.food, h)
+      + `<div class="sub-h">VEGAN & VEGETARIAN</div>
+         <div class="place static veg"><span class="ico">🌱</span><span><b>Plant-based in ${h.name}</b><span>${h.veg}</span></span></div>
+         <a class="mini" href="${vegSearch(h)}" target="_blank" rel="noopener">🌱 Find vegan restaurants near ${h.station.name} ↗</a>`;
+    first = h.food[0];
+  } else if (tab === "fest") {
+    html = h.festivals.map(f => `<div class="place static"><span class="ico">🏮</span><span><b>${f.name}</b><span><b style="display:inline;color:var(--ink)">${f.when}</b> · ${f.desc}</span></span></div>`).join("")
+      + `<p class="note">Dates change every year. Check the official event page before you plan around it.</p>`;
     showOnMap(placeQuery(h.attractions[0].name, h), h.attractions[0].name);
   } else if (tab === "hotel") {
-    html = `<div class="place on" style="cursor:default"><span class="ico">🏨</span><span><b>${h.hotel.name} · ${h.hotel.price}</b><span>${h.hotel.note}</span></span></div>
-      <a class="mini" href="${gmapDirections(h.hotel.name + ", Tokyo", h.station.name + ", Tokyo")}" target="_blank" rel="noopener">🚶 Directions from the hotel to ${h.station.name}</a>`;
+    html = `<div class="place static on"><span class="ico">🏨</span><span><b>${h.hotel.name} · ${h.hotel.price}</b><span>${h.hotel.note}</span></span></div>
+      <a class="mini" href="${gmapDirections(h.hotel.name + ", Tokyo", h.station.name + ", Tokyo")}" target="_blank" rel="noopener">🚶 Directions from the hotel to ${h.station.name} ↗</a>`;
     showOnMap(h.hotel.name + ", Tokyo", h.hotel.name);
   } else {
-    html = `<div class="place on" style="cursor:default"><span class="ico">🚉</span><span><b>${h.station.name}</b><span>${h.station.lines}</span></span></div>`;
+    html = `<div class="place static on"><span class="ico">🚉</span><span><b>${h.station.name}</b><span>${h.station.lines}</span></span></div>`;
     showOnMap(h.station.name + ", Tokyo", h.station.name);
   }
   $("dTabBody").innerHTML = html;
-}
-function pickPlace(el, q, label) {
-  document.querySelectorAll("#dTabBody .place").forEach(p => p.classList.remove("on"));
-  el.classList.add("on");
-  showOnMap(decodeURIComponent(q), decodeURIComponent(label));
-  $("dMap").scrollIntoView({ behavior: "smooth", block: "center" });
+  if (first) showOnMap(placeQuery(first.name, h), first.name);
+  document.querySelectorAll("#dTabBody button.place").forEach(b => b.onclick = () => {
+    document.querySelectorAll("#dTabBody .place").forEach(p => p.classList.remove("on"));
+    b.classList.add("on");
+    showOnMap(b.dataset.q, b.dataset.l);
+    $("dMap").scrollIntoView({ behavior: "smooth", block: "center" });
+  });
 }
 
 /* =========================================================
    QUIZ ENGINE
    ========================================================= */
-let qi = 0;
-let answers = [];
-
+let qi = 0, answers = [];
 function startQuiz() {
   qi = 0;
   answers = new Array(QUESTIONS.length).fill(null);
   go("quiz");
   renderQ();
 }
-
 function renderQ() {
   const Q = QUESTIONS[qi];
   $("progBar").style.width = (qi / QUESTIONS.length) * 100 + "%";
   $("qCount").textContent = `QUESTION ${qi + 1} OF ${QUESTIONS.length}`;
   $("qTitle").textContent = Q.q;
   $("qSub").textContent = Q.sub;
+  $("qOptions").className = "options" + (Q.month ? " months-grid" : "");
   $("qOptions").innerHTML = Q.options.map((o, i) => `
     <button class="opt ${answers[qi] === i ? "on" : ""}" onclick="pick(${i})">
-      <span class="e">${o.e}</span><span><b>${o.t}</b><small>${o.d}</small></span>
+      ${o.e ? `<span class="e">${o.e}</span>` : ""}<span><b>${o.t}</b>${o.d ? `<small>${o.d}</small>` : ""}</span>
     </button>`).join("");
   $("backBtn").style.visibility = qi === 0 ? "hidden" : "visible";
   $("nextBtn").disabled = answers[qi] === null;
   $("nextBtn").textContent = qi === QUESTIONS.length - 1 ? "See my Tokyo day ✨" : "Next →";
 }
-
 function pick(i) {
   answers[qi] = i;
   renderQ();
-  // auto-advance after a short pause
   setTimeout(() => { if (answers[qi] === i) nextQ(); }, 350);
 }
 function nextQ() {
   if (answers[qi] === null) return;
-  if (qi < QUESTIONS.length - 1) { qi++; renderQ(); }
-  else showResults();
+  if (qi < QUESTIONS.length - 1) { qi++; renderQ(); } else showResults();
 }
 function prevQ() { if (qi > 0) { qi--; renderQ(); } }
 
@@ -808,29 +1176,23 @@ function prevQ() { if (qi > 0) { qi--; renderQ(); } }
    SCORING + ITINERARY BUILDER
    ========================================================= */
 function computeScores() {
-  const scores = Object.fromEntries(Object.keys(HOODS).map(k => [k, 0]));
-  const maxPossible = Object.fromEntries(Object.keys(HOODS).map(k => [k, 0]));
+  const ids = Object.keys(HOODS);
+  const scores = Object.fromEntries(ids.map(k => [k, 0]));
+  const maxPossible = Object.fromEntries(ids.map(k => [k, 0]));
   QUESTIONS.forEach((Q, i) => {
-    Object.keys(HOODS).forEach(k => {
-      maxPossible[k] += Math.max(...Q.options.map(o => o.p[k] || 0));
-    });
-    const opt = Q.options[answers[i]];
-    Object.entries(opt.p).forEach(([k, v]) => scores[k] += v);
+    ids.forEach(k => maxPossible[k] += Math.max(...Q.options.map(o => o.p[k] || 0)));
+    Object.entries(Q.options[answers[i]].p).forEach(([k, v]) => scores[k] += v);
   });
-  // percentage match = how close this neighborhood got to its own best possible score
-  const pct = Object.fromEntries(Object.keys(HOODS).map(k => [k, Math.round((scores[k] / maxPossible[k]) * 100)]));
+  const pct = Object.fromEntries(ids.map(k => [k, Math.round((scores[k] / maxPossible[k]) * 100)]));
   return { scores, pct };
 }
-
 function distKm(a, b) {
   const R = 6371, toR = x => x * Math.PI / 180;
   const dLat = toR(b.lat - a.lat), dLng = toR(b.lng - a.lng);
   const s = Math.sin(dLat / 2) ** 2 + Math.cos(toR(a.lat)) * Math.cos(toR(b.lat)) * Math.sin(dLng / 2) ** 2;
   return 2 * R * Math.asin(Math.sqrt(s));
 }
-
-// Put the top 3 in the best morning → afternoon → evening order:
-// each neighborhood's strength at that time of day, minus a small penalty for travel distance.
+// Best morning → afternoon → evening order: time-of-day fit minus a small travel penalty.
 function orderDay(top3, base) {
   const perms = [[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]];
   const slots = ["morning", "afternoon", "evening"];
@@ -838,27 +1200,25 @@ function orderDay(top3, base) {
   perms.forEach(p => {
     const seq = p.map(i => top3[i]);
     let val = seq.reduce((s, id, i) => s + HOODS[id].slot[slots[i]], 0);
-    let travel = distKm(HOODS[base], HOODS[seq[0]]) + distKm(HOODS[seq[0]], HOODS[seq[1]]) + distKm(HOODS[seq[1]], HOODS[seq[2]]);
-    val -= travel * 0.08;
+    val -= (distKm(HOODS[base], HOODS[seq[0]]) + distKm(HOODS[seq[0]], HOODS[seq[1]]) + distKm(HOODS[seq[1]], HOODS[seq[2]])) * 0.08;
     if (val > bestVal) { bestVal = val; best = seq; }
   });
   return best;
 }
-
-function travelMinutes(a, b) {
-  // rough estimate for Tokyo trains, including walking and transfers
-  const km = distKm(HOODS[a], HOODS[b]);
-  return Math.max(8, Math.round(6 + km * 2.4));
-}
+const travelMinutes = (a, b) => Math.max(8, Math.round(6 + distKm(HOODS[a], HOODS[b]) * 2.4));
 
 function showResults() {
   $("progBar").style.width = "100%";
   const { scores, pct } = computeScores();
   const ranked = Object.keys(HOODS).sort((a, b) => scores[b] - scores[a] || pct[b] - pct[a]);
   const base = ranked[0];
-  const top3 = ranked.slice(0, 3);
-  const day = orderDay(top3, base);
+  const day = orderDay(ranked.slice(0, 3), base);
   const B = HOODS[base];
+
+  const dietQ = QUESTIONS.findIndex(q => q.diet);
+  const diet = answers[dietQ];               // 0 all, 1 vegetarian, 2 vegan, 3 pescatarian
+  const plantBased = diet === 1 || diet === 2;
+  const monthIdx = answers[QUESTIONS.findIndex(q => q.month)] + 1;
 
   const slotInfo = [
     { label: "MORNING · 9:00 – 12:30", picks: [0, 1] },
@@ -866,29 +1226,35 @@ function showResults() {
     { label: "EVENING · 18:00 – late", picks: [2, 3] }
   ];
 
-  let prevPoint = B.hotel.name + ", Tokyo";
-  let prevId = base;
-
+  let prevPoint = B.hotel.name + ", Tokyo", prevId = base;
   const timeline = day.map((id, i) => {
-    const h = HOODS[id];
-    const s = slotInfo[i];
+    const h = HOODS[id], s = slotInfo[i];
     const acts = s.picks.map(j => h.attractions[j % h.attractions.length]);
+    const shop = h.shops[i % h.shops.length];
+    const food = h.food[i % h.food.length];
     const transit = (i === 0 && id === base)
       ? `<div class="transit">🚶 Start right outside your hotel in ${h.name}</div>`
       : `<div class="transit">🚃 About ${travelMinutes(prevId, id)} min from ${HOODS[prevId].name} to ${h.station.name} ·
           <a href="${gmapDirections(prevPoint, h.station.name + ", Tokyo")}" target="_blank" rel="noopener">Get directions ↗</a></div>`;
-    prevPoint = h.station.name + ", Tokyo";
-    prevId = id;
+    prevPoint = h.station.name + ", Tokyo"; prevId = id;
+    const festNow = h.festivals.filter(f => f.months.includes(monthIdx));
     return `
       ${transit}
       <div class="card slot" style="border-left:8px solid ${h.color}">
         <div class="slot-time">${s.label}</div>
         <h3><span class="dot" style="background:${h.color}"></span>${h.name} <span style="opacity:.5;font-weight:500;font-size:1rem">${h.jp}</span></h3>
         <p class="why">${pct[id]}% match · ${h.tagline}</p>
-        <ul>${acts.map(a => `<li><b>${a.ico} ${a.name}</b><span>${a.desc}</span></li>`).join("")}</ul>
-        <div class="eat">🍜 <b>Eat here:</b> ${h.eat}</div>
+        <ul>
+          ${acts.map(a => `<li><b>${a.ico} ${a.name}</b><span>${a.desc}</span></li>`).join("")}
+          <li><b>${shop.ico} Shop: ${shop.name}</b><span>${shop.desc}</span></li>
+        </ul>
+        ${plantBased
+          ? `<div class="eat green">🌱 <b>Eat ${diet === 2 ? "vegan" : "vegetarian"}:</b> ${h.veg}</div>`
+          : `<div class="eat">🍜 <b>Eat at ${food.name}:</b> ${food.desc}</div>`}
+        ${festNow.map(f => `<div class="eat" style="background:#f3edff">🏮 <b>Happening in ${MONTHS_FULL[monthIdx - 1]}:</b> ${f.name} (${f.when})</div>`).join("")}
         <div class="slot-actions">
           <a class="mini" href="${gmapSearch(placeQuery(acts[0].name, h))}" target="_blank" rel="noopener">📍 ${acts[0].name} on Google Maps</a>
+          ${plantBased ? `<a class="mini" href="${vegSearch(h)}" target="_blank" rel="noopener">🌱 Vegan spots nearby ↗</a>` : ""}
           <button class="mini" onclick="openDrawer('${id}')">More about ${h.name}</button>
         </div>
       </div>`;
@@ -899,14 +1265,21 @@ function showResults() {
 
   const bars = ranked.map(id => `
     <div class="bar-row">
-      <span>${HOODS[id].name}</span>
+      <span>${HOODS[id].name.split(" & ")[0]}</span>
       <div class="bar"><div style="width:0;background:${HOODS[id].color}" data-w="${pct[id]}"></div></div>
       <span class="pct">${pct[id]}%</span>
     </div>`).join("");
 
+  const monthFests = allFestivals().filter(f => f.months.includes(monthIdx))
+    .sort((a, b) => (day.includes(b.id) || b.id === base) - (day.includes(a.id) || a.id === base));
+  const festHtml = monthFests.length
+    ? monthFests.map(f => `<div class="res-fest"><b><span class="dot" style="background:${HOODS[f.id].color};width:12px;height:12px;vertical-align:-1px"></span> ${f.name}</b>
+        <span>${HOODS[f.id].name} · ${f.when}${day.includes(f.id) || f.id === base ? " · <b style='display:inline;color:var(--pink-deep)'>on your route!</b>" : ""}</span></div>`).join("")
+    : `<p style="color:var(--muted);margin:6px 0 0">No big festivals in ${MONTHS_FULL[monthIdx - 1]} in these areas. That means shorter queues!</p>`;
+
   $("resultsContent").innerHTML = `
     <div class="result-hero">
-      <div class="jp" style="color:var(--pink-deep);font-weight:700;letter-spacing:.3em">あなたの東京</div>
+      <div style="color:var(--pink-deep);font-weight:700;letter-spacing:.3em">あなたの東京</div>
       <h1>Your Tokyo day is ready ✨</h1>
       <p>Based on your answers, <b>${B.name}</b> is your best base. Here's a day that links your three best-matching neighborhoods, ordered by when each one is at its best.</p>
       <div class="trio">${day.map(id => `<span style="background:${HOODS[id].color}">${HOODS[id].name}</span>`).join("")}</div>
@@ -914,7 +1287,7 @@ function showResults() {
 
     <div class="res-grid">
       <div>
-        <div class="card stay">
+        <div class="card side-card">
           <div class="label">WHERE TO SLEEP</div>
           <h3>${B.name} <span style="opacity:.5;font-weight:500">${B.jp}</span></h3>
           <p style="color:var(--muted);margin:4px 0 14px">${B.tagline}</p>
@@ -924,18 +1297,23 @@ function showResults() {
             <div class="info-row"><span class="ico">🚉</span><div><b>Nearest station: ${B.station.name}</b><span>${B.station.lines}</span></div></div>
             <div class="info-row"><span class="ico">📍</span><div><b>Nearby</b><span>${B.attractions.map(a => a.name).join(" · ")}</span></div></div>
           </div>
-          <div class="slot-actions" style="margin-top:8px">
+          <div class="slot-actions">
             <a class="mini" href="${gmapSearch(B.hotel.name + ", Tokyo")}" target="_blank" rel="noopener">Hotel on Google Maps ↗</a>
             <a class="mini" href="${gmapDirections(B.hotel.name + ", Tokyo", B.station.name + ", Tokyo")}" target="_blank" rel="noopener">Walk to station ↗</a>
           </div>
         </div>
-        <div class="card scores">
+        <div class="card side-card">
+          <div class="label">FESTIVALS IN ${MONTHS_FULL[monthIdx - 1].toUpperCase()}</div>
+          ${festHtml}
+          <p class="note">Dates change every year, so check before you go.</p>
+        </div>
+        <div class="card side-card">
           <h3>Your neighborhood match</h3>
           <p style="color:var(--muted);margin:0 0 8px;font-size:.92rem">How well each area fits your answers</p>
           ${bars}
         </div>
       </div>
-      <div class="timeline">${timeline}${backHome}</div>
+      <div>${timeline}${backHome}</div>
     </div>
 
     <div class="res-actions">
@@ -949,6 +1327,7 @@ function showResults() {
 }
 
 initMap();
+renderFestivals();
 </script>
 </body>
 </html>
