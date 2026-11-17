@@ -1,66 +1,954 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A Day in Tokyo</title>
-  <style>
-    :root {
-      --bg: #fdf8f4;
-      --text: #1f1d1b;
-      --muted: #6b645d;
-      --accent: #c8102e;
-      --card: #ffffff;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-    }
-    main {
-      max-width: 560px;
-      background: var(--card);
-      border-radius: 16px;
-      padding: 40px 32px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
-      text-align: center;
-    }
-    .sun {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      background: var(--accent);
-      margin: 0 auto 24px;
-    }
-    h1 { margin: 0 0 12px; font-size: 2rem; }
-    p { color: var(--muted); line-height: 1.6; margin: 0 0 24px; }
-    button {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 999px;
-      padding: 12px 28px;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-    button:disabled { opacity: 0.5; cursor: not-allowed; }
-    small { display: block; margin-top: 16px; color: var(--muted); }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Day in Tokyo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+  :root {
+    --ink: #3d3552;
+    --muted: #7a7191;
+    --card: rgba(255, 255, 255, 0.78);
+    --line: rgba(61, 53, 82, 0.12);
+    --pink: #f7b5c8;
+    --pink-deep: #e37fa0;
+    --lav: #c9b8f0;
+    --mint: #b5e6d3;
+    --peach: #ffd2b0;
+    --sky: #b8d8f5;
+    --shadow: 0 10px 40px rgba(120, 90, 160, 0.15);
+    --radius: 22px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: "Zen Maru Gothic", system-ui, sans-serif;
+    color: var(--ink);
+    background: #fdeef4;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ---------- Pastel Tokyo background ---------- */
+  .bg {
+    position: fixed; inset: 0; z-index: -2;
+    background:
+      radial-gradient(circle at 15% 10%, #ffe1ec 0, transparent 45%),
+      radial-gradient(circle at 85% 15%, #e6dcff 0, transparent 45%),
+      radial-gradient(circle at 70% 85%, #d4f3e8 0, transparent 45%),
+      radial-gradient(circle at 10% 80%, #ffe8d6 0, transparent 40%),
+      linear-gradient(180deg, #fdeef4 0%, #f1e9ff 55%, #e8f6f1 100%);
+  }
+  .skyline {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: -1;
+    width: 100%; height: 34vh; min-height: 180px;
+    pointer-events: none; opacity: 0.55;
+  }
+  .sun {
+    position: fixed; z-index: -1; right: 8vw; top: 12vh;
+    width: 140px; height: 140px; border-radius: 50%;
+    background: radial-gradient(circle, #ffc4d4 0%, #ffb3c8 60%, rgba(255,179,200,0) 72%);
+    opacity: .7;
+  }
+  .petal {
+    position: fixed; top: -20px; z-index: -1;
+    width: 14px; height: 10px;
+    background: #ffc2d4;
+    border-radius: 14px 1px 14px 1px;
+    opacity: .75;
+    animation: fall linear infinite;
+  }
+  @keyframes fall {
+    0% { transform: translate(0, -5vh) rotate(0deg); }
+    100% { transform: translate(18vw, 105vh) rotate(540deg); }
+  }
+  @media (prefers-reduced-motion: reduce) { .petal { display: none; } }
+
+  /* ---------- Layout ---------- */
+  header.nav {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1150px; margin: 0 auto; padding: 18px 16px;
+  }
+  .logo { font-weight: 900; font-size: 1.15rem; letter-spacing: .02em; cursor: pointer; }
+  .logo span { color: var(--pink-deep); }
+  .nav-links { display: flex; gap: 6px; }
+  .nav-links button {
+    background: none; border: none; font: inherit; color: var(--ink);
+    padding: 8px 14px; border-radius: 999px; cursor: pointer; font-weight: 500;
+  }
+  .nav-links button:hover { background: rgba(255,255,255,.6); }
+
+  main { max-width: 1150px; margin: 0 auto; padding: 0 16px 120px; }
+  .view { display: none; animation: fadein .45s ease; }
+  .view.active { display: block; }
+  @keyframes fadein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .card {
+    background: var(--card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,.8);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font: inherit; font-weight: 700; font-size: 1rem;
+    border: none; border-radius: 999px; padding: 14px 28px; cursor: pointer;
+    background: linear-gradient(135deg, #f49ab7, #b79cf0);
+    color: #fff; box-shadow: 0 8px 24px rgba(227,127,160,.35);
+    transition: transform .15s, box-shadow .15s;
+    text-decoration: none;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(227,127,160,.45); }
+  .btn.ghost { background: rgba(255,255,255,.85); color: var(--ink); box-shadow: none; border: 1px solid var(--line); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+
+  /* ---------- Hero ---------- */
+  .hero { text-align: center; padding: 40px 0 30px; }
+  .hero .jp { font-size: .95rem; color: var(--pink-deep); letter-spacing: .3em; font-weight: 700; }
+  .hero h1 { font-size: clamp(2.2rem, 6vw, 3.8rem); margin: 10px 0 14px; font-weight: 900; line-height: 1.1; }
+  .hero h1 em { font-style: normal; background: linear-gradient(120deg, #e37fa0, #9b7fe0); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p { color: var(--muted); max-width: 560px; margin: 0 auto 26px; font-size: 1.08rem; line-height: 1.7; }
+  .hero .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* ---------- Map section ---------- */
+  .section-title { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 40px 4px 14px; }
+  .section-title h2 { margin: 0; font-size: 1.6rem; font-weight: 900; }
+  .section-title p { margin: 0; color: var(--muted); }
+  .map-wrap { display: grid; grid-template-columns: 1.4fr 1fr; gap: 18px; }
+  #tokyoMap { height: 460px; border-radius: var(--radius); overflow: hidden; z-index: 0; }
+  .map-card { padding: 10px; }
+  .hood-list { padding: 18px; display: flex; flex-direction: column; gap: 8px; max-height: 480px; overflow-y: auto; }
+  .hood-chip {
+    display: flex; align-items: center; gap: 12px; padding: 10px 12px;
+    border-radius: 14px; cursor: pointer; border: 1px solid transparent; background: rgba(255,255,255,.55);
+    transition: background .15s, border-color .15s, transform .15s; text-align: left; font: inherit; color: inherit; width: 100%;
+  }
+  .hood-chip:hover { background: #fff; border-color: var(--line); transform: translateX(3px); }
+  .dot { width: 16px; height: 16px; border-radius: 50%; flex: none; border: 2px solid #fff; box-shadow: 0 0 0 1px var(--line); }
+  .hood-chip b { display: block; }
+  .hood-chip small { color: var(--muted); }
+
+  .leaflet-tooltip.hood-label {
+    background: #fff; border: none; border-radius: 999px; padding: 3px 10px;
+    font-family: "Zen Maru Gothic", sans-serif; font-weight: 700; color: var(--ink);
+    box-shadow: 0 4px 12px rgba(0,0,0,.12);
+  }
+  .leaflet-tooltip.hood-label::before { display: none; }
+
+  /* ---------- Neighborhood drawer ---------- */
+  .overlay { position: fixed; inset: 0; background: rgba(61,53,82,.35); z-index: 1000; display: none; }
+  .overlay.open { display: block; }
+  .drawer {
+    position: fixed; top: 0; right: 0; bottom: 0; width: min(620px, 100%);
+    background: #fffafc; z-index: 1001; overflow-y: auto;
+    transform: translateX(100%); transition: transform .35s ease;
+    box-shadow: -10px 0 40px rgba(0,0,0,.12);
+  }
+  .drawer.open { transform: none; }
+  .drawer-head { padding: 28px 24px 22px; position: relative; }
+  .drawer-head .close {
+    position: absolute; top: 16px; right: 16px; width: 38px; height: 38px; border-radius: 50%;
+    border: none; background: rgba(255,255,255,.85); font-size: 1.3rem; cursor: pointer; color: var(--ink);
+  }
+  .drawer-head .jp { font-weight: 700; opacity: .7; letter-spacing: .15em; }
+  .drawer-head h2 { margin: 4px 0 6px; font-size: 2rem; font-weight: 900; }
+  .drawer-head .tagline { margin: 0; font-weight: 500; }
+  .drawer-body { padding: 0 24px 40px; }
+  .drawer-body p.about { line-height: 1.75; color: #5a5270; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 18px; }
+  .tag { font-size: .8rem; padding: 4px 10px; border-radius: 999px; background: #f3edff; color: #6c5aa8; font-weight: 500; }
+
+  .tabs { display: flex; gap: 6px; background: #f4eef8; padding: 5px; border-radius: 999px; margin: 6px 0 14px; }
+  .tabs button {
+    flex: 1; border: none; background: none; font: inherit; font-weight: 700; padding: 9px 6px;
+    border-radius: 999px; cursor: pointer; color: var(--muted);
+  }
+  .tabs button.on { background: #fff; color: var(--ink); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+
+  .gmap { width: 100%; height: 280px; border: 0; border-radius: 16px; background: #eee; display: block; }
+  .gmap-caption { font-size: .85rem; color: var(--muted); margin: 8px 2px 14px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  .gmap-caption a { color: var(--pink-deep); font-weight: 700; text-decoration: none; }
+
+  .place {
+    display: flex; gap: 12px; padding: 12px 14px; border-radius: 14px; background: #fff;
+    border: 1px solid var(--line); margin-bottom: 8px; cursor: pointer; text-align: left; width: 100%; font: inherit; color: inherit;
+    transition: border-color .15s, transform .15s;
+  }
+  .place:hover, .place.on { border-color: var(--pink-deep); transform: translateX(2px); }
+  .place .ico { font-size: 1.4rem; line-height: 1; }
+  .place b { display: block; margin-bottom: 2px; }
+  .place span { font-size: .9rem; color: var(--muted); line-height: 1.5; }
+
+  /* ---------- Quiz ---------- */
+  .quiz { max-width: 720px; margin: 30px auto 0; padding: 34px 30px; }
+  .progress { height: 10px; background: #f1e8f6; border-radius: 999px; overflow: hidden; margin-bottom: 8px; }
+  .progress div { height: 100%; width: 0; background: linear-gradient(90deg, #f49ab7, #b79cf0, #8fd6bd); transition: width .35s ease; border-radius: 999px; }
+  .q-count { font-size: .85rem; color: var(--muted); font-weight: 700; letter-spacing: .08em; }
+  .quiz h2 { font-size: 1.7rem; margin: 14px 0 6px; font-weight: 900; line-height: 1.3; }
+  .quiz .sub { color: var(--muted); margin: 0 0 22px; }
+  .options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .opt {
+    text-align: left; font: inherit; color: inherit; cursor: pointer;
+    background: #fff; border: 2px solid transparent; border-radius: 18px; padding: 16px;
+    box-shadow: 0 3px 12px rgba(120,90,160,.08); transition: transform .15s, border-color .15s, background .15s;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .opt:hover { transform: translateY(-2px); border-color: #f3c4d4; }
+  .opt.on { border-color: var(--pink-deep); background: #fff3f7; }
+  .opt .e { font-size: 1.7rem; line-height: 1; }
+  .opt b { display: block; margin-bottom: 3px; }
+  .opt small { color: var(--muted); line-height: 1.45; display: block; }
+  .quiz-nav { display: flex; justify-content: space-between; margin-top: 26px; gap: 10px; }
+
+  /* ---------- Results ---------- */
+  .result-hero { text-align: center; padding: 30px 0 10px; }
+  .result-hero h1 { font-size: clamp(1.9rem, 5vw, 2.9rem); margin: 8px 0; font-weight: 900; }
+  .result-hero p { color: var(--muted); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+  .trio { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 18px 0 6px; }
+  .trio span { padding: 8px 16px; border-radius: 999px; font-weight: 700; background: #fff; box-shadow: 0 3px 10px rgba(0,0,0,.06); }
+
+  .res-grid { display: grid; grid-template-columns: 1fr 1.25fr; gap: 18px; margin-top: 24px; align-items: start; }
+  .stay { padding: 24px; position: sticky; top: 16px; }
+  .stay h3, .scores h3 { margin: 0 0 4px; font-size: 1.25rem; font-weight: 900; }
+  .stay .label { font-size: .8rem; letter-spacing: .14em; font-weight: 700; color: var(--pink-deep); }
+  .info-row { display: flex; gap: 10px; align-items: flex-start; padding: 12px 0; border-top: 1px dashed var(--line); }
+  .info-row:first-of-type { border-top: none; }
+  .info-row .ico { font-size: 1.3rem; }
+  .info-row b { display: block; }
+  .info-row span { color: var(--muted); font-size: .92rem; line-height: 1.5; }
+
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .slot { padding: 22px 24px; position: relative; }
+  .slot-time { font-size: .8rem; font-weight: 700; letter-spacing: .14em; color: var(--muted); }
+  .slot h3 { margin: 4px 0 4px; font-size: 1.45rem; font-weight: 900; display: flex; align-items: center; gap: 10px; }
+  .slot .why { margin: 0 0 12px; color: var(--muted); font-size: .95rem; }
+  .slot ul { margin: 0 0 12px; padding: 0; list-style: none; }
+  .slot li { padding: 9px 0; border-top: 1px dashed var(--line); line-height: 1.5; }
+  .slot li:first-child { border-top: none; }
+  .slot li b { display: block; }
+  .slot li span { color: var(--muted); font-size: .92rem; }
+  .slot .eat { background: #fff6ec; border-radius: 14px; padding: 10px 14px; font-size: .93rem; margin-bottom: 12px; }
+  .slot-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  .mini {
+    font: inherit; font-size: .85rem; font-weight: 700; padding: 8px 14px; border-radius: 999px;
+    background: #fff; border: 1px solid var(--line); color: var(--ink); cursor: pointer; text-decoration: none;
+  }
+  .mini:hover { border-color: var(--pink-deep); }
+  .transit {
+    display: flex; align-items: center; gap: 10px; margin: 10px 0 10px 26px; padding: 10px 14px;
+    border-left: 3px dotted #c9b8f0; color: var(--muted); font-size: .92rem;
+  }
+  .transit a { color: #7d63c9; font-weight: 700; text-decoration: none; }
+
+  .scores { padding: 24px; margin-top: 18px; }
+  .bar-row { display: grid; grid-template-columns: 120px 1fr 44px; gap: 10px; align-items: center; margin: 9px 0; font-size: .92rem; }
+  .bar { height: 12px; background: #f3edf7; border-radius: 999px; overflow: hidden; }
+  .bar div { height: 100%; border-radius: 999px; transition: width .8s ease; }
+  .bar-row .pct { text-align: right; font-weight: 700; color: var(--muted); }
+
+  .res-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 30px; }
+
+  footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 30px 16px 50px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px) {
+    .map-wrap, .res-grid { grid-template-columns: 1fr; }
+    #tokyoMap { height: 360px; }
+    .hood-list { max-height: none; }
+    .stay { position: static; }
+  }
+  @media (max-width: 560px) {
+    .options { grid-template-columns: 1fr; }
+    .quiz { padding: 24px 18px; }
+    .nav-links button.hide-sm { display: none; }
+    .bar-row { grid-template-columns: 96px 1fr 40px; }
+  }
+</style>
 </head>
 <body>
-  <main>
-    <div class="sun" aria-hidden="true"></div>
-    <h1>A Day in Tokyo</h1>
-    <p>Answer a few quick questions and get a personalized one-day itinerary for Tokyo.</p>
-    <button disabled>Start the questionnaire</button>
-    <small>Coming soon</small>
-  </main>
+
+<!-- Background -->
+<div class="bg"></div>
+<div class="sun"></div>
+<svg class="skyline" viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden="true">
+  <defs>
+    <linearGradient id="sk1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9c8f5"/><stop offset="1" stop-color="#f3d6e6"/></linearGradient>
+    <linearGradient id="sk2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6bfd2"/><stop offset="1" stop-color="#fbe0ea"/></linearGradient>
+  </defs>
+  <!-- back layer -->
+  <path fill="url(#sk1)" d="M0 300 V210 h40 v-30 h30 v40 h25 v-70 h35 v60 h20 v-90 h30 v100 h40 v-50 h30 v40 h25 V120 h12 v-20 h6 v20 h12 v100 h30 v-60 h45 v80 h20 v-40 h40 v30 h35 v-110 h30 v110 h20 v-50 h40 v60 h30 v-80 h30 v70 h25 v-30 h40 v50 h30 v-100 h35 v90 h20 v-60 h40 v70 h30 v-40 h30 v50 h40 v-70 h30 v80 h30 V300 Z"/>
+  <!-- Tokyo Tower -->
+  <path fill="#f4a6bf" d="M860 300 L878 150 L884 150 L890 95 L894 95 L897 40 L899 40 L902 95 L906 95 L912 150 L918 150 L936 300 Z M884 200 h28 v8 h-28 Z M880 240 h36 v8 h-36 Z"/>
+  <!-- Skytree -->
+  <path fill="#c9b3ef" d="M300 300 L312 120 L316 60 L318 10 L320 60 L324 120 L336 300 Z M308 150 h20 v10 h-20 Z"/>
+  <!-- front layer -->
+  <path fill="url(#sk2)" opacity=".9" d="M0 300 V250 h60 v-20 h40 v30 h50 v-40 h30 v50 h60 v-25 h40 v35 h70 v-30 h50 v20 h60 v-45 h35 v45 h55 v-20 h40 v30 h70 v-35 h45 v40 h60 v-25 h40 v30 h60 v-40 h40 v45 h60 v-20 h50 v25 h45 V300 Z"/>
+</svg>
+
+<header class="nav">
+  <div class="logo" onclick="go('home')">東京 <span>A Day in Tokyo</span></div>
+  <nav class="nav-links">
+    <button onclick="go('home')">Home</button>
+    <button class="hide-sm" onclick="go('home'); setTimeout(()=>document.getElementById('mapSection').scrollIntoView(),50)">Map</button>
+    <button onclick="startQuiz()">Take the quiz</button>
+  </nav>
+</header>
+
+<main>
+  <!-- ===================== HOME ===================== -->
+  <section id="view-home" class="view active">
+    <div class="hero">
+      <div class="jp">東京の一日</div>
+      <h1>Your perfect <em>day in Tokyo</em>,<br>made for you</h1>
+      <p>Answer 10 quick questions about how you like to travel. We'll match you with Tokyo's neighborhoods, tell you where to stay, and plan a day that links your three best matches.</p>
+      <div class="ctas">
+        <button class="btn" onclick="startQuiz()">Start the questionnaire →</button>
+        <button class="btn ghost" onclick="document.getElementById('mapSection').scrollIntoView()">Explore the map</button>
+      </div>
+    </div>
+
+    <div class="section-title" id="mapSection">
+      <h2>Meet the neighborhoods</h2>
+      <p>Click a neighborhood on the map or in the list to see what it's like</p>
+    </div>
+    <div class="map-wrap">
+      <div class="card map-card"><div id="tokyoMap"></div></div>
+      <div class="card hood-list" id="hoodList"></div>
+    </div>
+  </section>
+
+  <!-- ===================== QUIZ ===================== -->
+  <section id="view-quiz" class="view">
+    <div class="card quiz">
+      <div class="progress"><div id="progBar"></div></div>
+      <div class="q-count" id="qCount"></div>
+      <h2 id="qTitle"></h2>
+      <p class="sub" id="qSub"></p>
+      <div class="options" id="qOptions"></div>
+      <div class="quiz-nav">
+        <button class="btn ghost" id="backBtn" onclick="prevQ()">← Back</button>
+        <button class="btn" id="nextBtn" onclick="nextQ()" disabled>Next →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RESULTS ===================== -->
+  <section id="view-results" class="view">
+    <div id="resultsContent"></div>
+  </section>
+</main>
+
+<footer>Made for the Technion AI course · Maps by Google Maps &amp; OpenStreetMap · No accounts, no database, just open and plan</footer>
+
+<!-- Neighborhood drawer -->
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer" aria-hidden="true"></aside>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+/* =========================================================
+   DATA: Tokyo neighborhoods
+   ========================================================= */
+const HOODS = {
+  shinjuku: {
+    name: "Shinjuku", jp: "新宿", color: "#f7a8c4", lat: 35.6909, lng: 139.7003,
+    tagline: "Neon skyscrapers, tiny bars and Tokyo's busiest station",
+    about: "Shinjuku is Tokyo at full volume. On the west side are government towers with free observation decks. On the east side, Kabukicho's neon and Golden Gai's tiny six-seat bars stay busy until dawn. Shinjuku Gyoen, one of the city's loveliest gardens, is a few minutes' walk away when you need a break.",
+    tags: ["Nightlife", "Food alleys", "Transport hub", "Skyline views"],
+    station: { name: "Shinjuku Station", lines: "JR Yamanote, Chuo & Saikyo lines · Marunouchi line · Toei Shinjuku & Oedo lines · Odakyu & Keio" },
+    hotel: { name: "Hotel Gracery Shinjuku", note: "Mid-range, famous for the giant Godzilla head on its terrace. Kabukicho is right outside, and the station is a 5-minute walk.", price: "$$" },
+    attractions: [
+      { name: "Shinjuku Gyoen National Garden", ico: "🌸", desc: "Huge landscaped garden mixing Japanese, French and English styles. One of the best cherry blossom spots." },
+      { name: "Omoide Yokocho", ico: "🏮", desc: "Smoky lantern-lit alley of tiny yakitori stalls right next to the station." },
+      { name: "Shinjuku Golden Gai", ico: "🍸", desc: "About 200 tiny bars packed into six narrow lanes, each with its own theme." },
+      { name: "Tokyo Metropolitan Government Building", ico: "🏙️", desc: "Free observation decks on the 45th floor. On clear days you can see Mt. Fuji." }
+    ],
+    eat: "Yakitori and a cold beer in Omoide Yokocho, or ramen at Fuunji (tsukemen dipping noodles)",
+    slot: { morning: 1, afternoon: 2, evening: 3 }
+  },
+  shibuya: {
+    name: "Shibuya", jp: "渋谷", color: "#c9b3f2", lat: 35.6595, lng: 139.7005,
+    tagline: "The famous crossing, rooftop views and youth culture",
+    about: "Shibuya is where Tokyo's young crowd shops, eats and goes out. Thousands of people cross the Scramble at once, and Shibuya Sky's open-air rooftop looks straight down on it. Away from the crossing are record shops, MIYASHITA PARK's rooftop park and the bar alleys of Nonbei Yokocho.",
+    tags: ["Iconic sights", "Shopping", "Clubs", "Rooftop views"],
+    station: { name: "Shibuya Station", lines: "JR Yamanote & Saikyo lines · Ginza, Hanzomon & Fukutoshin lines · Tokyu Toyoko & Den-en-toshi · Keio Inokashira" },
+    hotel: { name: "Shibuya Stream Excel Hotel Tokyu", note: "Modern rooms connected directly to Shibuya Station, with the crossing a few minutes away.", price: "$$$" },
+    attractions: [
+      { name: "Shibuya Scramble Crossing", ico: "🚦", desc: "The world's busiest pedestrian crossing. Watch it from above at the Starbucks or MAGNET." },
+      { name: "Shibuya Sky", ico: "🌇", desc: "Open-air rooftop on top of Shibuya Scramble Square. Book a sunset slot ahead of time." },
+      { name: "Hachiko Statue", ico: "🐕", desc: "Statue of the loyal Akita dog, Tokyo's best-known meeting spot." },
+      { name: "MIYASHITA PARK", ico: "🛍️", desc: "Rooftop park above shops, with a long yokocho food hall underneath." }
+    ],
+    eat: "Conveyor-belt sushi at Uobei, or the Shibuya Yokocho food hall under MIYASHITA PARK",
+    slot: { morning: 1, afternoon: 2, evening: 3 }
+  },
+  harajuku: {
+    name: "Harajuku", jp: "原宿", color: "#ffc6a8", lat: 35.6702, lng: 139.7027,
+    tagline: "Kawaii street fashion next to a forest shrine",
+    about: "Harajuku mixes extremes. Takeshita Street is a candy-colored crush of crepes, cosplay and fashion shops. A few steps away, Meiji Jingu sits in a quiet forest of 100,000 trees. Omotesando's architect-designed boutiques and the indie shops along Cat Street fill in the space between.",
+    tags: ["Street fashion", "Kawaii", "Shrines", "Cafés"],
+    station: { name: "Harajuku Station", lines: "JR Yamanote line · Meiji-jingumae Station: Chiyoda & Fukutoshin lines" },
+    hotel: { name: "Trunk Hotel Cat Street", note: "Boutique design hotel on Cat Street, halfway between Harajuku and Shibuya. Its lobby bar is popular with locals.", price: "$$$$" },
+    attractions: [
+      { name: "Meiji Jingu", ico: "⛩️", desc: "Grand Shinto shrine set in a peaceful forest. Go early in the morning when it's quiet." },
+      { name: "Takeshita Street", ico: "🍭", desc: "Crepes, rainbow candy floss and Harajuku fashion in one packed lane." },
+      { name: "Omotesando", ico: "🏛️", desc: "Tree-lined avenue known as Tokyo's Champs-Élysées, full of striking modern architecture." },
+      { name: "Cat Street", ico: "🐈", desc: "Relaxed backstreet with vintage shops, sneaker stores and indie brands." }
+    ],
+    eat: "A Marion Crêpe on Takeshita Street, then fluffy soufflé pancakes at a café near Omotesando",
+    slot: { morning: 3, afternoon: 3, evening: 1 }
+  },
+  ginza: {
+    name: "Ginza", jp: "銀座", color: "#a8d8f0", lat: 35.6717, lng: 139.7650,
+    tagline: "Elegant boulevards, flagship stores and world-class sushi",
+    about: "Ginza is Tokyo's polished side, with department stores, flagship luxury boutiques and some of the best sushi counters in the world. On weekend afternoons the main street, Chuo-dori, closes to cars. Kabuki-za Theatre, the Tsukiji Outer Market and Hama-rikyu Gardens are all within walking distance.",
+    tags: ["Luxury", "Fine dining", "Culture", "Department stores"],
+    station: { name: "Ginza Station", lines: "Ginza, Marunouchi & Hibiya lines · JR Yurakucho Station nearby" },
+    hotel: { name: "Mitsui Garden Hotel Ginza Premier", note: "Upper-floor rooms with big views over Tokyo Bay and Tokyo Tower, in the middle of Ginza.", price: "$$$" },
+    attractions: [
+      { name: "Tsukiji Outer Market", ico: "🍣", desc: "Morning market streets of fresh seafood, tamagoyaki and knife shops." },
+      { name: "Kabuki-za Theatre", ico: "🎭", desc: "See a single act of kabuki with a single-act ticket (hitomakumi). No full-day commitment needed." },
+      { name: "GINZA SIX", ico: "✨", desc: "Stylish mall with a free rooftop garden and art installations." },
+      { name: "Hama-rikyu Gardens", ico: "🍵", desc: "Former shogun garden with a teahouse on a pond, framed by skyscrapers." }
+    ],
+    eat: "A sushi omakase lunch (much cheaper than dinner), or the depachika food hall in Mitsukoshi's basement",
+    slot: { morning: 3, afternoon: 3, evening: 2 }
+  },
+  asakusa: {
+    name: "Asakusa", jp: "浅草", color: "#f5d48c", lat: 35.7118, lng: 139.7966,
+    tagline: "Old Edo, red lanterns and Tokyo's oldest temple",
+    about: "Asakusa holds on to the old-town (shitamachi) atmosphere of Edo-era Tokyo. Walk through the giant red lantern of Kaminarimon, snack your way down Nakamise-dori to Senso-ji, then cross the Sumida River for views of Tokyo Skytree. Rickshaw drivers, kimono rentals and kitchen-tool shops on Kappabashi complete the picture.",
+    tags: ["Temples", "Traditional", "Street snacks", "Kimono"],
+    station: { name: "Asakusa Station", lines: "Ginza line · Toei Asakusa line · Tobu Skytree line" },
+    hotel: { name: "The Gate Hotel Kaminarimon by Hulic", note: "Calm boutique hotel next to Kaminarimon gate, with a rooftop terrace facing Skytree.", price: "$$$" },
+    attractions: [
+      { name: "Senso-ji Temple", ico: "🏯", desc: "Tokyo's oldest temple (628 AD). Come at dawn or after dark to see it without the crowds." },
+      { name: "Nakamise-dori", ico: "🍡", desc: "Shopping street of ningyo-yaki cakes, rice crackers and souvenirs leading to Senso-ji." },
+      { name: "Sumida Park & Tokyo Skytree view", ico: "🗼", desc: "Riverside walk with the best views of Skytree and the golden Asahi building." },
+      { name: "Kappabashi Kitchen Town", ico: "🔪", desc: "A whole street of Japanese knives, ceramics and plastic food samples." }
+    ],
+    eat: "Tempura at Daikokuya, and melon pan from Kagetsudo while you walk",
+    slot: { morning: 3, afternoon: 2, evening: 1 }
+  },
+  akihabara: {
+    name: "Akihabara", jp: "秋葉原", color: "#9fe0c8", lat: 35.6984, lng: 139.7731,
+    tagline: "Anime, retro games and electric-town energy",
+    about: "Akihabara, or Akiba, is the center of Japan's otaku culture. Its streets are packed with multi-floor anime shops, retro game stores, gachapon capsule-toy halls and maid cafés. Under the train tracks, 2k540 Aki-Oka Artisan sells handmade crafts, and the 1,300-year-old Kanda Myojin shrine even sells anime-themed charms.",
+    tags: ["Anime", "Gaming", "Electronics", "Pop culture"],
+    station: { name: "Akihabara Station", lines: "JR Yamanote, Keihin-Tohoku & Sobu lines · Hibiya line · Tsukuba Express" },
+    hotel: { name: "Remm Akihabara", note: "Smart, good-value business hotel connected to Akihabara Station. Rooms come with massage chairs.", price: "$$" },
+    attractions: [
+      { name: "Akihabara Electric Town", ico: "🎮", desc: "Main Chuo-dori strip of anime megastores, arcades and electronics shops." },
+      { name: "Super Potato Akihabara", ico: "👾", desc: "Retro game heaven, with Famicom cartridges and a vintage arcade floor." },
+      { name: "Mandarake Complex", ico: "📚", desc: "Eight floors of manga, figures and collectibles." },
+      { name: "Kanda Myojin Shrine", ico: "⛩️", desc: "Historic shrine with anime-themed charms, a 5-minute walk from Akiba." }
+    ],
+    eat: "Curry at Go Go Curry, or the full maid-café experience if you're curious",
+    slot: { morning: 1, afternoon: 3, evening: 2 }
+  },
+  shimokitazawa: {
+    name: "Shimokitazawa", jp: "下北沢", color: "#f5b0e0", lat: 35.6616, lng: 139.6680,
+    tagline: "Vintage clothes, indie music and tiny theaters",
+    about: "Shimokitazawa, or Shimokita, is Tokyo's bohemian village. Its winding lanes are full of thrift stores, record shops, small live houses and fringe theaters. Since the railway went underground, its old tracks have become new spaces like reload and BONUS TRACK, low-key complexes of independent shops, cafés and bookstores.",
+    tags: ["Vintage", "Live music", "Indie cafés", "Local vibe"],
+    station: { name: "Shimo-Kitazawa Station", lines: "Odakyu line · Keio Inokashira line (7 min from Shibuya)" },
+    hotel: { name: "MUSTARD HOTEL Shimokitazawa", note: "Laid-back design hotel built on the old railway line, steps from reload's shops.", price: "$$" },
+    attractions: [
+      { name: "Shimokitazawa vintage shops", ico: "👕", desc: "Dozens of thrift and vintage stores, from ¥500 bins to rare designer pieces." },
+      { name: "BONUS TRACK", ico: "📖", desc: "Small village of indie shops, a bookstore and cafés along the old train line." },
+      { name: "reload Shimokitazawa", ico: "☕", desc: "Low-rise complex of curated shops and specialty coffee." },
+      { name: "Honda Theater", ico: "🎭", desc: "Heart of Shimokita's famous small-theater scene." }
+    ],
+    eat: "Soup curry at Rojiura Curry SAMURAI, then coffee from one of the specialty roasters",
+    slot: { morning: 1, afternoon: 3, evening: 3 }
+  },
+  kichijoji: {
+    name: "Kichijoji", jp: "吉祥寺", color: "#bfe6a8", lat: 35.7030, lng: 139.5797,
+    tagline: "Park life, Ghibli magic and a relaxed local pace",
+    about: "Kichijoji regularly ranks as the place Tokyoites most want to live. Inokashira Park has swan boats on its pond and weekend street performers, and the Ghibli Museum sits at its edge. Back toward the station, Harmonica Yokocho's narrow lanes mix tiny bars with old-school snack shops.",
+    tags: ["Parks", "Ghibli", "Local life", "Relaxed"],
+    station: { name: "Kichijoji Station", lines: "JR Chuo & Sobu lines (about 15 min rapid to Shinjuku) · Keio Inokashira line" },
+    hotel: { name: "Kichijoji Tokyu REI Hotel", note: "Comfortable, good-value hotel a few minutes from the station and the park.", price: "$$" },
+    attractions: [
+      { name: "Inokashira Park", ico: "🦢", desc: "Rent a swan boat, wander the pond and catch weekend buskers." },
+      { name: "Ghibli Museum", ico: "🌳", desc: "Hayao Miyazaki's whimsical museum. Tickets must be booked weeks ahead." },
+      { name: "Harmonica Yokocho", ico: "🏮", desc: "Postwar maze of tiny bars and eateries near the station." },
+      { name: "Sun Road Shopping Street", ico: "🛍️", desc: "Covered shopping arcade full of local shops and snacks." }
+    ],
+    eat: "Menchi-katsu (fried meat cutlet) from Satou. Expect a queue, but it's worth it",
+    slot: { morning: 3, afternoon: 3, evening: 1 }
+  },
+  nakameguro: {
+    name: "Nakameguro", jp: "中目黒", color: "#b8c8f5", lat: 35.6440, lng: 139.6987,
+    tagline: "Canal-side cafés, boutiques and cherry blossoms",
+    about: "Nakameguro is stylish without trying too hard. Boutiques, galleries and coffee bars line the Meguro River canal, which turns into a tunnel of pink lanterns in cherry blossom season. Nearby is the huge Starbucks Reserve Roastery, and Daikanyama's T-Site bookstore is a short walk up the hill.",
+    tags: ["Cafés", "Boutiques", "Riverside", "Date night"],
+    station: { name: "Naka-Meguro Station", lines: "Hibiya line · Tokyu Toyoko line (2 stops from Shibuya)" },
+    hotel: { name: "Hotel Gajoen Tokyo", note: "Ornate, art-filled hotel in nearby Meguro, about 15 minutes away. Nakameguro itself has very few hotels.", price: "$$$$" },
+    attractions: [
+      { name: "Meguro River", ico: "🌸", desc: "Canal walk lined with cherry trees, cafés and small shops." },
+      { name: "Starbucks Reserve Roastery Tokyo", ico: "☕", desc: "Four-story roastery designed by Kengo Kuma, with a Teavana floor." },
+      { name: "Daikanyama T-Site", ico: "📚", desc: "Beautiful Tsutaya bookstore complex a 10-minute walk away." },
+      { name: "Nakameguro Koukashita", ico: "🍷", desc: "Restaurants and bars tucked under the train tracks." }
+    ],
+    eat: "Brunch by the canal, then tacos or natural wine at Koukashita in the evening",
+    slot: { morning: 2, afternoon: 3, evening: 3 }
+  },
+  yanaka: {
+    name: "Yanaka", jp: "谷中", color: "#e8c4a0", lat: 35.7266, lng: 139.7670,
+    tagline: "Old wooden houses, temples and cats",
+    about: "Yanaka came through the earthquake and wartime bombings almost untouched, so it still feels like early-20th-century Tokyo. Locals call it Yanesen, short for Yanaka, Nezu and Sendagi. Wooden houses, around 70 small temples, craft shops and resident cats line its quiet streets. Watch the sunset from the Yuyake Dandan steps, then walk down the old-fashioned Yanaka Ginza shopping street.",
+    tags: ["Old Tokyo", "Temples", "Crafts", "Quiet"],
+    station: { name: "Nippori Station", lines: "JR Yamanote & Keihin-Tohoku lines · Keisei Skyliner (direct to Narita) · Sendagi Station: Chiyoda line" },
+    hotel: { name: "hanare (Yanaka)", note: "A whole neighborhood as a hotel: rooms in an old wooden house, reception at HAGISO café, baths at the local sento.", price: "$$" },
+    attractions: [
+      { name: "Yanaka Ginza", ico: "🐈", desc: "Nostalgic shopping street of croquettes, crafts and cat-themed treats." },
+      { name: "Yanaka Cemetery", ico: "🍃", desc: "Peaceful, tree-lined cemetery with famous graves and stray cats." },
+      { name: "Nezu Shrine", ico: "⛩️", desc: "Tunnel of red torii gates and a stunning azalea garden in spring." },
+      { name: "SCAI The Bathhouse", ico: "🖼️", desc: "Contemporary art gallery inside a 200-year-old public bathhouse." }
+    ],
+    eat: "Croquettes and menchi-katsu along Yanaka Ginza, and kakigori (shaved ice) at Himitsudo",
+    slot: { morning: 3, afternoon: 3, evening: 1 }
+  }
+};
+
+/* =========================================================
+   QUESTIONNAIRE
+   Each option gives points to the neighborhoods that suit it.
+   ========================================================= */
+const QUESTIONS = [
+  {
+    q: "It's 9am on your first morning. What do you want to wake up to?",
+    sub: "This sets the mood for your whole day.",
+    options: [
+      { e: "⛩️", t: "Incense and temple bells", d: "Old shrines and quiet lanes before the crowds", p: { asakusa: 3, yanaka: 3, harajuku: 1 } },
+      { e: "🌳", t: "A park and good coffee", d: "Green space, joggers and a slow start", p: { kichijoji: 3, nakameguro: 2, harajuku: 1, shimokitazawa: 1 } },
+      { e: "🏙️", t: "Skyscrapers and city buzz", d: "Crowds, screens and a lot of energy", p: { shinjuku: 3, shibuya: 3, akihabara: 1 } },
+      { e: "🛍️", t: "Elegant shops opening up", d: "Window shopping along a wide boulevard", p: { ginza: 3, harajuku: 2 } }
+    ]
+  },
+  {
+    q: "Where do you want to sleep?",
+    sub: "Your hotel neighborhood matters more than you'd think.",
+    options: [
+      { e: "🏨", t: "A luxury hotel with a view", d: "Marble lobbies and city lights", p: { ginza: 3, shinjuku: 1, nakameguro: 2 } },
+      { e: "🎨", t: "A trendy design hotel", d: "Cool lobby bar, local creatives", p: { shibuya: 3, harajuku: 2, shimokitazawa: 2 } },
+      { e: "🏮", t: "A traditional or local guesthouse", d: "Tatami, wooden houses, a neighborhood sento", p: { yanaka: 3, asakusa: 3 } },
+      { e: "💤", t: "Somewhere quiet and residential", d: "Feel like a local, sleep like a baby", p: { kichijoji: 3, yanaka: 1, nakameguro: 1, shimokitazawa: 1 } }
+    ]
+  },
+  {
+    q: "How do you feel about your nearest subway station?",
+    sub: "Tokyo stations range from giant mazes to sleepy local stops.",
+    options: [
+      { e: "🚇", t: "Give me a mega-hub", d: "Every line, every direction, even if it's a maze", p: { shinjuku: 3, shibuya: 3, akihabara: 2 } },
+      { e: "🚶", t: "Walk everywhere, few trains", d: "I'd rather explore on foot", p: { ginza: 3, asakusa: 2, yanaka: 2, harajuku: 1 } },
+      { e: "🚃", t: "One good line is enough", d: "A small station with a local feel", p: { shimokitazawa: 3, kichijoji: 3, nakameguro: 2 } },
+      { e: "✈️", t: "Easy airport access", d: "Direct trains to Narita or Haneda", p: { yanaka: 2, asakusa: 2, ginza: 1, shinjuku: 1 } }
+    ]
+  },
+  {
+    q: "Pick your shopping bag.",
+    sub: "What are you bringing home?",
+    options: [
+      { e: "👜", t: "A designer piece", d: "Flagship stores and department stores", p: { ginza: 3, harajuku: 1, shibuya: 1 } },
+      { e: "👕", t: "Vintage treasures", d: "Thrift racks, records and one-off finds", p: { shimokitazawa: 3, harajuku: 1, kichijoji: 1 } },
+      { e: "🎮", t: "Anime figures and retro games", d: "Manga, gachapon and Famicom cartridges", p: { akihabara: 3, shinjuku: 1 } },
+      { e: "🏺", t: "Handmade crafts", d: "Ceramics, knives, tenugui towels", p: { yanaka: 3, asakusa: 3, nakameguro: 1 } }
+    ]
+  },
+  {
+    q: "Lunch is calling. What's your move?",
+    sub: "Tokyo has more Michelin stars than any city on Earth, and great food at every price.",
+    options: [
+      { e: "🍣", t: "A sushi counter, omakase style", d: "The chef decides, you just enjoy", p: { ginza: 3 } },
+      { e: "🍢", t: "Street snacks while I walk", d: "Skewers, crackers and fried croquettes", p: { asakusa: 3, yanaka: 2, harajuku: 1 } },
+      { e: "🥐", t: "A hip café with a great brunch", d: "Latte art and natural light", p: { nakameguro: 3, shimokitazawa: 2, kichijoji: 2 } },
+      { e: "🍜", t: "Fast, cheap and legendary ramen", d: "Queue, slurp, leave happy", p: { shinjuku: 3, akihabara: 2, shibuya: 1 } }
+    ]
+  },
+  {
+    q: "Which side of Japanese culture pulls you in most?",
+    sub: "Be honest, there's no wrong answer.",
+    options: [
+      { e: "🏯", t: "History and tradition", d: "Edo-era streets, kimono, tea ceremonies", p: { asakusa: 3, yanaka: 3, ginza: 1 } },
+      { e: "🌈", t: "Kawaii and street fashion", d: "Pastel everything, bold outfits", p: { harajuku: 3, shibuya: 2 } },
+      { e: "🤖", t: "Anime, games and otaku culture", d: "Maid cafés, arcades, collectibles", p: { akihabara: 3, shinjuku: 1 } },
+      { e: "🎸", t: "Indie art and music", d: "Small galleries, live houses, zines", p: { shimokitazawa: 3, kichijoji: 2, nakameguro: 1 } }
+    ]
+  },
+  {
+    q: "How do you feel about crowds?",
+    sub: "Tokyo can be very busy, or surprisingly calm.",
+    options: [
+      { e: "🎉", t: "The busier the better", d: "Big crowds give me energy", p: { shibuya: 3, shinjuku: 3, harajuku: 2, akihabara: 2 } },
+      { e: "🙂", t: "Some buzz is fine", d: "Lively, but with room to breathe", p: { ginza: 2, asakusa: 2, shimokitazawa: 2, nakameguro: 1 } },
+      { e: "🍃", t: "I prefer peace and quiet", d: "Calm streets, few tourists", p: { yanaka: 3, kichijoji: 3, nakameguro: 2 } }
+    ]
+  },
+  {
+    q: "The sun is setting. Where does your night go?",
+    sub: "Tokyo after dark is a different city.",
+    options: [
+      { e: "🌃", t: "Neon lights and tiny bars", d: "Bar-hopping through alleys until late", p: { shinjuku: 3, shibuya: 1 } },
+      { e: "🪩", t: "Clubs and rooftop views", d: "Sunset from a skydeck, then dancing", p: { shibuya: 3, shinjuku: 1 } },
+      { e: "🎶", t: "Live music in a small venue", d: "Indie bands in a basement live house", p: { shimokitazawa: 3, kichijoji: 1 } },
+      { e: "🕯️", t: "A quiet dinner, early night", d: "Riverside wine or a calm izakaya", p: { nakameguro: 3, yanaka: 2, kichijoji: 2, ginza: 1, asakusa: 1 } }
+    ]
+  },
+  {
+    q: "What's your daily budget (excluding the hotel)?",
+    sub: "Tokyo can be surprisingly affordable.",
+    options: [
+      { e: "🪙", t: "Budget: under ¥8,000", d: "Konbini snacks, ramen and free sights", p: { akihabara: 2, shimokitazawa: 2, asakusa: 2, yanaka: 2, kichijoji: 1 } },
+      { e: "💴", t: "Comfortable: ¥8,000–20,000", d: "Nice meals and a few paid attractions", p: { shinjuku: 2, shibuya: 2, harajuku: 2, kichijoji: 2, nakameguro: 1 } },
+      { e: "💎", t: "Treat myself: ¥20,000+", d: "Omakase, cocktails, luxury shopping", p: { ginza: 3, nakameguro: 2, shibuya: 1 } }
+    ]
+  },
+  {
+    q: "Last one! Who's coming with you?",
+    sub: "Good company changes the plan.",
+    options: [
+      { e: "🎒", t: "Just me, solo adventure", d: "Free to wander and get lost", p: { shimokitazawa: 2, akihabara: 2, yanaka: 2, shinjuku: 1 } },
+      { e: "💕", t: "My partner, a romantic trip", d: "Pretty walks and cozy dinners", p: { nakameguro: 3, ginza: 2, kichijoji: 1 } },
+      { e: "👯", t: "Friends, let's go!", d: "Fun, nightlife and big group energy", p: { shibuya: 3, shinjuku: 2, harajuku: 2 } },
+      { e: "👨‍👩‍👧", t: "Family with kids", d: "Parks, easy logistics, early nights", p: { kichijoji: 3, asakusa: 2, akihabara: 1 } }
+    ]
+  }
+];
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+const $ = (id) => document.getElementById(id);
+const gmapEmbed = (query) => `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=15&output=embed`;
+const gmapSearch = (query) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+const gmapDirections = (from, to) =>
+  `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(from)}&destination=${encodeURIComponent(to)}&travelmode=transit`;
+const placeQuery = (place, hood) => `${place}, ${hood.name}, Tokyo`;
+
+function go(view) {
+  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+  $("view-" + view).classList.add("active");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  if (view === "home" && map) setTimeout(() => map.invalidateSize(), 60);
+}
+
+/* Falling petals */
+(function petals() {
+  for (let i = 0; i < 14; i++) {
+    const p = document.createElement("div");
+    p.className = "petal";
+    p.style.left = Math.random() * 100 + "vw";
+    p.style.animationDuration = 9 + Math.random() * 10 + "s";
+    p.style.animationDelay = -Math.random() * 15 + "s";
+    p.style.transform = `scale(${0.6 + Math.random() * 0.8})`;
+    document.body.appendChild(p);
+  }
+})();
+
+/* =========================================================
+   HOME MAP (Leaflet + pastel tiles)
+   ========================================================= */
+let map;
+function initMap() {
+  map = L.map("tokyoMap", { scrollWheelZoom: false, zoomControl: true });
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
+    subdomains: "abcd", maxZoom: 19
+  }).addTo(map);
+
+  const bounds = [];
+  Object.entries(HOODS).forEach(([id, h]) => {
+    bounds.push([h.lat, h.lng]);
+    L.circle([h.lat, h.lng], { radius: 900, color: h.color, weight: 2, fillColor: h.color, fillOpacity: 0.45 })
+      .addTo(map).on("click", () => openDrawer(id));
+    L.circleMarker([h.lat, h.lng], { radius: 9, color: "#fff", weight: 3, fillColor: h.color, fillOpacity: 1 })
+      .addTo(map)
+      .bindTooltip(h.name, { permanent: true, direction: "top", offset: [0, -10], className: "hood-label" })
+      .on("click", () => openDrawer(id));
+  });
+  map.fitBounds(bounds, { padding: [40, 40] });
+
+  $("hoodList").innerHTML = Object.entries(HOODS).map(([id, h]) => `
+    <button class="hood-chip" onclick="openDrawer('${id}')">
+      <span class="dot" style="background:${h.color}"></span>
+      <span><b>${h.name} <span style="opacity:.55;font-weight:500">${h.jp}</span></b><small>${h.tagline}</small></span>
+    </button>`).join("");
+}
+
+/* =========================================================
+   NEIGHBORHOOD DRAWER with live Google Maps
+   ========================================================= */
+let drawerHood = null;
+function openDrawer(id) {
+  const h = HOODS[id];
+  drawerHood = id;
+  $("drawer").innerHTML = `
+    <div class="drawer-head" style="background:linear-gradient(135deg, ${h.color}, #fffafc)">
+      <button class="close" onclick="closeDrawer()" aria-label="Close">×</button>
+      <div class="jp">${h.jp}</div>
+      <h2>${h.name}</h2>
+      <p class="tagline">${h.tagline}</p>
+    </div>
+    <div class="drawer-body">
+      <div class="tags" style="margin-top:16px">${h.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+      <p class="about">${h.about}</p>
+
+      <div class="tabs" id="dTabs">
+        <button class="on" onclick="drawerTab('attr', this)">Attractions</button>
+        <button onclick="drawerTab('hotel', this)">Hotel</button>
+        <button onclick="drawerTab('station', this)">Station</button>
+      </div>
+
+      <iframe class="gmap" id="dMap" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        src="${gmapEmbed(placeQuery(h.attractions[0].name, h))}" title="Google Map"></iframe>
+      <div class="gmap-caption"><span id="dMapLabel">📍 ${h.attractions[0].name}</span>
+        <a id="dMapLink" href="${gmapSearch(placeQuery(h.attractions[0].name, h))}" target="_blank" rel="noopener">Open in Google Maps ↗</a></div>
+
+      <div id="dTabBody"></div>
+    </div>`;
+  drawerTab("attr");
+  $("overlay").classList.add("open");
+  $("drawer").classList.add("open");
+  $("drawer").setAttribute("aria-hidden", "false");
+  $("drawer").scrollTop = 0;
+}
+function closeDrawer() {
+  $("overlay").classList.remove("open");
+  $("drawer").classList.remove("open");
+  $("drawer").setAttribute("aria-hidden", "true");
+}
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeDrawer(); });
+
+function showOnMap(query, label) {
+  $("dMap").src = gmapEmbed(query);
+  $("dMapLabel").textContent = "📍 " + label;
+  $("dMapLink").href = gmapSearch(query);
+}
+
+function drawerTab(tab, btn) {
+  const h = HOODS[drawerHood];
+  if (btn) { document.querySelectorAll("#dTabs button").forEach(b => b.classList.remove("on")); btn.classList.add("on"); }
+  let html = "";
+  if (tab === "attr") {
+    html = h.attractions.map((a, i) => `
+      <button class="place ${i === 0 ? "on" : ""}" onclick="pickPlace(this, '${encodeURIComponent(placeQuery(a.name, h))}', '${encodeURIComponent(a.name)}')">
+        <span class="ico">${a.ico}</span><span><b>${a.name}</b><span>${a.desc}</span></span>
+      </button>`).join("")
+      + `<div class="place" style="cursor:default;background:#fff6ec"><span class="ico">🍜</span><span><b>Must-eat</b><span>${h.eat}</span></span></div>`;
+    showOnMap(placeQuery(h.attractions[0].name, h), h.attractions[0].name);
+  } else if (tab === "hotel") {
+    html = `<div class="place on" style="cursor:default"><span class="ico">🏨</span><span><b>${h.hotel.name} · ${h.hotel.price}</b><span>${h.hotel.note}</span></span></div>
+      <a class="mini" href="${gmapDirections(h.hotel.name + ", Tokyo", h.station.name + ", Tokyo")}" target="_blank" rel="noopener">🚶 Directions from the hotel to ${h.station.name}</a>`;
+    showOnMap(h.hotel.name + ", Tokyo", h.hotel.name);
+  } else {
+    html = `<div class="place on" style="cursor:default"><span class="ico">🚉</span><span><b>${h.station.name}</b><span>${h.station.lines}</span></span></div>`;
+    showOnMap(h.station.name + ", Tokyo", h.station.name);
+  }
+  $("dTabBody").innerHTML = html;
+}
+function pickPlace(el, q, label) {
+  document.querySelectorAll("#dTabBody .place").forEach(p => p.classList.remove("on"));
+  el.classList.add("on");
+  showOnMap(decodeURIComponent(q), decodeURIComponent(label));
+  $("dMap").scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+/* =========================================================
+   QUIZ ENGINE
+   ========================================================= */
+let qi = 0;
+let answers = [];
+
+function startQuiz() {
+  qi = 0;
+  answers = new Array(QUESTIONS.length).fill(null);
+  go("quiz");
+  renderQ();
+}
+
+function renderQ() {
+  const Q = QUESTIONS[qi];
+  $("progBar").style.width = (qi / QUESTIONS.length) * 100 + "%";
+  $("qCount").textContent = `QUESTION ${qi + 1} OF ${QUESTIONS.length}`;
+  $("qTitle").textContent = Q.q;
+  $("qSub").textContent = Q.sub;
+  $("qOptions").innerHTML = Q.options.map((o, i) => `
+    <button class="opt ${answers[qi] === i ? "on" : ""}" onclick="pick(${i})">
+      <span class="e">${o.e}</span><span><b>${o.t}</b><small>${o.d}</small></span>
+    </button>`).join("");
+  $("backBtn").style.visibility = qi === 0 ? "hidden" : "visible";
+  $("nextBtn").disabled = answers[qi] === null;
+  $("nextBtn").textContent = qi === QUESTIONS.length - 1 ? "See my Tokyo day ✨" : "Next →";
+}
+
+function pick(i) {
+  answers[qi] = i;
+  renderQ();
+  // auto-advance after a short pause
+  setTimeout(() => { if (answers[qi] === i) nextQ(); }, 350);
+}
+function nextQ() {
+  if (answers[qi] === null) return;
+  if (qi < QUESTIONS.length - 1) { qi++; renderQ(); }
+  else showResults();
+}
+function prevQ() { if (qi > 0) { qi--; renderQ(); } }
+
+/* =========================================================
+   SCORING + ITINERARY BUILDER
+   ========================================================= */
+function computeScores() {
+  const scores = Object.fromEntries(Object.keys(HOODS).map(k => [k, 0]));
+  const maxPossible = Object.fromEntries(Object.keys(HOODS).map(k => [k, 0]));
+  QUESTIONS.forEach((Q, i) => {
+    Object.keys(HOODS).forEach(k => {
+      maxPossible[k] += Math.max(...Q.options.map(o => o.p[k] || 0));
+    });
+    const opt = Q.options[answers[i]];
+    Object.entries(opt.p).forEach(([k, v]) => scores[k] += v);
+  });
+  // percentage match = how close this neighborhood got to its own best possible score
+  const pct = Object.fromEntries(Object.keys(HOODS).map(k => [k, Math.round((scores[k] / maxPossible[k]) * 100)]));
+  return { scores, pct };
+}
+
+function distKm(a, b) {
+  const R = 6371, toR = x => x * Math.PI / 180;
+  const dLat = toR(b.lat - a.lat), dLng = toR(b.lng - a.lng);
+  const s = Math.sin(dLat / 2) ** 2 + Math.cos(toR(a.lat)) * Math.cos(toR(b.lat)) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(s));
+}
+
+// Put the top 3 in the best morning → afternoon → evening order:
+// each neighborhood's strength at that time of day, minus a small penalty for travel distance.
+function orderDay(top3, base) {
+  const perms = [[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]];
+  const slots = ["morning", "afternoon", "evening"];
+  let best = null, bestVal = -Infinity;
+  perms.forEach(p => {
+    const seq = p.map(i => top3[i]);
+    let val = seq.reduce((s, id, i) => s + HOODS[id].slot[slots[i]], 0);
+    let travel = distKm(HOODS[base], HOODS[seq[0]]) + distKm(HOODS[seq[0]], HOODS[seq[1]]) + distKm(HOODS[seq[1]], HOODS[seq[2]]);
+    val -= travel * 0.08;
+    if (val > bestVal) { bestVal = val; best = seq; }
+  });
+  return best;
+}
+
+function travelMinutes(a, b) {
+  // rough estimate for Tokyo trains, including walking and transfers
+  const km = distKm(HOODS[a], HOODS[b]);
+  return Math.max(8, Math.round(6 + km * 2.4));
+}
+
+function showResults() {
+  $("progBar").style.width = "100%";
+  const { scores, pct } = computeScores();
+  const ranked = Object.keys(HOODS).sort((a, b) => scores[b] - scores[a] || pct[b] - pct[a]);
+  const base = ranked[0];
+  const top3 = ranked.slice(0, 3);
+  const day = orderDay(top3, base);
+  const B = HOODS[base];
+
+  const slotInfo = [
+    { label: "MORNING · 9:00 – 12:30", picks: [0, 1] },
+    { label: "AFTERNOON · 13:30 – 17:30", picks: [1, 2] },
+    { label: "EVENING · 18:00 – late", picks: [2, 3] }
+  ];
+
+  let prevPoint = B.hotel.name + ", Tokyo";
+  let prevId = base;
+
+  const timeline = day.map((id, i) => {
+    const h = HOODS[id];
+    const s = slotInfo[i];
+    const acts = s.picks.map(j => h.attractions[j % h.attractions.length]);
+    const transit = (i === 0 && id === base)
+      ? `<div class="transit">🚶 Start right outside your hotel in ${h.name}</div>`
+      : `<div class="transit">🚃 About ${travelMinutes(prevId, id)} min from ${HOODS[prevId].name} to ${h.station.name} ·
+          <a href="${gmapDirections(prevPoint, h.station.name + ", Tokyo")}" target="_blank" rel="noopener">Get directions ↗</a></div>`;
+    prevPoint = h.station.name + ", Tokyo";
+    prevId = id;
+    return `
+      ${transit}
+      <div class="card slot" style="border-left:8px solid ${h.color}">
+        <div class="slot-time">${s.label}</div>
+        <h3><span class="dot" style="background:${h.color}"></span>${h.name} <span style="opacity:.5;font-weight:500;font-size:1rem">${h.jp}</span></h3>
+        <p class="why">${pct[id]}% match · ${h.tagline}</p>
+        <ul>${acts.map(a => `<li><b>${a.ico} ${a.name}</b><span>${a.desc}</span></li>`).join("")}</ul>
+        <div class="eat">🍜 <b>Eat here:</b> ${h.eat}</div>
+        <div class="slot-actions">
+          <a class="mini" href="${gmapSearch(placeQuery(acts[0].name, h))}" target="_blank" rel="noopener">📍 ${acts[0].name} on Google Maps</a>
+          <button class="mini" onclick="openDrawer('${id}')">More about ${h.name}</button>
+        </div>
+      </div>`;
+  }).join("");
+
+  const backHome = `<div class="transit">🌙 Back to ${B.hotel.name} ·
+      <a href="${gmapDirections(prevPoint, B.hotel.name + ", Tokyo")}" target="_blank" rel="noopener">Directions home ↗</a></div>`;
+
+  const bars = ranked.map(id => `
+    <div class="bar-row">
+      <span>${HOODS[id].name}</span>
+      <div class="bar"><div style="width:0;background:${HOODS[id].color}" data-w="${pct[id]}"></div></div>
+      <span class="pct">${pct[id]}%</span>
+    </div>`).join("");
+
+  $("resultsContent").innerHTML = `
+    <div class="result-hero">
+      <div class="jp" style="color:var(--pink-deep);font-weight:700;letter-spacing:.3em">あなたの東京</div>
+      <h1>Your Tokyo day is ready ✨</h1>
+      <p>Based on your answers, <b>${B.name}</b> is your best base. Here's a day that links your three best-matching neighborhoods, ordered by when each one is at its best.</p>
+      <div class="trio">${day.map(id => `<span style="background:${HOODS[id].color}">${HOODS[id].name}</span>`).join("")}</div>
+    </div>
+
+    <div class="res-grid">
+      <div>
+        <div class="card stay">
+          <div class="label">WHERE TO SLEEP</div>
+          <h3>${B.name} <span style="opacity:.5;font-weight:500">${B.jp}</span></h3>
+          <p style="color:var(--muted);margin:4px 0 14px">${B.tagline}</p>
+          <iframe class="gmap" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="${gmapEmbed(B.hotel.name + ", Tokyo")}" title="Recommended hotel on Google Maps"></iframe>
+          <div style="margin-top:12px">
+            <div class="info-row"><span class="ico">🏨</span><div><b>${B.hotel.name} · ${B.hotel.price}</b><span>${B.hotel.note}</span></div></div>
+            <div class="info-row"><span class="ico">🚉</span><div><b>Nearest station: ${B.station.name}</b><span>${B.station.lines}</span></div></div>
+            <div class="info-row"><span class="ico">📍</span><div><b>Nearby</b><span>${B.attractions.map(a => a.name).join(" · ")}</span></div></div>
+          </div>
+          <div class="slot-actions" style="margin-top:8px">
+            <a class="mini" href="${gmapSearch(B.hotel.name + ", Tokyo")}" target="_blank" rel="noopener">Hotel on Google Maps ↗</a>
+            <a class="mini" href="${gmapDirections(B.hotel.name + ", Tokyo", B.station.name + ", Tokyo")}" target="_blank" rel="noopener">Walk to station ↗</a>
+          </div>
+        </div>
+        <div class="card scores">
+          <h3>Your neighborhood match</h3>
+          <p style="color:var(--muted);margin:0 0 8px;font-size:.92rem">How well each area fits your answers</p>
+          ${bars}
+        </div>
+      </div>
+      <div class="timeline">${timeline}${backHome}</div>
+    </div>
+
+    <div class="res-actions">
+      <button class="btn" onclick="startQuiz()">Retake the quiz</button>
+      <button class="btn ghost" onclick="go('home')">Back to the map</button>
+      <button class="btn ghost" onclick="window.print()">Print my day</button>
+    </div>`;
+
+  go("results");
+  setTimeout(() => document.querySelectorAll(".bar div").forEach(d => d.style.width = d.dataset.w + "%"), 150);
+}
+
+initMap();
+</script>
 </body>
 </html>
