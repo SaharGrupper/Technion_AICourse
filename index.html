@@ -113,6 +113,14 @@
   .line-note { font-size: .82rem; color: var(--muted); line-height: 1.5; }
 
   .stay-grid { display: grid; gap: 8px; }
+  .tier { font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; margin-right: 6px; vertical-align: 1px; }
+  .tier.Budget { background: #e3f6ec; color: #2f7a4f; }
+  .tier.Mid-range { background: #e8f0ff; color: #3d5fa8; }
+  .tier.Splurge { background: #fbe6f3; color: #a83d7f; }
+  .loc { display: block; margin-top: 5px; font-size: .86rem; color: #5a5270; }
+  .cat { font-size: .7rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: #fff1d6; color: #9a5d12; margin-left: 6px; vertical-align: 1px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+  .hotel-pick { border: 2px solid var(--pink-deep); border-radius: 16px; padding: 12px 14px; background: #fff7fa; margin-top: 12px; }
   .price { font-size: .78rem; font-weight: 700; background: #fff1d6; color: #a0661a; padding: 2px 8px; border-radius: 999px; margin-left: 6px; }
   .hood-list { padding: 14px; display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 6px; }
   .hood-chip { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border-radius: 14px; cursor: pointer;
@@ -406,8 +414,9 @@ const HOODS = {
     tags: ["Nightlife", "Food alleys", "Transport hub", "Koreatown"],
     station: { name: "Shinjuku Station", lines: ["JY","JC","JB","JA","M","S","E","OH","KO"], note: "" },
     hotels: [
-      { name: "Hotel Gracery Shinjuku", note: "Mid-range, famous for the giant Godzilla head on its terrace. Kabukicho is right outside, and the station is a 5-minute walk.", price: "$$" },
-      { name: "Keio Plaza Hotel Tokyo", note: "Big classic hotel in the Nishi-Shinjuku skyscraper district with great city views and Hello Kitty rooms.", price: "$$$" }
+      {"tier": "Budget", "name": "UNPLAN Shinjuku", "price": "$", "note": "Friendly design hostel with private rooms and dorms, plus a café-bar.", "loc": "On the quiet Shinjuku-gyoemmae side: 3 minutes to Shinjuku Gyoen, and Shinjuku 3-chome's bars and the Marunouchi line are a short walk."},
+      {"tier": "Mid-range", "name": "Hotel Gracery Shinjuku", "price": "$$", "note": "Famous for the giant Godzilla head on its terrace.", "loc": "Right in Kabukicho: Golden Gai and Omoide Yokocho are steps away and Shinjuku Station is a 5-minute walk, which is ideal for nightlife."},
+      {"tier": "Splurge", "name": "Hilton Tokyo", "price": "$$$$", "note": "Big, polished hotel among the Nishi-Shinjuku skyscrapers.", "loc": "On the calm west side, next to the Metropolitan Government Building's free observation deck, with a free shuttle to Shinjuku Station and quick airport buses."}
     ],
     attractions: [
       { name: "Shinjuku Gyoen National Garden", ico: "🌸", desc: "Huge landscaped garden mixing Japanese, French and English styles. One of the best cherry blossom spots." },
@@ -421,9 +430,12 @@ const HOODS = {
       { name: "Disk Union Shinjuku", ico: "💿", desc: "A cluster of record shops, each floor dedicated to one genre." }
     ],
     food: [
-      { name: "Omoide Yokocho", ico: "🍢", desc: "Yakitori skewers and motsu-ni stew under the train tracks.", ok: ["kosher","nofish"] },
-      { name: "Shin-Okubo Koreatown", ico: "🌶️", desc: "Korean street food, cheese hotteok and K-pop shops, one stop north.", ok: ["kosher","nofish","veg"] },
-      { name: "Fuunji", ico: "🍜", desc: "Cult tsukemen (dipping ramen) shop near the south exit. Expect a queue.", ok: [] }
+      { name: "Omoide Yokocho", cat: "Izakaya", ico: "🍢", desc: "Yakitori skewers and motsu-ni stew under the train tracks.", ok: ["kosher","nofish"] },
+      { name: "Shin-Okubo Koreatown", cat: "Street food", ico: "🌶️", desc: "Korean street food, cheese hotteok and K-pop shops, one stop north.", ok: ["kosher","nofish","veg"] },
+      { name: "Fuunji", cat: "Ramen", ico: "🍜", desc: "Cult tsukemen (dipping ramen) shop near the south exit. Expect a queue.", ok: [] },
+      { name: "Shinjuku Horumon", cat: "Yakiniku", ico: "🔥", desc: "Smoky grill-it-yourself horumon (offal) and beef yakiniku in Shinjuku 3-chome.", ok: ["nofish","kosher"] },
+      { name: "Takano Fruit Parlour Shinjuku", cat: "Sweets", ico: "🍓", desc: "Famous fruit parfaits and premium Japanese fruit since 1885.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Isetan Shinjuku food hall", cat: "Market", ico: "🍱", desc: "Basement food hall with wagashi, bento and gourmet treats.", ok: ["kosher","nofish","pesc","veg"] }
     ],
     veg: "Ain Soph. Journey is a fully vegan café known for its fluffy pancakes, and Ramen Ouka near Shinjuku-gyoemmae makes vegan ramen. In Shin-Okubo, vegetable bibimbap and hotteok are easy veggie picks.",
     festivals: [
@@ -440,8 +452,9 @@ const HOODS = {
     tags: ["Iconic sights", "Shopping", "Clubs", "Rooftop views"],
     station: { name: "Shibuya Station", lines: ["JY","JA","G","Z","F","TY","DT","IN"], note: "" },
     hotels: [
-      { name: "Shibuya Stream Excel Hotel Tokyu", note: "Modern rooms connected directly to Shibuya Station, with the crossing a few minutes away.", price: "$$$" },
-      { name: "sequence MIYASHITA PARK", note: "Stylish, good-value rooms on top of MIYASHITA PARK, 5 minutes from the crossing.", price: "$$" }
+      {"tier": "Budget", "name": "The Millennials Shibuya", "price": "$", "note": "Smart capsule-pod hotel with a free evening beer hour and a co-working lounge.", "loc": "Close to the Scramble Crossing and Center-gai, so you can walk home after a late night."},
+      {"tier": "Mid-range", "name": "sequence MIYASHITA PARK", "price": "$$", "note": "Stylish, good-value rooms on top of MIYASHITA PARK.", "loc": "Above the rooftop park and the Shibuya Yokocho food hall, a 5-minute walk to the crossing and an easy stroll along Cat Street to Harajuku."},
+      {"tier": "Splurge", "name": "Cerulean Tower Tokyu Hotel", "price": "$$$$", "note": "High-rise luxury with sweeping city views and a Noh theater inside.", "loc": "On the quieter south side of the station with high-floor views (Mt. Fuji on clear days), 10 minutes' walk to Daikanyama and Ebisu."}
     ],
     attractions: [
       { name: "Shibuya Scramble Crossing", ico: "🚦", desc: "The world's busiest pedestrian crossing. Watch it from above at MAGNET by SHIBUYA109." },
@@ -455,9 +468,12 @@ const HOODS = {
       { name: "Shibuya 109", ico: "👗", desc: "The temple of gyaru and Tokyo girls' fashion." }
     ],
     food: [
-      { name: "Shibuya Yokocho", ico: "🏮", desc: "A long food hall under MIYASHITA PARK with regional dishes from all over Japan.", ok: ["kosher","nofish","pesc","veg"] },
-      { name: "Nonbei Yokocho", ico: "🍶", desc: "\"Drunkard's Alley\", a row of tiny, old-school bars by the train tracks.", ok: ["nofish"] },
-      { name: "Uobei Shibuya Dogenzaka", ico: "🍣", desc: "Cheap, fast sushi delivered to your seat by a high-speed conveyor.", ok: ["pesc"] }
+      { name: "Shibuya Yokocho", cat: "Food hall", ico: "🏮", desc: "A long food hall under MIYASHITA PARK with regional dishes from all over Japan.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Nonbei Yokocho", cat: "Izakaya", ico: "🍶", desc: "\"Drunkard's Alley\", a row of tiny, old-school bars by the train tracks.", ok: ["nofish"] },
+      { name: "Uobei Shibuya Dogenzaka", cat: "Sushi", ico: "🍣", desc: "Cheap, fast sushi delivered to your seat by a high-speed conveyor.", ok: ["pesc"] },
+      { name: "Ichiran Shibuya", cat: "Ramen", ico: "🍜", desc: "Tonkotsu ramen in solo booths, open 24 hours.", ok: [] },
+      { name: "Yakiniku Like Shibuya", cat: "Yakiniku", ico: "🔥", desc: "Solo yakiniku: your own mini grill and fast, cheap sets.", ok: ["nofish"] },
+      { name: "Tokyu Food Show Shibuya", cat: "Market", ico: "🍡", desc: "Station food hall with onigiri, sushi and wagashi to go.", ok: ["kosher","nofish","pesc","veg"] }
     ],
     veg: "Okushibu has many veggie-friendly cafés. The Shibuya Yokocho food hall has vegetable dishes, and Shibuya PARCO's restaurant floors list vegetarian options. Use the vegan search link below for today's picks.",
     festivals: [
@@ -474,8 +490,9 @@ const HOODS = {
     tags: ["Street fashion", "Kawaii", "Shrines", "Cafés"],
     station: { name: "Harajuku Station", lines: ["JY","C","F"], note: "Chiyoda & Fukutoshin lines stop at Meiji-jingumae, connected to Harajuku" },
     hotels: [
-      { name: "Trunk Hotel Cat Street", note: "Boutique design hotel on Cat Street, halfway between Harajuku and Shibuya. Its lobby bar is popular with locals.", price: "$$$$" },
-      { name: "TRUNK(HOTEL) YOYOGI PARK", note: "Sister hotel overlooking Yoyogi Park, with a rooftop pool.", price: "$$$$" }
+      {"tier": "Budget", "name": "Tokyu Stay Aoyama Premier", "price": "$$", "note": "Apartment-style rooms with washer-dryers, which is the best value around here.", "loc": "In Aoyama, walkable to Omotesando's architecture and boutiques, with the Ginza and Hanzomon lines at Aoyama-itchome."},
+      {"tier": "Mid-range", "name": "Mitsui Garden Hotel Jingugaien Tokyo Premier", "price": "$$$", "note": "Sleek hotel with a bath overlooking the National Stadium.", "loc": "Next to the Jingu Gaien ginkgo avenue (gold in late November), 15 minutes' walk to Harajuku and Omotesando."},
+      {"tier": "Splurge", "name": "TRUNK(HOTEL) CAT STREET", "price": "$$$$", "note": "Boutique design hotel with a lobby bar that's popular with locals.", "loc": "On Cat Street, exactly halfway between Harajuku and Shibuya, so both are walkable and the best indie shops are at your door."}
     ],
     attractions: [
       { name: "Meiji Jingu", ico: "⛩️", desc: "Grand Shinto shrine set in a peaceful forest. Go early in the morning when it's quiet." },
@@ -489,9 +506,11 @@ const HOODS = {
       { name: "Omotesando Hills", ico: "✨", desc: "Tadao Ando-designed mall full of Japanese designer labels." }
     ],
     food: [
-      { name: "Takeshita Street crêpe stands", ico: "🥞", desc: "Marion Crêpes and Santa Monica Crêpes are the classic Harajuku snack.", ok: ["kosher","nofish","pesc","veg"] },
-      { name: "AFURI Harajuku", ico: "🍜", desc: "Light, citrusy yuzu shio ramen in a sleek counter bar.", ok: [] },
-      { name: "Harajuku Gyoza Rou", ico: "🥟", desc: "Cheap, legendary gyoza, either pan-fried or boiled.", ok: [] }
+      { name: "Takeshita Street crêpe stands", cat: "Sweets", ico: "🥞", desc: "Marion Crêpes and Santa Monica Crêpes are the classic Harajuku snack.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "AFURI Harajuku", cat: "Ramen", ico: "🍜", desc: "Light, citrusy yuzu shio ramen in a sleek counter bar.", ok: [] },
+      { name: "Harajuku Gyoza Rou", cat: "Gyoza", ico: "🥟", desc: "Cheap, legendary gyoza, either pan-fried or boiled.", ok: [] },
+      { name: "Eggs 'n Things Harajuku", cat: "Sweets", ico: "🥞", desc: "Hawaiian pancakes piled with whipped cream.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Harajuku Takeshita Street dango & candy", cat: "Street food", ico: "🍡", desc: "Colorful dango, cotton candy and strawberry daifuku.", ok: ["kosher","nofish","pesc","veg"] }
     ],
     veg: "AFURI serves a vegan ramen with seasonal vegetables. Many cafés along Omotesando and Cat Street have plant-based menus, and the crêpe stands can make fruit-only crêpes.",
     festivals: [
@@ -508,8 +527,9 @@ const HOODS = {
     tags: ["Luxury", "Fine dining", "Culture", "Department stores"],
     station: { name: "Ginza Station", lines: ["G","M","H"], note: "JR Yamanote at Yurakucho, a 5-minute walk" },
     hotels: [
-      { name: "Mitsui Garden Hotel Ginza Premier", note: "Upper-floor rooms with big views over Tokyo Bay and Tokyo Tower, in the middle of Ginza.", price: "$$$" },
-      { name: "The Peninsula Tokyo", note: "Iconic luxury hotel facing the Imperial Palace gardens, a short walk from Ginza.", price: "$$$$" }
+      {"tier": "Budget", "name": "Sotetsu Fresa Inn Ginza-Nanachome", "price": "$$", "note": "Compact, spotless rooms, a good value for Ginza.", "loc": "On the south side of Ginza, 10 minutes' walk to the Tsukiji Outer Market for an early sushi breakfast, and close to Shimbashi's izakaya."},
+      {"tier": "Mid-range", "name": "Mitsui Garden Hotel Ginza Premier", "price": "$$$", "note": "Upper-floor rooms with big views over Tokyo Bay and Tokyo Tower.", "loc": "Halfway between Ginza's main boulevard and Shiodome, steps from the weekend Pedestrian Paradise on Chuo-dori."},
+      {"tier": "Splurge", "name": "The Peninsula Tokyo", "price": "$$$$", "note": "Iconic luxury hotel with a famous afternoon tea.", "loc": "Facing the Imperial Palace East Gardens and Hibiya Park, 5 minutes' walk to Ginza's flagship stores and to Yurakucho Station."}
     ],
     attractions: [
       { name: "Tsukiji Outer Market", ico: "🍣", desc: "Morning market streets of fresh seafood, tamagoyaki and knife shops." },
@@ -523,9 +543,12 @@ const HOODS = {
       { name: "Dover Street Market Ginza", ico: "🖤", desc: "Comme des Garçons' multi-brand concept store." }
     ],
     food: [
-      { name: "Tsukiji Outer Market", ico: "🐟", desc: "Fresh sushi, grilled scallops and tamagoyaki on sticks.", ok: ["pesc"] },
-      { name: "Ginza Mitsukoshi depachika", ico: "🍱", desc: "Department-store basement food hall of bento, wagashi and fruit.", ok: ["kosher","nofish","pesc","veg"] },
-      { name: "Yurakucho Gado-shita", ico: "🍻", desc: "Salaryman izakaya tucked under the railway arches.", ok: ["nofish"] }
+      { name: "Tsukiji Outer Market", cat: "Market", ico: "🐟", desc: "Fresh sushi, grilled scallops and tamagoyaki on sticks.", ok: ["pesc"] },
+      { name: "Ginza Mitsukoshi depachika", cat: "Market", ico: "🍱", desc: "Department-store basement food hall of bento, wagashi and fruit.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Yurakucho Gado-shita", cat: "Izakaya", ico: "🍻", desc: "Salaryman izakaya tucked under the railway arches.", ok: ["nofish"] },
+      { name: "Ginza Kimuraya", cat: "Sweets", ico: "🍞", desc: "The bakery that invented anpan (sweet bean bun) in 1874.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Tempura Kondo", cat: "Tempura", ico: "🍤", desc: "Michelin-starred tempura counter, famous for its vegetables.", ok: ["pesc","veg"] },
+      { name: "Tsukiji Outer Market tamagoyaki stands", cat: "Market", ico: "🍳", desc: "Sweet rolled omelet on a stick, about ¥100–200.", ok: ["kosher","nofish","pesc","veg"] }
     ],
     veg: "Ain Soph. Ginza is a long-running, fully vegan restaurant. Many depachika counters sell vegetable bento and inari sushi, and shojin ryori (Buddhist temple cuisine) is naturally plant-based.",
     festivals: [
@@ -542,8 +565,9 @@ const HOODS = {
     tags: ["Temples", "Traditional", "Street snacks", "Kimono"],
     station: { name: "Asakusa Station", lines: ["G","A","TS"], note: "Toei Asakusa line runs direct to Narita & Haneda airports" },
     hotels: [
-      { name: "The Gate Hotel Kaminarimon by Hulic", note: "Calm boutique hotel next to Kaminarimon gate, with a rooftop terrace facing Skytree.", price: "$$$" },
-      { name: "Richmond Hotel Premier Asakusa International", note: "Good-value rooms, many with Skytree views, a few minutes from Senso-ji.", price: "$$" }
+      {"tier": "Budget", "name": "Nui. HOSTEL & BAR LOUNGE", "price": "$", "note": "Hostel in a converted warehouse with a lively ground-floor bar.", "loc": "In Kuramae, Tokyo's craft-and-coffee district, beside the Sumida River, one stop (or a 15-minute walk) from Senso-ji."},
+      {"tier": "Mid-range", "name": "Richmond Hotel Premier Asakusa International", "price": "$$", "note": "Good-value rooms, many with Skytree views.", "loc": "A few minutes from Senso-ji and Hoppy Street, with the Tsukuba Express next door."},
+      {"tier": "Splurge", "name": "The Gate Hotel Kaminarimon by Hulic", "price": "$$$", "note": "Calm boutique hotel with a rooftop terrace facing Skytree.", "loc": "Right beside Kaminarimon gate, so you can see Senso-ji at dawn before the crowds. It's also 1 minute to the Ginza line and the airport-direct Toei Asakusa line."}
     ],
     attractions: [
       { name: "Senso-ji Temple", ico: "🏯", desc: "Tokyo's oldest temple (628 AD). Come at dawn or after dark to see it without the crowds." },
@@ -557,9 +581,12 @@ const HOODS = {
       { name: "Kimono rental in Asakusa", ico: "👘", desc: "Rent a kimono or yukata for the day and walk to Senso-ji." }
     ],
     food: [
-      { name: "Hoppy Street Asakusa", ico: "🍢", desc: "Outdoor izakaya row famous for beef-tendon stew (gyu-suji nikomi).", ok: ["kosher","nofish"] },
-      { name: "Nakamise-dori", ico: "🍘", desc: "Kibi-dango, fresh senbei and ningyo-yaki cakes.", ok: ["kosher","nofish","pesc","veg"] },
-      { name: "Asakusa Kagetsudo", ico: "🍈", desc: "Giant, crispy melon pan baked fresh all day.", ok: ["kosher","nofish","pesc","veg"] }
+      { name: "Hoppy Street Asakusa", cat: "Izakaya", ico: "🍢", desc: "Outdoor izakaya row famous for beef-tendon stew (gyu-suji nikomi).", ok: ["kosher","nofish"] },
+      { name: "Nakamise-dori", cat: "Street food", ico: "🍘", desc: "Kibi-dango, fresh senbei and ningyo-yaki cakes.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Asakusa Kagetsudo", cat: "Sweets", ico: "🍈", desc: "Giant, crispy melon pan baked fresh all day.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Asakusa Kibi Dango Azuma", cat: "Dango", ico: "🍡", desc: "Warm millet dango rolled in kinako, freshly made on Nakamise.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Daikokuya Tempura", cat: "Tempura", ico: "🍤", desc: "Tendon (tempura rice bowl) with a dark, rich sauce, since 1887.", ok: ["pesc"] },
+      { name: "Funawa Asakusa", cat: "Sweets", ico: "🍠", desc: "Sweet-potato yokan, a classic Asakusa souvenir.", ok: ["kosher","nofish","pesc","veg"] }
     ],
     veg: "Many Nakamise snacks are vegetarian, like kibi-dango, senbei and sweet potato treats (just check for egg). The area also has several vegan ramen and shojin-style restaurants. Use the vegan search link below.",
     festivals: [
@@ -577,8 +604,9 @@ const HOODS = {
     tags: ["Anime", "Gaming", "Electronics", "Pop culture"],
     station: { name: "Akihabara Station", lines: ["JY","JK","JB","H","TX"], note: "" },
     hotels: [
-      { name: "Remm Akihabara", note: "Smart, good-value business hotel connected to Akihabara Station. Rooms come with massage chairs.", price: "$$" },
-      { name: "Akihabara Washington Hotel", note: "Simple, reliable hotel right by the Electric Town exit.", price: "$$" }
+      {"tier": "Budget", "name": "Grids Akihabara Hotel & Hostel", "price": "$", "note": "Clean hostel with private rooms and a social lounge.", "loc": "A short walk to Electric Town, with Kanda Myojin and Ochanomizu's guitar street close by."},
+      {"tier": "Mid-range", "name": "Remm Akihabara", "price": "$$", "note": "Smart business hotel where the rooms come with massage chairs.", "loc": "Connected to Akihabara Station (JR Yamanote, Hibiya line, Tsukuba Express), the easiest base for anime shopping and day trips."},
+      {"tier": "Splurge", "name": "Hotel Ryumeikan Ochanomizu Honten", "price": "$$$", "note": "Refined modern hotel from a family that has run inns here since 1899.", "loc": "In quiet Ochanomizu, 10 minutes' walk to Akihabara and close to the Chuo rapid line to Shinjuku."}
     ],
     attractions: [
       { name: "Akihabara Electric Town", ico: "🎮", desc: "Main Chuo-dori strip of anime megastores, arcades and electronics shops." },
@@ -592,9 +620,11 @@ const HOODS = {
       { name: "Yodobashi Camera Multimedia Akiba", ico: "📷", desc: "Gigantic electronics store with tax-free shopping." }
     ],
     food: [
-      { name: "Go Go Curry Akihabara", ico: "🍛", desc: "Thick Kanazawa-style curry with katsu.", ok: ["nofish"] },
-      { name: "Kanda Matsuya", ico: "🥢", desc: "Historic soba restaurant (since 1884) in nearby Kanda.", ok: ["pesc"] },
-      { name: "Maidreamin Akihabara", ico: "🎀", desc: "The classic maid-café experience: songs, latte art and \"moe moe kyun\".", ok: ["kosher","nofish","pesc","veg"] }
+      { name: "Go Go Curry Akihabara", cat: "Curry", ico: "🍛", desc: "Thick Kanazawa-style curry with katsu.", ok: ["nofish"] },
+      { name: "Kanda Matsuya", cat: "Soba", ico: "🥢", desc: "Historic soba restaurant (since 1884) in nearby Kanda.", ok: ["pesc"] },
+      { name: "Maidreamin Akihabara", cat: "Themed café", ico: "🎀", desc: "The classic maid-café experience: songs, latte art and \"moe moe kyun\".", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Kyushu Jangara Akihabara", cat: "Ramen", ico: "🍜", desc: "Kyushu-style ramen; there's a vegan branch nearby too.", ok: [] },
+      { name: "Takemura (Kanda Sudacho)", cat: "Sweets", ico: "🍡", desc: "Wooden sweet shop from 1930 serving age-manju and oshiruko.", ok: ["kosher","nofish","pesc","veg"] }
     ],
     veg: "Vegan Bistro Jangara, the plant-based branch of a well-known ramen chain, makes vegan tonkotsu-style ramen and gyoza right in Akihabara.",
     festivals: [
@@ -610,8 +640,9 @@ const HOODS = {
     tags: ["Vintage", "Live music", "Indie cafés", "Local vibe"],
     station: { name: "Shimo-Kitazawa Station", lines: ["OH","IN"], note: "7 minutes from Shibuya on the Inokashira line" },
     hotels: [
-      { name: "MUSTARD HOTEL Shimokitazawa", note: "Laid-back design hotel built on the old railway line, steps from reload's shops.", price: "$$" },
-      { name: "Yuen Bettei Daita", note: "Hot-spring ryokan with tatami rooms and open-air baths, one stop from Shimokita.", price: "$$$" }
+      {"tier": "Budget", "name": "MUSTARD HOTEL Shimokitazawa", "price": "$$", "note": "Laid-back design hotel with a café and turntables in some rooms.", "loc": "Built on the old railway line, steps from reload and BONUS TRACK, in the heart of the thrift and live-music streets."},
+      {"tier": "Mid-range", "name": "Yuen Bettei Daita", "price": "$$$", "note": "Hot-spring ryokan with tatami rooms and open-air baths.", "loc": "One stop from Shimo-Kitazawa in a quiet residential area. Soak in the onsen after a day of walking."},
+      {"tier": "Splurge", "name": "TRUNK(HOTEL) YOYOGI PARK", "price": "$$$$", "note": "Design hotel with a rooftop pool overlooking Yoyogi Park.", "loc": "One short Odakyu ride from Shimokitazawa, with Yoyogi Park and Okushibu's coffee shops at the door."}
     ],
     attractions: [
       { name: "BONUS TRACK", ico: "📖", desc: "Small village of indie shops, a bookstore and cafés along the old train line." },
@@ -625,9 +656,10 @@ const HOODS = {
       { name: "Village Vanguard Shimokitazawa", ico: "🎁", desc: "Chaotic \"exciting bookstore\" of quirky goods and comics." }
     ],
     food: [
-      { name: "Rojiura Curry SAMURAI Shimokitazawa", ico: "🍛", desc: "Hokkaido-style soup curry loaded with vegetables.", ok: ["kosher","nofish","pesc","veg"] },
-      { name: "Shimokitazawa Ichibangai", ico: "🍢", desc: "Old shopping street of small izakaya and snack bars.", ok: ["nofish","pesc"] },
-      { name: "Bear Pond Espresso", ico: "☕", desc: "Cult espresso bar. Get there early, because it closes when the beans run out.", ok: ["kosher","nofish","pesc","veg"] }
+      { name: "Rojiura Curry SAMURAI Shimokitazawa", cat: "Curry", ico: "🍛", desc: "Hokkaido-style soup curry loaded with vegetables.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Shimokitazawa Ichibangai", cat: "Izakaya", ico: "🍢", desc: "Old shopping street of small izakaya and snack bars.", ok: ["nofish","pesc"] },
+      { name: "Bear Pond Espresso", cat: "Coffee", ico: "☕", desc: "Cult espresso bar. Get there early, because it closes when the beans run out.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Shirohige's Cream Puff Factory", cat: "Sweets", ico: "🧁", desc: "Totoro-shaped cream puffs (officially licensed by Ghibli) in nearby Daita.", ok: ["kosher","nofish","pesc","veg"] }
     ],
     veg: "Shimokita is one of Tokyo's best areas for plant-based food. Rojiura Curry SAMURAI has a vegan soup curry, there are vegan bakeries nearby, and the BONUS TRACK cafés serve many veggie options.",
     festivals: [
@@ -644,8 +676,9 @@ const HOODS = {
     tags: ["Parks", "Ghibli", "Local life", "Family-friendly"],
     station: { name: "Kichijoji Station", lines: ["JC","JB","IN"], note: "About 15 minutes to Shinjuku on the Chuo rapid" },
     hotels: [
-      { name: "Kichijoji Tokyu REI Hotel", note: "Comfortable, good-value hotel a few minutes from the station and the park.", price: "$$" },
-      { name: "Kichijoji Daiichi Hotel", note: "Classic hotel near the station, close to the department stores and the park.", price: "$$" }
+      {"tier": "Budget", "name": "Kichijoji Tokyu REI Hotel", "price": "$$", "note": "Comfortable, good-value hotel.", "loc": "A few minutes from the station and Sun Road, and about 8 minutes' walk to Inokashira Park."},
+      {"tier": "Mid-range", "name": "Kichijoji Daiichi Hotel", "price": "$$", "note": "Classic hotel with larger rooms than most in Tokyo.", "loc": "Next to the department stores and Harmonica Yokocho, an easy walk to the park and toward the Ghibli Museum."},
+      {"tier": "Splurge", "name": "Keio Plaza Hotel Tokyo", "price": "$$$", "note": "Big classic hotel in the Nishi-Shinjuku skyscraper district.", "loc": "Stay in Shinjuku and ride the Chuo rapid line 15 minutes direct to Kichijoji. Best if you want the suburbs by day and the big city by night."}
     ],
     attractions: [
       { name: "Inokashira Park", ico: "🦢", desc: "Rent a swan boat, wander the pond and catch weekend buskers." },
@@ -659,9 +692,10 @@ const HOODS = {
       { name: "Kichijoji Loft", ico: "🎨", desc: "Japanese stationery, beauty and design goods." }
     ],
     food: [
-      { name: "Satou Kichijoji", ico: "🥩", desc: "Famous menchi-katsu (fried minced-beef cutlet). There's always a queue.", ok: ["nofish"] },
-      { name: "Harmonica Yokocho", ico: "🍶", desc: "Yakitori, gyoza and tiny standing bars.", ok: ["nofish","pesc"] },
-      { name: "Iseya Kichijoji", ico: "🍢", desc: "Old-school yakitori house near the park since 1928.", ok: ["kosher","nofish"] }
+      { name: "Satou Kichijoji", cat: "Wagyu", ico: "🥩", desc: "Famous menchi-katsu (fried minced-beef cutlet). There's always a queue.", ok: ["nofish"] },
+      { name: "Harmonica Yokocho", cat: "Izakaya", ico: "🍶", desc: "Yakitori, gyoza and tiny standing bars.", ok: ["nofish","pesc"] },
+      { name: "Iseya Kichijoji", cat: "Yakitori", ico: "🍢", desc: "Old-school yakitori house near the park since 1928.", ok: ["kosher","nofish"] },
+      { name: "Ozasa Kichijoji", cat: "Sweets", ico: "🍡", desc: "Legendary tiny wagashi shop. Its limited yokan sells out at dawn, but the monaka is easier to get.", ok: ["kosher","nofish","pesc","veg"] }
     ],
     veg: "Kichijoji has a relaxed organic-café culture, with several macrobiotic and vegan-friendly cafés near Inokashira Park and along Nakamichi-dori.",
     festivals: [
@@ -678,7 +712,9 @@ const HOODS = {
     tags: ["Cafés", "Boutiques", "Riverside", "Date night"],
     station: { name: "Naka-Meguro Station", lines: ["H","TY"], note: "2 stops from Shibuya" },
     hotels: [
-      { name: "Hotel Gajoen Tokyo", note: "Ornate, art-filled hotel in nearby Meguro, about 15 minutes away. Nakameguro itself has very few hotels.", price: "$$$$" }
+      {"tier": "Budget", "name": "MUSTARD HOTEL Shibuya", "price": "$$", "note": "Relaxed design hotel with a bakery café downstairs.", "loc": "Between Ebisu and Shibuya, about a 15-minute walk to the Meguro River, and close to Daikanyama's boutiques."},
+      {"tier": "Mid-range", "name": "Shibuya Stream Excel Hotel Tokyu", "price": "$$$", "note": "Modern rooms connected directly to Shibuya Station.", "loc": "The Tokyu Toyoko line reaches Naka-Meguro in 4 minutes, and you also get all of Shibuya's train lines."},
+      {"tier": "Splurge", "name": "Hotel Gajoen Tokyo", "price": "$$$$", "note": "Ornate, art-filled hotel with a garden waterfall.", "loc": "On the Meguro River itself, 15 minutes' walk downstream from Nakameguro's cafés, which is beautiful in cherry blossom season."}
     ],
     attractions: [
       { name: "Meguro River", ico: "🌸", desc: "Canal walk lined with cherry trees, cafés and small shops." },
@@ -692,9 +728,10 @@ const HOODS = {
       { name: "Tsutaya Books Nakameguro", ico: "📖", desc: "Bookstore and café sharing a space with Starbucks under the tracks." }
     ],
     food: [
-      { name: "Nakameguro Koukashita", ico: "🍷", desc: "Natural wine, tacos and izakaya under the railway.", ok: ["kosher","nofish","pesc","veg"] },
-      { name: "Onibus Coffee Nakameguro", ico: "☕", desc: "Specialty coffee in a little wooden house by the tracks.", ok: ["kosher","nofish","pesc","veg"] },
-      { name: "Tonki Meguro", ico: "🐷", desc: "Legendary tonkatsu counter (since 1939), one stop away in Meguro.", ok: ["nofish"] }
+      { name: "Nakameguro Koukashita", cat: "Food hall", ico: "🍷", desc: "Natural wine, tacos and izakaya under the railway.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Onibus Coffee Nakameguro", cat: "Coffee", ico: "☕", desc: "Specialty coffee in a little wooden house by the tracks.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Tonki Meguro", cat: "Tonkatsu", ico: "🐷", desc: "Legendary tonkatsu counter (since 1939), one stop away in Meguro.", ok: ["nofish"] },
+      { name: "Nakameguro yakitori back streets", cat: "Izakaya", ico: "🔥", desc: "Small yakitori counters on the lanes off the canal.", ok: ["kosher","nofish"] }
     ],
     veg: "Brunch cafés along the canal usually have veggie bowls, and nearby Ebisu has AFURI's vegan ramen. Use the vegan search link below for the latest spots.",
     festivals: [
@@ -710,8 +747,9 @@ const HOODS = {
     tags: ["Old Tokyo", "Temples", "Crafts", "Quiet"],
     station: { name: "Nippori Station", lines: ["JY","JK","KS","C"], note: "Keisei Skyliner: 36 min to Narita · Chiyoda line at nearby Sendagi" },
     hotels: [
-      { name: "hanare (Yanaka)", note: "A whole neighborhood as a hotel: rooms in an old wooden house, reception at HAGISO café, baths at the local sento.", price: "$$" },
-      { name: "Sawanoya Ryokan", note: "Family-run traditional ryokan with tatami rooms and a cypress bath, loved by travelers for decades.", price: "$" }
+      {"tier": "Budget", "name": "Sawanoya Ryokan", "price": "$", "note": "Family-run traditional ryokan with tatami rooms and a cypress bath.", "loc": "In the lanes between Nezu and Yanaka, 7 minutes to Nezu Shrine and an easy walk to Ueno Park's museums."},
+      {"tier": "Mid-range", "name": "hanare (Yanaka)", "price": "$$", "note": "Rooms in an old wooden house, with reception at HAGISO café.", "loc": "In the heart of Yanaka's temple streets. The hotel sends you to the local sento, bakeries and shops, so you live like a resident."},
+      {"tier": "Splurge", "name": "NOHGA HOTEL UENO TOKYO", "price": "$$$", "note": "Design hotel full of local craft and art.", "loc": "Near Ueno's museums and Ameyoko market, a 15-minute walk to Yanaka, close to the Skyliner to Narita."}
     ],
     attractions: [
       { name: "Yanaka Ginza", ico: "🐈", desc: "Nostalgic shopping street of croquettes, crafts and cat-themed treats." },
@@ -725,9 +763,11 @@ const HOODS = {
       { name: "Yanaka Ginza", ico: "🐾", desc: "Small shops of cat goods, crafts and local sweets." }
     ],
     food: [
-      { name: "Yanaka Ginza", ico: "🥔", desc: "Walk-and-eat croquettes, menchi-katsu and senbei.", ok: ["kosher","nofish","pesc","veg"] },
-      { name: "Kamachiku Nezu", ico: "🍜", desc: "Handmade udon in a 100-year-old warehouse with a garden.", ok: ["pesc"] },
-      { name: "Himitsudo Yanaka", ico: "🍧", desc: "Fluffy kakigori shaved ice made from natural ice.", ok: ["kosher","nofish","pesc","veg"] }
+      { name: "Yanaka Ginza", cat: "Street food", ico: "🥔", desc: "Walk-and-eat croquettes, menchi-katsu and senbei.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Kamachiku Nezu", cat: "Udon", ico: "🍜", desc: "Handmade udon in a 100-year-old warehouse with a garden.", ok: ["pesc"] },
+      { name: "Himitsudo Yanaka", cat: "Sweets", ico: "🍧", desc: "Fluffy kakigori shaved ice made from natural ice.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Habutae Dango", cat: "Dango", ico: "🍡", desc: "Silky dango made by the same shop in Nippori since 1819.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Yanaka Ginza menchi-katsu stands", cat: "Street food", ico: "🥩", desc: "Hot fried cutlets from the butcher shops on the street.", ok: ["nofish"] }
     ],
     veg: "Kamachiku's cold udon can be ordered vegetarian, and kakigori is a sweet veggie treat. Temple-town tofu shops and onigiri stands are easy options too.",
     festivals: [
@@ -744,7 +784,9 @@ const HOODS = {
     tags: ["Vintage", "Punk & live music", "Cheap eats", "Local"],
     station: { name: "Koenji Station", lines: ["JC","JB","M"], note: "Marunouchi line at Shin-Koenji, 10 minutes' walk · about 6 min to Shinjuku" },
     hotels: [
-      { name: "BnA Hotel Koenji", note: "Small art hotel where every room was designed by a local artist, with a bar for meeting locals.", price: "$$" }
+      {"tier": "Budget", "name": "BnA Hotel Koenji", "price": "$$", "note": "Small art hotel where each room was designed by a local artist.", "loc": "Under the train tracks among Koenji's izakaya, with a bar where you can meet locals."},
+      {"tier": "Mid-range", "name": "Hotel Sunroute Plaza Shinjuku", "price": "$$$", "note": "Reliable, comfortable hotel by Shinjuku's south exit.", "loc": "6 minutes on the JR Chuo line to Koenji, and the airport buses at Busta Shinjuku are right next door."},
+      {"tier": "Splurge", "name": "JR Kyushu Hotel Blossom Shinjuku", "price": "$$$", "note": "Polished upscale hotel with a large public bath.", "loc": "A few minutes from Shinjuku's south exit, with direct Chuo-line trains to Koenji. Shinjuku nightlife is on one side and Koenji's thrift shops on the other."}
     ],
     attractions: [
       { name: "Koenji Hikawa Shrine", ico: "⛅", desc: "Home to Kisho Jinja, Japan's only shrine dedicated to the weather. Pray for sunshine." },
@@ -758,8 +800,9 @@ const HOODS = {
       { name: "Koenji PAL Shopping Street", ico: "🛍️", desc: "Covered arcade with secondhand shops, records and cheap eats." }
     ],
     food: [
-      { name: "Koenji Gado-shita", ico: "🍻", desc: "Izakaya and standing bars along the elevated tracks.", ok: ["kosher","nofish","pesc"] },
-      { name: "Koenji Junjo Shopping Street", ico: "🍢", desc: "Long, nostalgic street of family-run eateries.", ok: ["kosher","nofish","pesc","veg"] }
+      { name: "Koenji Gado-shita", cat: "Izakaya", ico: "🍻", desc: "Izakaya and standing bars along the elevated tracks.", ok: ["kosher","nofish","pesc"] },
+      { name: "Koenji Junjo Shopping Street", cat: "Street food", ico: "🍢", desc: "Long, nostalgic street of family-run eateries.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Koenji izakaya alleys", cat: "Izakaya", ico: "🍶", desc: "Cheap, friendly izakaya around the station's north exit.", ok: ["nofish","pesc"] }
     ],
     veg: "Koenji has one of Tokyo's most relaxed vegan scenes, with several vegan cafés, falafel spots and Indian or Nepali curry houses that offer veggie sets.",
     festivals: [
@@ -775,8 +818,9 @@ const HOODS = {
     tags: ["Hidden alleys", "Geisha history", "French bistros", "Quiet"],
     station: { name: "Kagurazaka Station", lines: ["T","JB","Y","N","E"], note: "Tozai line at Kagurazaka · JR, Yurakucho, Namboku & Oedo at Iidabashi" },
     hotels: [
-      { name: "Agnes Hotel Tokyo", note: "Small, elegant boutique hotel on a quiet Kagurazaka side street.", price: "$$$" },
-      { name: "Hotel Metropolitan Edmont Tokyo", note: "Large, comfortable hotel at Iidabashi, a few minutes from the bottom of Kagurazaka.", price: "$$$" }
+      {"tier": "Budget", "name": "UNPLAN Kagurazaka", "price": "$", "note": "Stylish hostel with private rooms and a café-bar.", "loc": "Steps from Kagurazaka Station (Tozai line), close to the hidden alleys and Akagi Shrine."},
+      {"tier": "Mid-range", "name": "Hotel Metropolitan Edmont Tokyo", "price": "$$$", "note": "Large, comfortable hotel with a garden.", "loc": "At Iidabashi, a hub with five train lines (JR, Tozai, Yurakucho, Namboku and Oedo), at the bottom of the Kagurazaka slope and next to Canal Café."},
+      {"tier": "Splurge", "name": "Agnes Hotel Tokyo", "price": "$$$", "note": "Small, elegant boutique hotel known for its pastries.", "loc": "On a quiet side street just off Kagurazaka-dori, a few minutes from the cobblestone alleys and the best bistros."}
     ],
     attractions: [
       { name: "Hyogo Yokocho", ico: "🏮", desc: "Kagurazaka's oldest cobblestone alley, lined with black-walled ryotei." },
@@ -790,9 +834,10 @@ const HOODS = {
       { name: "Kagurazaka Saryo", ico: "🍵", desc: "Japanese tea house selling matcha sweets and tea." }
     ],
     food: [
-      { name: "Kagurazaka bistros", ico: "🥖", desc: "French crêperies and bistros are a local specialty.", ok: ["kosher","nofish","pesc","veg"] },
-      { name: "Kagurazaka Isuzu", ico: "🍡", desc: "Traditional wagashi sweet shop since the Edo era.", ok: ["kosher","nofish","pesc","veg"] },
-      { name: "Kagurazaka kaiseki", ico: "🍱", desc: "Multi-course kaiseki dining in old geisha-district houses.", ok: ["pesc"] }
+      { name: "Kagurazaka bistros", cat: "French", ico: "🥖", desc: "French crêperies and bistros are a local specialty.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Kagurazaka Isuzu", cat: "Sweets", ico: "🍡", desc: "Traditional wagashi sweet shop since the Edo era.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Kagurazaka kaiseki", cat: "Kaiseki", ico: "🍱", desc: "Multi-course kaiseki dining in old geisha-district houses.", ok: ["pesc"] },
+      { name: "Kinozen Kagurazaka", cat: "Sweets", ico: "🍵", desc: "Famous matcha bavarois and anmitsu in a classic tea room.", ok: ["kosher","nofish","pesc","veg"] }
     ],
     veg: "Kaiseki and shojin-style restaurants can often do vegetarian courses if you book ahead. The French crêperies make vegetarian galettes.",
     festivals: [
@@ -807,7 +852,9 @@ const HOODS = {
     tags: ["Food alleys", "Design", "Bookstores", "Date night"],
     station: { name: "Ebisu Station", lines: ["JY","JA","H","TY"], note: "Tokyu Toyoko line at Daikanyama" },
     hotels: [
-      { name: "The Westin Tokyo", note: "Classic luxury hotel inside Yebisu Garden Place.", price: "$$$$" }
+      {"tier": "Budget", "name": "MUSTARD HOTEL Shibuya", "price": "$$", "note": "Relaxed design hotel with a bakery café downstairs.", "loc": "About 10 minutes' walk to Ebisu Yokocho and Daikanyama's T-Site."},
+      {"tier": "Mid-range", "name": "Shibuya Stream Excel Hotel Tokyu", "price": "$$$", "note": "Modern rooms connected to Shibuya Station.", "loc": "A pleasant 10-minute walk along the Shibuya River to Ebisu, with all of Shibuya's train lines at the door."},
+      {"tier": "Splurge", "name": "The Westin Tokyo", "price": "$$$$", "note": "Classic luxury hotel inside Yebisu Garden Place.", "loc": "In the Garden Place plaza, by the photography museum and YEBISU BREWERY. A moving walkway takes you to Ebisu Station."}
     ],
     attractions: [
       { name: "Daikanyama T-Site", ico: "📚", desc: "Celebrated Tsutaya bookstore complex, open late, with a lounge café." },
@@ -821,8 +868,9 @@ const HOODS = {
       { name: "Okura Daikanyama", ico: "👖", desc: "Indigo-dyed Japanese clothing in a wooden shop." }
     ],
     food: [
-      { name: "Ebisu Yokocho", ico: "🍢", desc: "Yakitori, oden and seafood in a lively covered alley.", ok: ["kosher","nofish","pesc"] },
-      { name: "AFURI Ebisu", ico: "🍜", desc: "The original yuzu-ramen shop that started a trend.", ok: [] }
+      { name: "Ebisu Yokocho", cat: "Izakaya", ico: "🍢", desc: "Yakitori, oden and seafood in a lively covered alley.", ok: ["kosher","nofish","pesc"] },
+      { name: "AFURI Ebisu", cat: "Ramen", ico: "🍜", desc: "The original yuzu-ramen shop that started a trend.", ok: [] },
+      { name: "YEBISU BREWERY TOKYO", cat: "Brewery", ico: "🍺", desc: "Beer brewed on site where Yebisu began, with tastings.", ok: ["kosher","nofish","pesc","veg"] }
     ],
     veg: "The original AFURI in Ebisu has a vegan ramen, and Daikanyama's cafés usually offer veggie bowls and plant-based sweets.",
     festivals: [
@@ -838,8 +886,9 @@ const HOODS = {
     tags: ["Digital art", "Museums", "Skyline", "Luxury"],
     station: { name: "Kamiyacho Station", lines: ["H","N","E"], note: "Hibiya line to Azabudai Hills · Namboku at Roppongi-itchome · Oedo at Roppongi" },
     hotels: [
-      { name: "Janu Tokyo", note: "Luxury wellness hotel inside Azabudai Hills, steps from teamLab Borderless. For something more affordable, look around Roppongi.", price: "$$$$" },
-      { name: "Mitsui Garden Hotel Roppongi Tokyo Premier", note: "Upscale rooms with Tokyo Tower views, more affordable than Azabudai Hills.", price: "$$$" }
+      {"tier": "Budget", "name": "remm Roppongi", "price": "$$", "note": "Smart, compact business hotel with comfy beds.", "loc": "Next to Roppongi Station (Hibiya & Oedo lines), 15 minutes' walk to teamLab Borderless and Tokyo Tower."},
+      {"tier": "Mid-range", "name": "Mitsui Garden Hotel Roppongi Tokyo Premier", "price": "$$$", "note": "Upscale rooms, many with Tokyo Tower views.", "loc": "Between Roppongi and Azabudai Hills, walkable to teamLab Borderless, Tokyo Tower and Roppongi's nightlife."},
+      {"tier": "Splurge", "name": "Janu Tokyo", "price": "$$$$", "note": "Luxury wellness hotel with a huge spa.", "loc": "Inside Azabudai Hills, a few steps from teamLab Borderless. Kamiyacho Station (Hibiya line) is connected underground."}
     ],
     attractions: [
       { name: "teamLab Borderless", ico: "🌈", desc: "Immersive digital art that flows between rooms. Book timed tickets ahead and allow at least 2–3 hours." },
@@ -853,9 +902,11 @@ const HOODS = {
       { name: "Roppongi Hills", ico: "🛍️", desc: "Fashion, museum shop and the giant Maman spider sculpture." }
     ],
     food: [
-      { name: "Azabudai Hills Market", ico: "🧺", desc: "Gourmet food market with fishmongers, bakeries and deli counters.", ok: ["kosher","nofish","pesc","veg"] },
-      { name: "Naniwaya Sohonten", ico: "🐟", desc: "The original taiyaki shop (since 1909) in Azabu-Juban.", ok: ["kosher","nofish","pesc","veg"] },
-      { name: "Azabu-Juban Shopping Street", ico: "🍡", desc: "Old shotengai of rice crackers, soba and sweet shops.", ok: ["kosher","nofish","pesc","veg"] }
+      { name: "Azabudai Hills Market", cat: "Market", ico: "🧺", desc: "Gourmet food market with fishmongers, bakeries and deli counters.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Naniwaya Sohonten", cat: "Sweets", ico: "🐟", desc: "The original taiyaki shop (since 1909) in Azabu-Juban.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Azabu-Juban Shopping Street", cat: "Street food", ico: "🍡", desc: "Old shotengai of rice crackers, soba and sweet shops.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Jojoen Roppongi", cat: "Yakiniku", ico: "🔥", desc: "Classic upscale yakiniku chain with excellent wagyu.", ok: ["nofish","kosher"] },
+      { name: "Mamegen Azabu-Juban", cat: "Sweets", ico: "🥜", desc: "Flavored beans and rice crackers since 1865.", ok: ["kosher","nofish","pesc","veg"] }
     ],
     veg: "Roppongi has many international, vegan-friendly restaurants, and the cafés at Azabudai Hills offer plant-based options. Taiyaki is filled with red bean paste.",
     festivals: [
@@ -871,8 +922,9 @@ const HOODS = {
     tags: ["Digital art", "Seafood", "Waterfront", "Family-friendly"],
     station: { name: "Shin-Toyosu Station", lines: ["U","Y"], note: "Yurikamome at Shin-Toyosu (teamLab) · Yurakucho line at Toyosu" },
     hotels: [
-      { name: "La Vista Tokyo Bay", note: "Hot-spring hotel with a rooftop open-air bath overlooking the bay, right next to Senkyaku Banrai.", price: "$$$" },
-      { name: "Hotel JAL City Tokyo Toyosu", note: "Calm, modern hotel next to the Toyosu waterfront and LaLaport.", price: "$$" }
+      {"tier": "Budget", "name": "Hotel JAL City Tokyo Toyosu", "price": "$$", "note": "Calm, modern hotel.", "loc": "Next to the Toyosu waterfront and LaLaport, a short walk to teamLab Planets and the Yurakucho line."},
+      {"tier": "Mid-range", "name": "La Vista Tokyo Bay", "price": "$$$", "note": "Hot-spring hotel with a rooftop open-air bath over the bay.", "loc": "Next to Toyosu Market and Senkyaku Banrai. Wake up early for the tuna auction and walk to teamLab Planets."},
+      {"tier": "Splurge", "name": "Hilton Tokyo Odaiba", "price": "$$$$", "note": "Bay-view luxury with balconies facing Rainbow Bridge.", "loc": "A few stops on the Yurikamome line from Toyosu, with Odaiba's beach, the Gundam statue and some of Tokyo's best night views."}
     ],
     attractions: [
       { name: "teamLab Planets TOKYO", ico: "💧", desc: "Barefoot immersive art: wade through water and walk among floating orchids. Book ahead." },
@@ -886,9 +938,10 @@ const HOODS = {
       { name: "Toyosu Senkyaku Banrai shops", ico: "🎁", desc: "Food souvenirs and seafood snacks." }
     ],
     food: [
-      { name: "Sushi Dai Toyosu", ico: "🍣", desc: "Famous breakfast omakase inside the market. The queue starts before dawn.", ok: ["pesc"] },
-      { name: "Toyosu Senkyaku Banrai food court", ico: "🦐", desc: "Kaisendon (seafood bowls) and grilled seafood with a view.", ok: ["pesc"] },
-      { name: "Tsukishima Monja Street", ico: "🍳", desc: "Two stops away: the home of monjayaki, Tokyo's gooey griddle dish.", ok: ["kosher","nofish","pesc","veg"] }
+      { name: "Sushi Dai Toyosu", cat: "Sushi", ico: "🍣", desc: "Famous breakfast omakase inside the market. The queue starts before dawn.", ok: ["pesc"] },
+      { name: "Toyosu Senkyaku Banrai food court", cat: "Market", ico: "🦐", desc: "Kaisendon (seafood bowls) and grilled seafood with a view.", ok: ["pesc"] },
+      { name: "Tsukishima Monja Street", cat: "Monjayaki", ico: "🍳", desc: "Two stops away: the home of monjayaki, Tokyo's gooey griddle dish.", ok: ["kosher","nofish","pesc","veg"] },
+      { name: "Toyosu Market tuna & sushi row", cat: "Market", ico: "🐟", desc: "Restaurant row inside the market building, open from early morning.", ok: ["pesc"] }
     ],
     veg: "Vegan Ramen UZU Tokyo, right next to teamLab Planets, serves plant-based ramen designed around the art experience. Monjayaki can be made with vegetables only.",
     festivals: [
@@ -1022,7 +1075,8 @@ const QUESTIONS = [
   },
   {
     q: "What's your daily budget (excluding the hotel)?",
-    sub: "Tokyo can be surprisingly affordable.",
+    budget: true,
+    sub: "We'll also pick a hotel in your price range.",
     options: [
       { e: "🪙", t: "Shoestring: under ¥6,000", d: "Konbini, ramen and free sights", p: { koenji: 3, akihabara: 2, yanaka: 2, asakusa: 1, shimokitazawa: 1 } },
       { e: "💴", t: "Comfortable: ¥6,000–20,000", d: "Nice meals and a few paid attractions", p: { shinjuku: 2, shibuya: 2, harajuku: 2, kichijoji: 2, shimokitazawa: 2, nakameguro: 1, toyosu: 1 } },
@@ -1231,16 +1285,16 @@ function openDrawer(id) {
     <div class="drawer-body">
       <div class="tags" style="margin-top:16px">${h.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
       <p class="about">${h.about}</p>
-      <div class="sub-h">🏨 WHERE TO STAY</div>
+      <div class="sub-h">🏨 WHERE TO STAY: 3 BUDGETS</div>
       <div class="stay-grid">${h.hotels.map(ht => `
         <button class="place" data-q="${esc(ht.name + ", Tokyo")}" data-l="${esc(ht.name)}">
-          <span class="ico">🏨</span><span><b>${ht.name}<span class="price">${ht.price}</span></b><span>${ht.note}</span></span>
+          <span class="ico">🏨</span><span><b><span class="tier ${ht.tier}">${ht.tier}</span>${ht.name}<span class="price">${ht.price}</span></b><span>${ht.note}</span><span class="loc">📍 <b style="display:inline">Location:</b> ${ht.loc}</span></span>
         </button>`).join("")}</div>
       <div class="sub-h">🚉 NEAREST STATION & LINES</div>
       <button class="place" data-q="${esc(h.station.name + ", Tokyo")}" data-l="${esc(h.station.name)}">
         <span class="ico">🚉</span><span style="flex:1"><b>${h.station.name}</b>${lineChips(h.station.lines)}${h.station.note ? `<span class="line-note">${h.station.note}</span>` : ""}</span>
       </button>
-      <a class="mini" style="margin:2px 0 6px" href="${gmapDirections(h.hotels[0].name + ", Tokyo", h.station.name + ", Tokyo")}" target="_blank" rel="noopener">🚶 Walk from ${h.hotels[0].name} to the station ↗</a>
+      <a class="mini" style="margin:2px 0 6px" href="${gmapSearch("convenience store near " + h.station.name + ", Tokyo")}" target="_blank" rel="noopener">🏪 Convenience stores near the station ↗</a>
       <div class="sub-h">✨ EXPLORE</div>
       <div class="tabs" id="dTabs">
         <button data-t="attr" class="on">Attractions</button>
@@ -1276,7 +1330,7 @@ const FIT_LABELS = { kosher: "✡️ Kosher-style", nofish: "🍗 No fish", pesc
 function placeButtons(items, h, cls = "") {
   return items.map((a, i) => `
     <button class="place ${cls} ${i === 0 ? "on" : ""}" data-q="${esc(placeQuery(a.name, h))}" data-l="${esc(a.name)}">
-      <span class="ico">${a.ico}</span><span><b>${a.name}</b><span>${a.desc}</span>${a.ok && a.ok.length ? `<div class="tags" style="margin:6px 0 0">${a.ok.map(k => `<span class="tag" style="background:#eef8f1;color:#3b7a52">${FIT_LABELS[k]}</span>`).join("")}</div>` : ""}</span>
+      <span class="ico">${a.ico}</span><span><b>${a.name}${a.cat ? `<span class="cat">${a.cat}</span>` : ""}</b><span>${a.desc}</span>${a.ok && a.ok.length ? `<div class="tags" style="margin:6px 0 0">${a.ok.map(k => `<span class="tag" style="background:#eef8f1;color:#3b7a52">${FIT_LABELS[k]}</span>`).join("")}</div>` : ""}</span>
     </button>`).join("");
 }
 function drawerTab(tab, btn) {
@@ -1288,7 +1342,11 @@ function drawerTab(tab, btn) {
   } else if (tab === "shop") {
     html = placeButtons(h.shops, h); first = h.shops[0];
   } else if (tab === "eat") {
-    html = `<div class="sub-h">FOOD AREAS & LOCAL DISHES</div>` + placeButtons(h.food, h)
+    const near = h.station.name + ", Tokyo";
+    html = `<div class="sub-h">BEST PLACES TO EAT</div>` + placeButtons(h.food, h)
+      + `<div class="sub-h">FIND MORE NEAR ${h.station.name.toUpperCase()}</div>
+         <div class="chips">${[["🔥","Yakiniku"],["🍜","Ramen"],["🍣","Sushi"],["🍡","Dango & wagashi"],["🍢","Izakaya"],["🧺","Market"]]
+           .map(([i, c]) => `<a class="mini" href="${gmapSearch("best " + c.split(" ")[0].toLowerCase() + " near " + near)}" target="_blank" rel="noopener">${i} ${c} ↗</a>`).join("")}</div>`
       + `<div class="sub-h">VEGAN & VEGETARIAN</div>
          <div class="place static veg"><span class="ico">🌱</span><span><b>Plant-based in ${h.name}</b><span>${h.veg}</span></span></div>
          <a class="mini" href="${vegSearch(h)}" target="_blank" rel="noopener">🌱 Find vegan restaurants near ${h.station.name} ↗</a>`;
@@ -1401,7 +1459,9 @@ function showResults() {
     { label: "EVENING · 18:00 – late", picks: [2, 3] }
   ];
 
-  const HT = B.hotels[0];
+  const budgetIdx = answers[QUESTIONS.findIndex(q => q.budget)];      // 0 budget, 1 mid, 2 splurge
+  const HT = B.hotels[Math.min(budgetIdx, B.hotels.length - 1)];
+  const otherHotels = B.hotels.filter(x => x !== HT);
   let prevPoint = HT.name + ", Tokyo", prevId = base;
   const timeline = day.map((id, i) => {
     const h = HOODS[id], s = slotInfo[i];
@@ -1409,6 +1469,7 @@ function showResults() {
     const shop = h.shops[i % h.shops.length];
     const fits = dietKey === "all" ? h.food : h.food.filter(f => f.ok.includes(dietKey));
     const food = fits.length ? fits[i % fits.length] : null;
+    const food2 = fits.length > 1 ? fits[(i + 1 + Math.floor(fits.length / 2)) % fits.length] : null;
     const transit = (i === 0 && id === base)
       ? `<div class="transit">🚶 Start right outside your hotel in ${h.name}</div>`
       : `<div class="transit">🚃 About ${travelMinutes(prevId, id)} min from ${HOODS[prevId].name} to ${h.station.name} ·
@@ -1428,7 +1489,7 @@ function showResults() {
         ${plantBased
           ? `<div class="eat green">🌱 <b>Eat ${dietKey === "vegan" ? "vegan" : "vegetarian"}:</b> ${h.veg}</div>`
           : food
-            ? `<div class="eat${dietKey !== "all" ? " green" : ""}">🍜 <b>Eat at ${food.name}${dietKey !== "all" ? ` (fits ${DIET_INFO[dietKey].label})` : ""}:</b> ${food.desc}</div>`
+            ? [food, food2].filter((f, k, arr) => f && arr.indexOf(f) === k).map(f => `<div class="eat${dietKey !== "all" ? " green" : ""}">${f.ico} <b>${f.cat ? f.cat + ": " : ""}${f.name}${dietKey !== "all" ? ` (fits ${DIET_INFO[dietKey].label})` : ""}</b> · ${f.desc}</div>`).join("")
             : `<div class="eat">🍜 <b>Eating ${DIET_INFO[dietKey].label} here:</b> the classic spots in ${h.name} mostly use ${dietKey === "pesc" ? "meat" : dietKey === "kosher" ? "pork or seafood" : "fish stock"}, so look for chicken, beef or vegetable dishes and ask staff. See the food tips on the left.</div>`}
         ${festNow.map(f => `<div class="eat" style="background:#f3edff">🏮 <b>Happening in ${MONTHS_FULL[monthIdx - 1]}:</b> ${f.name} (${f.when})</div>`).join("")}
         <div class="slot-actions">
@@ -1472,8 +1533,8 @@ function showResults() {
           <p style="color:var(--muted);margin:4px 0 14px">${B.tagline}</p>
           <iframe class="gmap" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="${gmapEmbed(HT.name + ", Tokyo")}" title="Recommended hotel on Google Maps"></iframe>
           <div style="margin-top:12px">
-            <div class="info-row"><span class="ico">🏨</span><div><b>${HT.name}<span class="price">${HT.price}</span></b><span>${HT.note}</span></div></div>
-            ${B.hotels.slice(1).map(o => `<div class="info-row"><span class="ico">🛏️</span><div><b>Also great: ${o.name}<span class="price">${o.price}</span></b><span>${o.note}</span></div></div>`).join("")}
+            <div class="hotel-pick"><div class="label" style="margin-bottom:4px">PICKED FOR YOUR BUDGET</div><b><span class="tier ${HT.tier}">${HT.tier}</span>${HT.name}<span class="price">${HT.price}</span></b><span style="display:block;color:var(--muted);font-size:.92rem;margin-top:4px">${HT.note}</span><span class="loc">📍 <b style="display:inline">Why this location:</b> ${HT.loc}</span></div>
+            ${otherHotels.map(o => `<div class="info-row"><span class="ico">🛏️</span><div><b><span class="tier ${o.tier}">${o.tier}</span>${o.name}<span class="price">${o.price}</span></b><span>${o.loc}</span></div></div>`).join("")}
             <div class="info-row"><span class="ico">🚉</span><div style="flex:1"><b>Nearest station: ${B.station.name}</b>${lineChips(B.station.lines)}${B.station.note ? `<span>${B.station.note}</span>` : ""}</div></div>
             <div class="info-row"><span class="ico">📍</span><div><b>Nearby</b><span>${B.attractions.map(a => a.name).join(" · ")}</span></div></div>
           </div>
@@ -1481,6 +1542,13 @@ function showResults() {
             <a class="mini" href="${gmapSearch(HT.name + ", Tokyo")}" target="_blank" rel="noopener">Hotel on Google Maps ↗</a>
             <a class="mini" href="${gmapDirections(HT.name + ", Tokyo", B.station.name + ", Tokyo")}" target="_blank" rel="noopener">Walk to station ↗</a>
           </div>
+        </div>
+        <div class="card side-card">
+          <div class="label">🏪 CONVENIENCE STORES NEAR YOUR HOTEL</div>
+          <p style="color:var(--muted);margin:6px 0 10px;font-size:.92rem">The closest konbini to ${HT.name}, live from Google Maps:</p>
+          <iframe class="gmap" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="${gmapEmbed("convenience store near " + HT.name + ", Tokyo")}" title="Convenience stores near your hotel"></iframe>
+          <div class="chips">${["7-Eleven", "FamilyMart", "Lawson"].map(k => `<a class="mini" href="${gmapSearch(k + " near " + HT.name + ", Tokyo")}" target="_blank" rel="noopener">${k} ↗</a>`).join("")}</div>
+          <p class="note">Konbini tips: try egg sandos, onigiri and FamilyMart's Famichiki fried chicken. 7-Eleven ATMs accept foreign cards, and most stores are open 24/7.</p>
         </div>
         ${DIET_INFO[dietKey] ? `<div class="card side-card">
           <div class="label">${DIET_INFO[dietKey].label.toUpperCase()} FOOD TIPS</div>
